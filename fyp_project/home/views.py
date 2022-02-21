@@ -7,3 +7,6 @@ def home(request):
 
 def student(request):
     return render(request, 'home-templates/student.html')
+
+def recruiter(request):
+    return render(request, 'home-templates/recruiter.html')

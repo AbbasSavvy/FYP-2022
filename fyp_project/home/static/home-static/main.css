@@ -557,6 +557,25 @@ section {
 	text-decoration: none;
 }
 
+.col-sm-6{
+	align-items: center;
+}
+
+
+.student-card{
+	max-width: 15rem;
+	margin: auto;
+	margin-top: 15px;
+}
+
+
+.recruiter-card{
+	max-width: 15rem;
+	margin: auto;
+	margin-top: 15px;
+}
+
+
 /*--------------------------------------------------------------
 # Features
 --------------------------------------------------------------*/
