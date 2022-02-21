@@ -11,7 +11,10 @@
 body {
 	font-family: "Open Sans", sans-serif;
 	color: #444444;
-    background-color: #27344f;
+    /* background-color: #27344f; */
+    background-color: #322250;
+	width: 98%;
+	color: #fff;
 }
 
 a {
@@ -390,7 +393,8 @@ h6 {
 	display: block;
 	width: 100%;
 	height: 60px;
-	position: relative;
+	/* position: sticky;
+	bottom: 0; */
 }
 
 .wave1 use {
@@ -557,22 +561,55 @@ section {
 	text-decoration: none;
 }
 
+/*--------------------------------------------------------------
+# Edited
+--------------------------------------------------------------*/
+
+.welcome-message{
+	color: #fff;
+	/* margin-top: em; */
+	padding-left: 10%;
+}
+
+.row{
+	margin-top: 7.5%;
+}
+
 .col-sm-6{
 	align-items: center;
+}
+
+.card-body{
+	margin: auto;
+}
+
+.card-title{
+	margin: 0;
 }
 
 
 .student-card{
 	max-width: 15rem;
 	margin: auto;
-	margin-top: 15px;
+	margin-top: 50px;
 }
 
 
 .recruiter-card{
 	max-width: 15rem;
 	margin: auto;
-	margin-top: 15px;
+	margin-top: 50px;
+}
+
+.resume-form{
+	color: #fff;
+	/* margin-top: em; */
+	padding-left: 10%;
+	margin-top: 2%;
+}
+
+.border{
+	border: solid 2px red;
 }
 
 
@@ -1392,12 +1429,32 @@ section {
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
+
+/* .footer-svg{
+	width: 101%;
+} */
+
+.footer-svg-relative{
+	position:relative;
+   	bottom:0;
+	width: 100%;
+}
+
+.footer-svg-absolute{
+	position:absolute;
+   	bottom:0;
+	width: 100%;
+}
+
 #footer {
 	background: #fff;
 	color: #14151c;
 	font-size: 14px;
 	text-align: center;
 	padding: 30px 0;
+	/* position:absolute;
+   	bottom:0;
+	width: 100%; */
 }
 #footer h3 {
 	font-size: 36px;
