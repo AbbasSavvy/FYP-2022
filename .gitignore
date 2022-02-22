@@ -1,2 +1,7 @@
 fyp_project/db.sqlite3
+*.pyc
 **/*.pyc
+**/**/*.pyc
+**/**/**/*.pyc
+**/**/**/**/*.pyc
+
