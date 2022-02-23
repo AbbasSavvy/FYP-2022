@@ -24,9 +24,9 @@ urlpatterns = [
     path('', include('home.urls')),
     path('register/', userViews.registerPlacecomUser, name='register'),
     path('login/', authViews.LoginView.as_view(
-        template_name='users/templates/user-templates/login.html'), name='login'),
+        template_name='user-templates/login.html'), name='login'),
     path('logout/', authViews.LogoutView.as_view(
-        template_name='users/templates/user-templates/logout.html'), name='logout'),
+        template_name='user-templates/logout.html'), name='logout'),
 
 
 ]
