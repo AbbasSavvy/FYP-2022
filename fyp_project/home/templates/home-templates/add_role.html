@@ -1,0 +1,41 @@
+{% extends 'home-templates/base.html'%} 
+
+{% block body %}
+    <div class="row container">
+        <div class="welcome-message">
+            <!-- <h1>Welcome {{ username }}!</h1> -->
+            <h1>Add a new Job Role</h1>
+        </div>
+
+
+        <div class="resume-form">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div>
+                        <label for="role_company">Select Company</label>
+                        <select name="role_company" id="role_company" required>
+                            <option disabled selected>Select Company</option>
+                            {% for company in companies_list %}
+                            <option value={{company.id}}>{{company}}</option>
+                            {% endfor %}
+                        </select><br>
+
+                        <label for="role">Role</label>
+                        <input type="text" name="role" id="role" required><br>
+
+                        <label for="package">Package</label>
+                        <input type="number" name="package" id="package" required><br>
+
+                        <label for=jd">Job Description</label>
+                        <input type="text" name="jd" id="jd" required><br>
+
+                        
+                    </div>
+                    <br>
+                </div>
+                <input type="submit" value="Add Role">
+            </form>
+        </div>
+    </div>
+{% endblock body %}

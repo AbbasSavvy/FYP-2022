@@ -1,0 +1,25 @@
+{% extends 'home-templates/base.html'%} 
+
+{% block body %}
+    <div class="row container">
+        <div class="welcome-message">
+            <!-- <h1>Welcome {{ username }}!</h1> -->
+            <h1>Add a new Company</h1>
+        </div>
+
+
+        <div class="resume-form">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div>
+                        <label for="enter_username">Company Name</label>
+                        <input type="text" name="company_name" id="company_name" required><br>
+                    </div>
+                    <br>
+                </div>
+                <input type="submit" value="Add Company" value="Post"/>
+            </form>
+        </div>
+    </div>
+{% endblock body %}

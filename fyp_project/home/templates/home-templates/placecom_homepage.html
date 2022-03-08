@@ -1,6 +1,7 @@
-{% extends 'home-templates/base.html'%} 
-
+{% extends 'home-templates/base.html'%}
 {% block body %}
+
+
 <div class="row">
     <div class="col-sm-6 align-items-center">
         <a href="#">
@@ -23,7 +24,7 @@
     </div>
     
     <div class="col-sm-6 align-items-center">
-        <a href={% url 'add_company' %}>
+        <a href="add_company/">
             <div>
                 <div class="card-body">
                 <h5 class="card-title">Add Company</h5>
@@ -33,7 +34,7 @@
     </div>
 
     <div class="col-sm-6 align-items-center">
-        <a href={% url 'view_company' %}>
+        <a href="view_company/">
             <div>
                 <div class="card-body">
                 <h5 class="card-title">View Companies</h5>
@@ -43,7 +44,7 @@
     </div>
 
     <div class="col-sm-6 align-items-center">
-        <a href={% url 'add_role' %}>
+        <a href="add_role/">
             <div>
                 <div class="card-body">
                 <h5 class="card-title">Add Role</h5>
@@ -63,7 +64,7 @@
     </div>
 
     <div class="col-sm-6 align-items-center">
-        <a href=#>
+        <a href="view_company/">
             <div>
                 <div class="card-body">
                 <h5 class="card-title">View Compatibility</h5>
@@ -73,4 +74,6 @@
     </div>
     
 </div>
+
+   
 {% endblock body %}

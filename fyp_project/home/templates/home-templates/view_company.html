@@ -1,0 +1,16 @@
+{% extends 'home-templates/base.html'%} 
+
+{% block body %}
+    <div class="row container">
+        <div class="welcome-message">
+            <!-- <h1>Welcome {{ username }}!</h1> -->
+            <h1>View Companies</h1>
+        </div>
+        <div>
+         {% for company in companies_list %}
+            {{company}}
+            <br>
+         {% endfor %}
+        </div>
+    </div>
+{% endblock body %}

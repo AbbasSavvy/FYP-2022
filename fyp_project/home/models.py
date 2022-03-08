@@ -22,6 +22,9 @@ class Company(models.Model):
     def __str__(self):
         return self.company_name
 
+    def get_company_id(self):
+        return self.id
+
 
 class Jd(models.Model):
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
@@ -31,6 +34,15 @@ class Jd(models.Model):
 
     def __str__(self):
         return self.job_role
+
+    def get_jd_company_id(self):
+        return self.company_id
+
+    def get_job_desc(self):
+        return self.job_desc
+    
+    def get_package(self):
+        return self.package
 
 
 # class Student(models.Model):
