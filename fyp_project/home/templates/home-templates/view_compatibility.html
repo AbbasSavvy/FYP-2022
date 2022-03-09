@@ -1,0 +1,32 @@
+{% extends 'home-templates/base.html'%} 
+
+{% block body %}
+    <div class="row container">
+        <div class="welcome-message">
+            <h1>View Compatibility of Student</h1>
+        </div>
+        <div>
+            <div class="resume-form">
+                <form action="" method="GET">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div>
+                            <label for="company">Select a Company</label>
+                                <select name="company" id="company" required>
+                                    <option disabled selected>Select Company</option>
+                                    {% for company in companies_list %}
+                                        <option value={{company.id}}>{{company}}</option>
+                                    {% endfor %}
+                                </select><br>
+                            <input type="submit" value="Add Company" id="check_company"/>
+                        </div>
+                        <br>
+                        
+                    </div>
+                    <!-- <input type="submit" value="Add Company" value="Post"/> -->
+                </form>
+            </div>
+         
+        </div>
+    </div>
+{% endblock body %}

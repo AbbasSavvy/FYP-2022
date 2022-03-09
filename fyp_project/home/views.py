@@ -5,8 +5,8 @@ import imp,logging
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.shortcuts import render
-from .models import Company
-from .models import Jd
+from .models import Company, Student, Jd
+
 
 
 def home(request):
@@ -25,9 +25,21 @@ def view_roles(request):
     roles_list=Jd.objects.all()
     return render(request, 'home-templates/view_roles.html',{'roles_list':roles_list})
 
-def add_company(request):
+def view_student(request):
+    student_list=Student.objects.all()
+    return render(request, 'home-templates/view_student.html',{'student_list':student_list})
+
+def view_compatibility(request):
     if request.method == 'POST':
-        if request.POST.get('company_name'):
+        if request.POST.get('check_company') == 'Add Company':
+            print('HELLOOOOOOOOOOOOO!!!!!!!!!!!!!!!!')
+            messages.success(request, f'user clicked summary')
+    companies_list=Company.objects.all()
+    return render(request, 'home-templates/view_compatibility.html',{'companies_list':companies_list})
+
+def add_company(request):
+    if request.method == 'GET':
+        if request.GET.get('company_name'):
             company=Company()
             company.company_name= request.POST.get('company_name')
             company.save()
@@ -64,6 +76,27 @@ def add_role(request):
             return render(request, 'home-templates/add_role.html',{'companies_list':companies_list})
     else:
         return render(request, 'home-templates/add_role.html',{'companies_list':companies_list})
+
+
+def add_student(request):
+    if request.method == 'POST':
+        student = Student()
+        student.student_name = request.POST.get('student_name')
+        student.sap_id = request.POST.get('sap_id')
+        student.program = request.POST.get('program')
+        student.branch = request.POST.get('branch')
+        student.year = request.POST.get('year')
+        student.division = request.POST.get('division')
+        student.phone_number = request.POST.get('phone_number')
+        student.email = request.POST.get('email')
+        student.cgpa = request.POST.get('cgpa')
+        student.placement = request.POST.get('placement')
+        student.save()
+        messages.success(request, f'Student Added - {student.student_name}!')
+        #CHANGE THE RENDER ADDRESS
+        return render(request, 'home-templates/add_student.html')
+    else:
+        return render(request, 'home-templates/add_student.html')
 
 
 @login_required

@@ -1,0 +1,43 @@
+{% extends 'home-templates/base.html'%} 
+
+{% block body %}
+    <div class="row container">
+        <div class="welcome-message">
+            <!-- <h1>Welcome {{ username }}!</h1> -->
+            <h1>View Students</h1>
+        </div>
+        <div>
+            <table style="width:100%">
+                <tr>
+                  <th>Student Name</th>
+                  <th>SAP ID</th>
+                  <th>Program</th>
+                  <th>Branch</th>
+                  <th>Year</th>
+                  <th>Division</th>
+                  <th>Phone Number</th>
+                  <th>Email</th>
+                  <th>CGPA</th>
+                  <th>Placement Status</th>
+                </tr>
+                {% for student in student_list %}
+                    <tr>
+                    <td>{{student.student_name}}</td>
+                    <td>{{student.sap_id}}</td>
+                    <td>{{student.program}}</td>
+                    <td>{{student.branch}}</td>
+                    <td>{{student.year}}</td>
+                    <td>{{student.division}}</td>
+                    <td>{{student.phone_number}}</td>
+                    <td>{{student.email}}</td>
+                    <td>{{student.cgpa}}</td>
+                    <td>{{student.placement}}</td>
+
+                    </tr>
+                {% endfor %}
+              </table>
+            <br>
+         
+        </div>
+    </div>
+{% endblock body %}

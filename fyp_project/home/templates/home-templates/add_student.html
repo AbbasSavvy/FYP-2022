@@ -1,0 +1,61 @@
+{% extends 'home-templates/base.html'%} 
+
+{% block body %}
+    <div class="row container">
+        <div class="welcome-message">
+            <!-- <h1>Welcome {{ username }}!</h1> -->
+            <h1>Add a new Student</h1>
+        </div>
+
+
+        <div class="resume-form">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div>
+                        <!-- <label for="role_company">Select Company</label>
+                        <select name="role_company" id="role_company" required>
+                            <option disabled selected>Select Company</option>
+                            {% for company in companies_list %}
+                            <option value={{company.id}}>{{company}}</option>
+                            {% endfor %}
+                        </select><br> -->
+
+                        <label for="student_name">Student Name: </label>
+                        <input type="text" name="student_name" id="student_name" required><br>
+
+                        <label for="sap_id">SAP ID: </label>
+                        <input type="number" name="sap_id" id="sap_id" required maxlength=11><br>
+
+                        <label for="program">Program: </label>
+                        <input type="text" name="program" id="program" required><br>
+                        
+                        <label for="branch">Branch: </label>
+                        <input type="text" name="branch" id="branch" required><br>
+                        
+                        <label for="year">Year: </label>
+                        <input type="number" name="year" id="year" required maxlength=1 min=1><br>
+                        
+                        <label for="division">Division: </label>
+                        <input type="text" name="division" id="division" required maxlength=1><br>
+                        
+                        <label for="phone_number">Phone Number: </label>
+                        <input type="number" name="phone_number" id="phone_number" required maxlength=10><br>
+                        
+                        <label for="email">Email: </label>
+                        <input type="email" name="email" id="email" required><br>
+
+                        <label for="cgpa">CGPA: </label>
+                        <input type="number" step="0.01" name="cgpa" id="cgpa" required maxlength=4 max=4.00><br>
+
+                        <label for="placement">Placed: </label>
+                        <input type="text" name="placement" id="placement" required><br>
+
+                    </div>
+                    <br>
+                </div>
+                <input type="submit" value="Add Student">
+            </form>
+        </div>
+    </div>
+{% endblock body %}

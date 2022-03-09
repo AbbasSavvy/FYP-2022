@@ -48,3 +48,34 @@ class Jd(models.Model):
 # class Student(models.Model):
 #     student_name = models.CharField(blank=False, max_length=50)
 #     sap_id = models.IntegerField(blank=False, unique=True)
+
+
+class Student(models.Model):
+    student_name = models.CharField(blank=False, max_length=50, null=False, default='-')
+    sap_id = models.IntegerField(blank=False, unique=True, default=00000000000)
+    program = models.CharField(blank=False, max_length=50, default='B Tech')
+    branch = models.CharField(blank=False, max_length=50, default='CS')
+    year = models.IntegerField(blank=False, default=4)
+    division = models.CharField(blank=False, max_length=1, default='E')
+    phone_number = models.IntegerField(blank=False, unique=True, null=False, default=0000000000)
+    email = models.EmailField(blank=False, default='default@email.com')
+    cgpa = models.DecimalField(blank=False, max_digits=3, decimal_places=2, default=4)
+    #  resume = models.FileField()
+    placement = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self
+    '''
+    def get_sap_id(self):
+        return self.sap_id
+    '''
+
+    # def get_sap_id(self):
+    #     return self.sap_id
+    
+    # def get_sap_id(self):
+    #     return self.sap_id
+    
+    # def get_sap_id(self):
+    #     return self.sap_id
+
