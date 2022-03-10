@@ -64,7 +64,7 @@ class Student(models.Model):
     placement = models.BooleanField(default=False)
 
     def __str__(self):
-        return self
+        return self.student_name
     '''
     def get_sap_id(self):
         return self.sap_id

@@ -1,3 +1,4 @@
+from xmlrpc.client import Boolean
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -6,8 +7,9 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.shortcuts import render
 from .models import Company, Student, Jd
-
-
+from csvs.models import Csv
+from csvs.forms import CsvModelForm
+import csv
 
 def home(request):
     return render(request, 'home-templates/home.html')
@@ -17,6 +19,38 @@ def placecom_homepage(request):
     return render(request, 'home-templates/placecom_homepage.html')
 '''
 
+def upload_file_view(request):
+    form = CsvModelForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        form = CsvModelForm()
+        obj = Csv.objects.get(activated=False)
+
+        with open(obj.file_name.path, 'r') as f:
+            reader = csv.reader(f)
+
+            for i, row in enumerate(reader):
+                if i == 0:
+                    pass
+                else:
+                    # print(row)
+                    Student.objects.create(
+                        student_name = row[0].upper(),
+                        sap_id = int(row[1]),
+                        program = row[2].upper(),
+                        branch = row[3].upper(),
+                        year = int(row[4]),
+                        division = row[5].upper(),
+                        phone_number = int(row[6]),
+                        email = row[7],
+                        cgpa = row[8],
+                        placement = row[9],
+                    )
+
+                    
+            obj.activated = True
+            obj.save()
+    return render(request, 'csvs-templates/upload_csvs.html', {'form': form})
 
 def student(request):
     return render(request, 'home-templates/student.html')
