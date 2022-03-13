@@ -13,8 +13,8 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <div>
-                        <label for="role_company">Select Event Type</label>
-                        <select name="role_company" id="role_company" required>
+                        <label for="event_type">Select Event Type</label>
+                        <select name="event_type" id="event_type" required>
                             <option disabled selected>Event type</option>
                             <option value="PPT">Pre-Placement Talk</option>
                             <option value="PPT">Exam</option>
@@ -22,13 +22,22 @@
                         </select><br>
                     </div>
                     <br>
-                    <label for="role">Title</label>
-                    <input type="text" name="role" id="role" required><br>
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title" required><br>
 
-                    <label for="role">Description</label>
-                    <input type="text" name="role" id="role" required><br>
+                    <label for="description">Description</label>
+                    <input type="text" name="description" id="description" required><br>
+
+                    <label for="start_time">Select a start time:</label>
+                    <input type="datetime-local" id="start_time" name="start_time"><br>
+
+                    <label for="end_time">Select an end time:</label>
+                    <input type="datetime-local" id="end_time" name="end_time"><br>
+
+
                 </div>
-                <input type="submit" value="Add Company" value="Post"/>
+                <input type="submit" value="Set for all students" value="Post"/><br>
+                <input type="submit" value="Select students" value="Post"/>
             </form>
         </div>
     </div>
