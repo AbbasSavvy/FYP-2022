@@ -13,6 +13,7 @@
                   <th>Job Role</th>
                   <th>Package</th>
                   <th>Description</th>
+                  <th>Schedule</th>
                 </tr>
                 {% for role in roles_list %}
                     <tr>
@@ -20,6 +21,10 @@
                     <td>{{role}}</td>
                     <td>{{role.get_package}}</td>
                     <td>{{role.get_job_desc}}</td>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <td><button>Schedule</button></td>
+                    </form>
                     </tr>
                 {% endfor %}
               </table>
