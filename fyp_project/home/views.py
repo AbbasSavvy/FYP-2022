@@ -30,16 +30,58 @@ def view_student(request):
     return render(request, 'home-templates/view_student.html',{'student_list':student_list})
 
 def view_compatibility(request):
-    if request.method == 'POST':
-        if request.POST.get('check_company') == 'Add Company':
-            print('HELLOOOOOOOOOOOOO!!!!!!!!!!!!!!!!')
-            messages.success(request, f'user clicked summary')
+    check_display_company=True
+    check_set_company=False
+    check_select_students=False
     companies_list=Company.objects.all()
-    return render(request, 'home-templates/view_compatibility.html',{'companies_list':companies_list})
+    if request.method == 'POST':
+        if request.POST.get('check_company')=="submit_company":
+            check_set_company=True
+            jd_company_id=request.POST.get('company')
+            roles=Jd.objects.filter(company_id=jd_company_id)
+            messages.success(request,f'{check_set_company}')
+            return render(request, 'home-templates/view_compatibility.html',
+                                {'companies_list':companies_list,
+                                  'roles_list':roles,
+                                  'check_set_company':check_set_company,
+                                  'check_display_company':check_display_company})
+        if request.POST.get('get_role')=="submit_role":
+            role_id=request.POST.get('selected_role')
+            selected_role=Jd.objects.filter(id=role_id).first()
+            student_list=Student.objects.all()
+            check_display_company=False
+            check_select_students=True
+            check_set_company=False
+            #Selected role is fetching correct but not readable-CHECK!
+            #messages.success(request,f'{selected_role.get_package}')
+            return render(request, 'home-templates/view_compatibility.html',
+                                {'companies_list':companies_list,
+                                'check_display_company':check_display_company,
+                                'check_select_students':check_select_students,
+                                'check_set_company':check_set_company,
+                                'student_list':student_list})
+
+        if request.POST.get('get_students')=="submit_students":
+            selected_students=request.POST.getlist('selected_students[]')
+            messages.success(request,f'{selected_students}')
+            return render(request, 'home-templates/view_compatibility.html',
+                                {
+                                'check_display_company':check_display_company,
+                                'check_select_students':check_select_students,
+                                'check_set_company':check_set_company,
+                                })
+
+        return render(request, 'home-templates/view_compatibility.html',
+                                {'companies_list':companies_list,
+                                  'check_set_company':check_set_company,
+                                  'check_display_company':check_display_company,
+                                  'check_select_students':check_select_students})
+    else:
+        return render(request, 'home-templates/view_compatibility.html',{'companies_list':companies_list,'check_display_company':check_display_company})
 
 def add_company(request):
-    if request.method == 'GET':
-        if request.GET.get('company_name'):
+    if request.method == 'POST':
+        if request.POST.get('company_name'):
             company=Company()
             company.company_name= request.POST.get('company_name')
             company.save()
@@ -97,6 +139,9 @@ def add_student(request):
         return render(request, 'home-templates/add_student.html')
     else:
         return render(request, 'home-templates/add_student.html')
+
+def schedule(request):
+    return render(request, 'home-templates/schedule.html')
 
 
 @login_required

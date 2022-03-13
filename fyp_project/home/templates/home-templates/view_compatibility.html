@@ -5,9 +5,10 @@
         <div class="welcome-message">
             <h1>View Compatibility of Student</h1>
         </div>
+        {% if check_display_company %}
         <div>
             <div class="resume-form">
-                <form action="" method="GET">
+                <form action="" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
                         <div>
@@ -18,15 +19,67 @@
                                         <option value={{company.id}}>{{company}}</option>
                                     {% endfor %}
                                 </select><br>
-                            <input type="submit" value="Add Company" id="check_company"/>
+                            <button type="submit" name="check_company" id="check_company" value="submit_company">Select Company</button>
                         </div>
                         <br>
-                        
                     </div>
-                    <!-- <input type="submit" value="Add Company" value="Post"/> -->
                 </form>
             </div>
+        </div>
+        {% endif %}
+        {% if check_set_company %}
+          <div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <p>Please select a role of the company:</p>
+                {% for role in roles_list %}
+                <input type="radio" id="{{role.get_jd_id}}" name="selected_role" value="{{role.get_jd_id}}">
+                <label for="{{role.get_jd_id}}" style="color: black;">{{role.get_jd_role}}</label><br>
+                {% endfor %}
+                <button type="submit" name="get_role" id="get_role" value="submit_role">Submit Role</button>
+              </form>
+          </div>
+        {% endif %}
+        {% if check_select_students %}
+        <div>
+            <h3>Select students for the role: </h3>
+            <form action="" method="POST">
+                {% csrf_token %}
+            <table style="width:100%">
+                <tr>
+                  <th>Select</th>
+                  <th>Student Name</th>
+                  <th>SAP ID</th>
+                  <th>Program</th>
+                  <th>Branch</th>
+                  <th>Year</th>
+                  <th>Division</th>
+                  <th>Phone Number</th>
+                  <th>Email</th>
+                  <th>CGPA</th>
+                  <th>Placement Status</th>
+                </tr>
+                {% for student in student_list %}
+                <tr>
+                    <td><input type="checkbox" id="{{student.id}}" name="selected_student" value="{{student.id}}"></td>
+                    <td>{{student.student_name}}</td>
+                    <td>{{student.sap_id}}</td>
+                    <td>{{student.program}}</td>
+                    <td>{{student.branch}}</td>
+                    <td>{{student.year}}</td>
+                    <td>{{student.division}}</td>
+                    <td>{{student.phone_number}}</td>
+                    <td>{{student.email}}</td>
+                    <td>{{student.cgpa}}</td>
+                    <td>{{student.placement}}</td>
+                </tr>
+                {% endfor %}
+              </table>
+              <button type="submit" name="get_students[]" id="get_students" value="submit_students">Submit Students</button>
+              </form>
+            <br>
          
         </div>
+       {% endif %}
     </div>
 {% endblock body %}

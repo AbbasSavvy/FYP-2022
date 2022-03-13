@@ -1,0 +1,35 @@
+{% extends 'home-templates/base.html'%} 
+
+{% block body %}
+    <div class="row container">
+        <div class="welcome-message">
+            <!-- <h1>Welcome {{ username }}!</h1> -->
+            <h1>Schedule an Event</h1>
+        </div>
+
+
+        <div class="resume-form">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div>
+                        <label for="role_company">Select Event Type</label>
+                        <select name="role_company" id="role_company" required>
+                            <option disabled selected>Event type</option>
+                            <option value="PPT">Pre-Placement Talk</option>
+                            <option value="PPT">Exam</option>
+                            <option value="PPT">Interview</option>
+                        </select><br>
+                    </div>
+                    <br>
+                    <label for="role">Title</label>
+                    <input type="text" name="role" id="role" required><br>
+
+                    <label for="role">Description</label>
+                    <input type="text" name="role" id="role" required><br>
+                </div>
+                <input type="submit" value="Add Company" value="Post"/>
+            </form>
+        </div>
+    </div>
+{% endblock body %}

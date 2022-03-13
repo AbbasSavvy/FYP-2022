@@ -34,6 +34,12 @@ class Jd(models.Model):
 
     def __str__(self):
         return self.job_role
+     
+    def get_jd_id(self):
+        return self.id
+
+    def get_jd_role(self):
+        return self.job_role
 
     def get_jd_company_id(self):
         return self.company_id
