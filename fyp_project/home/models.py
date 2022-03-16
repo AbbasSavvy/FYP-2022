@@ -79,3 +79,13 @@ class Student(models.Model):
     # def get_sap_id(self):
     #     return self.sap_id
 
+class Skills(models.Model):
+    skill_name = models.CharField(blank=False, max_length=50, unique=True)
+
+    def __str__(self):
+        return str(self.id)
+    
+    def get_skill_id(self):
+        return self.id
+
+

@@ -5,7 +5,8 @@ import imp,logging
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.shortcuts import render
-from .models import Company, Student, Jd
+from .models import Company, Student, Jd, Skills
+
 
 
 
@@ -29,17 +30,21 @@ def view_student(request):
     student_list=Student.objects.all()
     return render(request, 'home-templates/view_student.html',{'student_list':student_list})
 
+'''
 def view_compatibility(request):
     if request.method == 'POST':
         if request.POST.get('check_company') == 'Add Company':
             print('HELLOOOOOOOOOOOOO!!!!!!!!!!!!!!!!')
             messages.success(request, f'user clicked summary')
+            return render(request, 'home-templates/view_compatibility.html',{'companies_list':companies_list})
     companies_list=Company.objects.all()
     return render(request, 'home-templates/view_compatibility.html',{'companies_list':companies_list})
+'''
+
 
 def add_company(request):
-    if request.method == 'GET':
-        if request.GET.get('company_name'):
+    if request.method == 'POST':
+        if request.POST.get('company_name'):
             company=Company()
             company.company_name= request.POST.get('company_name')
             company.save()

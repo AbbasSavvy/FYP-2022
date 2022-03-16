@@ -1,0 +1,226 @@
+﻿Question,Answer,Skill ID
+ Q 1 - What of the following is the default value of an instance variable? A - null B - 0 C - Depends upon the type of variable D - Not assigned ,"
+ C
+Explaination
+Instance variables are assigned default values based on their types. For example, int variable is assigned 0 and an object type variable is assigned null as default value.
+",2
+ Q 2 - What is the size of boolean variable? A - 8 bit B - 16 bit C - 32 bit D - not precisely defined ,"
+ B
+Explaination
+The boolean data type can take either true or false, but its ""size"" isn't precisely defined.
+",2
+ Q 3 - What is the default value of short variable? A - 0.0 B - 0 C - null D - not defined ,"
+ B
+Explaination
+short variable has default value of 0 if defined as an instance/static variable.
+",2
+ Q 4 - Which of the following is false about String? A - String is immutable. B - String can be created using new operator. C - String is a primary data type. D - None of the above. ,"
+ C
+Explaination
+String is a object.
+",2
+ Q 5 - What is Encapsulation? A - Encapsulation is a technique to define different methods of same type. B - Encapsulation is the ability of an object to take on many forms. C -  Encapsulation is the technique of making the fields in a class private and providing access to the fields via public methods. D - None of the above. ,"
+ C
+Explaination
+It is the technique of making the fields in a class private and providing access to the fields via public methods. If a field is declared private, it cannot be accessed by anyone outside the class, thereby hiding the fields within the class. Therefore encapsulation is also referred to as data hiding.
+",2
+ Q 6 - What is JIT compiler? A - JIT improves the runtime performance of computer programs based on bytecode. B - JIT is an application development framework. C - JIT is an implementation of the Java Virtual Machine which executes Java programs. D - None of the above. ,"
+ A
+Explaination
+JIT, Just In-Time Compiler, improves the runtime performance of computer programs based on bytecode.
+",2
+" Q 7 - What is function overriding? A - If a subclass uses a method that is already provided by its parent class, it is known as Method Overriding. B - If a subclass provides a specific implementation of a method that is already provided by its parent class, it is known as Method Overriding. C - Both of the above. D - None of the above. ","
+ B
+Explaination
+If a subclass provides a specific implementation of a method that is already provided by its parent class, it is known as Method Overriding.
+",2
+ Q 8 - What is Deserialization? A - Deserialization is the process of restoring state of an object from a byte stream. B - Serialization is the process of restoring state of an object from an object. C - Both of the above. D - None of the above. ,"
+ A
+Explaination
+Deserialization is the process of restoring state of an object from a byte stream.
+",2
+ Q 9 - Can constructor be inherited? A - True. B - False. ,"
+ B
+Explaination
+No, constructor cannot be inherited.
+",2
+" Q 10 - What is a marker interface? A - marker interface is an interface with no method. B - marker interface is an interface with single method, mark(). C - marker interface is an interface with single method, marker(). D - none of the above. ","
+ A
+Explaination
+Marker interface is an interface with no method.
+",2
+ Q 1 - What is output for − 'search'. find('S') ? A - s B - -1 C - ‘ ‘ D - None of the above ,"
+ B
+Explanation
+The method find() is case sensitive.
+",1
+ Q 2 - Name the python module which supports regular expressions. A - regex B - re C - pyre D - pyregex ,"
+ B
+Explanation
+re is the module which supports regular expressions and is part of standard library.
+We can import re module as − import re.
+",1
+" Q 3 - Name the error that doesn’t cause program to stop/end, but the output is not the desired result or is incorrect. A - Syntax error B - Runtime error C - Logical error D - All of the above ","
+ C
+Explanation
+logical error doesn’t cause the program to stop/end, but the output is not the desired result or is incorrect.
+",1
+ Q 4 - What is output of following code − _x000D_ def func(n):_x000D_    if(n==1):_x000D_       return 1;_x000D_    else:_x000D_       return(n+func(n-1))_x000D_ print(func(4))_x000D_  A - 12 B - 10 C - 9 D - 11 ,"
+ B
+",1
+" Q 5 - What is the output of the following code? _x000D_ def nprint(message, n):_x000D_ while(n > 0):_x000D_    print(message)_x000D_ n-=1_x000D_ nprint('z', 5)_x000D_  A - zzzz B - zzzzz C - Syntax Error D - Infinite Loop ","
+ D
+Explanation
+Because decrementing condition of ‘n’ is not present in the while loop.
+",1
+ Q 6 - Guess the output − _x000D_ def main(): _x000D_    try: _x000D_       func() _x000D_       print(''print this after function call'') _x000D_    except ZeroDivisionError: _x000D_       print('Divided By Zero! Not Possible! ') _x000D_    except: _x000D_       print('Its an Exception!') _x000D_ def func(): _x000D_    print(1/0) _x000D_ main()_x000D_  A - ‘Its an Exception!’ B - ‘Divided By Zero! Not possible!’ C - ‘print this after function call’ followed by ‘Divided By Zero! Not Possible!’ D - ‘print this after function call’ followed by ‘Its an Exception!’ ,"
+ B
+Explanation
+The function ‘func’ will not run because it contains an exception. So in try and expect block. The function called under try will not run and will move to except block which defines the type of exception present in the function ‘func’. Thus block of statements present in except ZeroDivisionError is printed.
+",1
+ Q 7 - Which among them is correct(s) about Recursive Function? A - They are much faster than the normal functions. B - They take more space then the non-recursive functions. C - They can always be replaced by non-recursive functions. D - Using recursive functions however also gives a natural and straight forward simple solution for the program. ,"
+  B, C, D.
+Explanation
+Recursive function is used to make the code simpler. They are better version of non-recursive functions.
+",1
+ Q 8 - Which event among them is fired when the right mouse button is released? A - <ButtonReleased> B - <ButtonPressed> C - <ButtonReleased-3> D - <ButtonPressed-3> ,"
+ C
+Explanation
+It is the default way to do this kind of work.
+",1
+" Q 9 - Select the correct option to draw a rectangle centred at 50,50 with width and height as 50, 70 respectively. A - Canvas.create_rect(50,50,50,70) B - Canvas.create_rect(50,70,50,50) C - Canvas.create_rectangle(50,50,50,70) D - Tkinter.create_rect(50,50,50,70) ","
+ C
+",1
+ Q 10 - Which is the special symbol used in python to add comments? A - $ B - // C - /*.... */ D - # ,"
+ D
+",1
+ Q 1 - Are HTML tags case sensitive? A - true B - false ,"
+ B
+Explanation
+No! HTML tags are not case sensitive.
+",3
+ Q 2 - Which of the following tag represents the header of a section in HTML5? A - section B - article C - aside D - header ,"
+ D
+Explanation
+'header' tag represents the header of a section.
+",3
+" Q 3 - Which of the following input control represents a time (hour, minute, seconds, fractional seconds) encoded according to ISO 8601 in Web Form 2.0? A - week B - time C - number D - range ","
+ B
+Explanation
+'time' input control represents a time (hour, minute, seconds, fractional seconds) encoded according to ISO 8601.
+",3
+" Q 4 - Which of the following is true about Cookies? A - Cookies are included with every HTTP request, thereby slowing down your web application by transmitting the same data. B - Cookies are included with every HTTP request, thereby sending data unencrypted over the internet. C - Cookies are limited to about 4 KB of data . Not enough to store required data. D - All of the above. ","
+ D
+Explanation
+All of the above options are correct.
+",3
+ Q 5 - Which value of Socket.readyState atribute of WebSocket indicates that the connection is going through the closing handshake? A - 0 B - 1 C - 2 D - 3 ,"
+ C
+Explanation
+A value of 2 indicates that the connection is going through the closing handshake.
+",3
+ Q 6 - Which of the following is true about 'video' tag in HTML5? A - HTML5 supports <video> tag which is used to embed a video file in an HTML or XHTML document. B - The current HTML5 draft specification does not specify which video formats browsers should support in the video tag. C - Ogg files with Thedora video codec and Vorbis audio codec are supported. D - All of the above. ,"
+ D
+Explanation
+All of the above options are correct.
+",3
+ Q 7 - Which of the following attribute is used to group elements? A - item B - itemprop C - itemcheck D - itemgroup ,"
+ A
+Explanation
+item − Used to group elements.
+",3
+ Q 8 - Which of the following attribute triggers event when an element is dragged? A - ondragleave B - ondrag C - ondragend D - ondragenter ,"
+ B
+Explanation
+ondrag − Triggers event when an element is dragged.
+",3
+ Q 9 - Which of the following attribute triggers events when a form changes? A - onchange B - onedit C - onformchange D - onforminput ,"
+ C
+Explanation
+onformchange − Triggers events when a form changes.
+",3
+ Q 10 - Which of the following attribute triggers event when the document comes online? A - onloadedmetadata B - onloadstart C - onmessage D - ononline ,"
+ D
+Explanation
+ononline − Triggers event when the document comes online.
+",3
+" Q 1 - Consider the following schema − _x000D_ STUDENTS(student_code, first_name, last_name, email, _x000D_          phone_no, date_of_birth, honours_subject, percentage_of_marks);_x000D_  Which of the following query would display all the students where the second letter in the first name is ‘i’? A - select first_name from students where first_name like ‘_i%’; B - select first_name from students where first_name like ‘%i_’; C - select first_name from students where first_name like ‘%i%’; D - select first_name from students where first_name like ‘_i_’; ","
+ A
+",4
+ Q 2 - Which of the following is not a character manipulation function? A - concat B - substr C - instr D - coalesce  ,"
+ D
+",4
+" Q 3 - Consider the following schema − _x000D_ HONOURS_SUBJECT(subject_code, subject_name, department_head);_x000D_  _x000D_ LOCATIONS(subject_code, department_name, location_id, city);_x000D_  Select the right query for retrieving records from the tables HONOURS_SUBJECT and LOCATIONS with the USING clause A - select h.subject_name, l.department_name, h.department_head, l.city from honours_subject h join location l using(subject_code); B - select h.subject_name, l.department_name, h.department_head, l.city from honours_subject h natural join location l using(subject_code); C - select h.subject_name, l.department_name, h.department_head, l.city from honours_subject h,  location l using(subject_code); D - None of the above. ","
+ A
+",4
+ Q 4 - Which of the following is true about a group function? A - Group functions operate on sets of rows to produce multiple results per group. B - DISTINCT keyword makes a group function consider duplicate values. C - Group functions ignore null values. D - None of the above. ,"
+ C
+",4
+" Q 5 - You want to calculate the minimum percentage of marks obtained under each honours group students, where the minimum marks is more than the minimum marks in economics department. Under which clause should the subquery be? A - WHERE clause B - FROM clause C - HAVING clause D - None of the above. ","
+ C
+",4
+ Q 6 - In which of the following cases a DML statement is not executed? A - When existing rows are modified B - When some rows are deleted C - When a table is deleted D - All of the above ,"
+ C
+",4
+" Q 7 - Consider the following schema − _x000D_ LOCATIONS(subject_code, department_name, location_id, city);_x000D_  Which code snippet will alter the table LOCATIONS and add a column named Address, with datatype VARCHAR2(100)? A - ALTER TABLE locations ADD (address varchar2(100)); B - ALTER TABLE locations ADD  COLUMN(address varchar2(100)); C - MODIFY TABLE locations ADD  COLUMN (address varchar2(100)); D - None of the above.  ","
+ A
+",4
+ Q 8 - Which of the following is not true about simple views? A - They derive data from one table. B - They contain no functions or grouping. C - You cannot perform DML operations through a simple view. D - All of the above are true. ,"
+ C
+",4
+ Q 9 - Which of the following code will create an index named stu_marks_ind on the columns student_code and percentage_of_marks of the STUDENTS table.  Now which will delete the index  stu_marks_ind. Which of the following code will delete an index stu_marks_ind on the columns student_code and percentage_of_marks of the STUDENTS table? A - drop index stu_marks_ind; B - delete index stu_marks_ind; C - drop stu_marks_ind; D - drop index stu_marks_ind on students; ,"
+ A
+",4
+ Q 10 - Which of the following is true about a role? A - A role is a named group of related privileges. B - It can be it can be created and assigned to a user. C - It can be revoked from a user. D - All of the above. ,"
+ D
+",4
+ Q 1 - Which of the following selector matches the name of any element type? A - The Type Selector B - The Universal Selector C - The Descendant Selector D - The Class Selector ,"
+ B
+Explanation
+The Universal Selector matches the name of any element type.
+",5
+ Q 2 - Which of the following defines a measurement in inches? A - in B - mm C - pc D - pt ,"
+ A
+Explanation
+in − Defines a measurement in inches.
+",5
+ Q 3 - Which of the following defines a measurement in millimeters? A - in B - mm C - pc D - pt ,"
+ B
+Explanation
+mm − Defines a measurement in millimeters.
+",5
+ Q 4 - Which of the following property is used to make a font italic or oblique? A - font-family B - font-style C - font-variant D - font-weight ,"
+ B
+Explanation
+The font-style property is used to make a font italic or oblique.
+",5
+ Q 5 - Which of the following property is used to increase or decrease how bold or light a font appears? A - font-family B - font-style C - font-variant D - font-weight ,"
+ D
+Explanation
+The font-weight property is used to increase or decrease how bold or light a font appears.
+",5
+ Q 6 - Which of the following property of a anchor element signifies an element that currently has the user's mouse pointer hovering over it? A - :link B - :visited C - :hover D - :active ,"
+ C
+Explanation
+The :hover signifies an element that currently has the user's mouse pointer hovering over it.
+",5
+" Q 7 - Which of the following property specifies whether a border should be solid, dashed line, double line, or one of the other possible values? A - :border-color B - :border-style C - :border-width D - :border-bottom-color ","
+ B
+Explanation
+The border-style specifies whether a border should be solid, dashed line, double line, or one of the other possible values.
+",5
+ Q 8 - Which of the following property changes the style of top border? A - :border-bottom-style B - :border-top-style C - :border-left-style D - :border-right-style ,"
+ B
+Explanation
+The border-top-style changes the style of top border.
+",5
+ Q 9 - Which of the following property specifies the top margin of an element? A - :margin B - :margin-bottom C - :margin-top D - :margin-left ,"
+ C
+Explanation
+The margin-top specifies the top margin of an element.
+",5
+ Q 10 - Which of the following value of cursor shows it as an arrow? A - crosshair B - default C - pointer D - move ,"
+ B
+Explanation
+default: An arrow
+",5
