@@ -6,10 +6,11 @@ import imp,logging
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.shortcuts import render
-from .models import Company, Student, Jd
+from .models import Company, Student, Jd, Event
 from csvs.models import Csv
 from csvs.forms import CsvModelForm
 import csv
+from datetime import datetime
 
 def home(request):
     return render(request, 'home-templates/home.html')
@@ -18,6 +19,20 @@ def home(request):
 def placecom_homepage(request):
     return render(request, 'home-templates/placecom_homepage.html')
 '''
+def schedule(request,role):
+    role=Jd.objects.filter(pk=role)[:1].get()
+    if request.method == 'POST':
+        event=Event()
+        event.event_type= request.POST.get('event_type')
+        event.title= request.POST.get('title')
+        event.description=request.POST.get('description')
+        event.start_time=request.POST.get('start_time')
+        event.end_time=request.POST.get('end_time')
+        event.role_id=role
+        event.save()
+        messages.success(request, f'New Event Scheduled!')
+        return render(request, 'home-templates/schedule.html',{'role':role})
+    return render(request, 'home-templates/schedule.html',{'role':role})
 
 def upload_file_view(request):
     form = CsvModelForm(request.POST or None, request.FILES or None)
@@ -57,6 +72,10 @@ def student(request):
 
 def view_roles(request):
     roles_list=Jd.objects.all()
+    if request.POST.get('schedule_event'):
+        role_id=request.POST.get('schedule_event')
+        #messages.success(request,f'{role_id}')
+        return redirect(schedule,role=role_id)
     return render(request, 'home-templates/view_roles.html',{'roles_list':roles_list})
 
 def view_student(request):
@@ -174,8 +193,17 @@ def add_student(request):
     else:
         return render(request, 'home-templates/add_student.html')
 
-def schedule(request):
-    return render(request, 'home-templates/schedule.html')
+def view_schedule(request):
+    day=datetime.today()
+    future_events=Event.objects.filter(start_time__gte=day)
+    messages.success(request, f'Student Added - {future_events}!')
+    return render(request, 'home-templates/view_schedule.html')
+
+
+
+
+
+
 
 
 @login_required

@@ -23,7 +23,7 @@
                     <td>{{role.get_job_desc}}</td>
                     <form action="" method="POST">
                         {% csrf_token %}
-                        <td><button>Schedule</button></td>
+                        <td><button id="schedule_event" name="schedule_event" value="{{role.get_jd_id}}">Schedule</button></td>
                     </form>
                     </tr>
                 {% endfor %}

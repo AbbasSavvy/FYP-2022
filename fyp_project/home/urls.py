@@ -14,7 +14,8 @@ urlpatterns = [
     path('view_student/', views.view_student, name='view_student'),
     path('view_compatibility/', views.view_compatibility, name='view_compatibility'),
     path('', include('csvs.urls', namespace='csvs')),
-    path('schedule/', views.schedule, name='schedule'),
+    path('<role>/schedule/', views.schedule, name='schedule'),
+    path('view_schedule/', views.view_schedule, name='view_schedule'),
 
     #path('placecom_homepage/', views.placecom_homepage, name='placecom_homepage'),
 ]
