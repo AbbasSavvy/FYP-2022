@@ -1,6 +1,10 @@
 from xml.etree.ElementInclude import include
 from django.urls import path, include
 from . import views
+from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.home, name='homepage'),
@@ -21,3 +25,10 @@ urlpatterns = [
 
     #path('placecom_homepage/', views.placecom_homepage, name='placecom_homepage'),
 ]
+    path('',include('mcqs.urls',namespace='mcqs')),
+    #path('admin/',admin.site.urls),
+    #path('view_compatibility/', views.view_compatibility, name='view_compatibility'),
+
+    #path('placecom_homepage/', views.placecom_homepage, name='placecom_homepage'),
+]
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

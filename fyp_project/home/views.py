@@ -7,7 +7,7 @@ import logging
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.shortcuts import render
-from .models import Company, Student, Jd
+from .models import Company, Student, Jd, Skills
 from csvs.models import Csv
 from csvs.forms import CsvModelForm
 import csv
@@ -161,6 +161,7 @@ def view_student(request):
     return render(request, 'home-templates/view_student.html', {'student_list': student_list})
 
 
+'''
 def view_compatibility(request):
     check_display_company = True
     check_set_company = False
@@ -210,6 +211,13 @@ def view_compatibility(request):
                        'check_select_students': check_select_students})
     else:
         return render(request, 'home-templates/view_compatibility.html', {'companies_list': companies_list, 'check_display_company': check_display_company})
+        if request.POST.get('check_company') == 'Add Company':
+            print('HELLOOOOOOOOOOOOO!!!!!!!!!!!!!!!!')
+            messages.success(request, f'user clicked summary')
+            return render(request, 'home-templates/view_compatibility.html',{'companies_list':companies_list})
+    companies_list=Company.objects.all()
+    return render(request, 'home-templates/view_compatibility.html',{'companies_list':companies_list})
+'''
 
 
 def add_company(request):
