@@ -1,5 +1,6 @@
 from xml.etree.ElementInclude import include
 from django.urls import path, include
+from django.conf.urls import url
 from . import views
 
 urlpatterns = [
@@ -16,6 +17,6 @@ urlpatterns = [
     path('', include('csvs.urls', namespace='csvs')),
     path('<role>/schedule/', views.schedule, name='schedule'),
     path('view_schedule/', views.view_schedule, name='view_schedule'),
-
+    url(r'^calendar/$', views.CalendarView.as_view(), name='calendar'),
     #path('placecom_homepage/', views.placecom_homepage, name='placecom_homepage'),
 ]
