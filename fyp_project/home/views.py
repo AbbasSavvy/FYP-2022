@@ -136,10 +136,40 @@ def student(request):
         if percentage_of_similarity > 100:
             percentage_of_similarity = 100
 
-        # print('------------------------------------------------------')
-        # print(percentage_of_similarity)
-        # print('------------------------------------------------------')
+        absent_skills = []
+        present_skills = []
+        gen_docs_list = []
+        gen_docs_list2 = []
 
+        len(gen_docs2)
+
+        for i in range(len(gen_docs)):
+            for j in gen_docs[i]:
+                gen_docs_list.append(j)
+
+        for i in range(len(gen_docs2)):
+            for j in gen_docs2[i]:
+                gen_docs_list2.append(j)
+
+        # print(gen_docs_list,gen_docs_list2)
+        for i in gen_docs_list:
+            if i not in gen_docs_list2:
+                absent_skills.append(i)
+            else:
+                present_skills.append(i)
+
+        actual_present_skills = []
+        actual_absent_skills = []
+        for i in present_skills:
+            if Skills.objects.filter(skill_name=i.lower()).exists():
+                actual_present_skills.append(i)
+        for i in absent_skills:
+            if Skills.objects.filter(skill_name=i.lower()).exists():
+                actual_absent_skills.append(i)
+
+        # print(actual_present_skills)
+        # print('------------------------')
+        # print(actual_absent_skills)
         context = percentage_of_similarity
         return redirect(check_compatibility, context=context)
 
