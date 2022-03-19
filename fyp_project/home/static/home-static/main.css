@@ -623,6 +623,53 @@ section {
 
 
 /*--------------------------------------------------------------
+# Calendar
+--------------------------------------------------------------*/
+.calendar {
+	background-color: rgba(256, 256, 256, 0.4);
+	color: black;
+	width: 50%;
+	margin: auto;
+	margin-top: 100px;
+	font-size: 13px;
+  }
+  
+  .calendar tr, .calendar td {
+	border: 1px solid black;
+  }
+  
+  .calendar th {
+	padding: 10px;
+	text-align: center;
+	font-size: 18px;
+  }
+  
+  .calendar td {
+	width: 200px;
+	height: 100px;
+	padding: 20px 0px 0px 5px;
+  }
+  
+  .month {
+	font-size: 25px;
+  }
+  
+  .date {
+	font-size: 16px;
+  }
+  
+  ul {
+	height: 100%;
+	padding: 0px 5px 0px 20px;
+  }
+  
+  a {
+	color: #17a2b8;
+  }
+
+
+
+/*--------------------------------------------------------------
 # Features
 --------------------------------------------------------------*/
 .features .nav-tabs {
@@ -1455,9 +1502,9 @@ section {
 	width: 100%;
 }
 
-.footer-svg{
+/* .footer-svg{
 	z-index: -10000000000;
-}
+} */
 
 #footer {
 	background: #fff;
@@ -1465,6 +1512,7 @@ section {
 	font-size: 14px;
 	text-align: center;
 	padding: 30px 0;
+	bottom: 0;
 	/* max-height: 50px; */
 	/* position:absolute;
    	bottom:0;

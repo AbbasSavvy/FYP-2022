@@ -61,7 +61,7 @@
                 </tr>
                 {% for student in student_list %}
                 <tr>
-                    <td><input type="checkbox" id="{{student.id}}" name="selected_student" value="{{student.id}}"></td>
+                    <td><input type="checkbox" id="{{student.id}}" name="selected_students[]" value="{{student.id}}"></td>
                     <td>{{student.student_name}}</td>
                     <td>{{student.sap_id}}</td>
                     <td>{{student.program}}</td>
@@ -75,7 +75,8 @@
                 </tr>
                 {% endfor %}
               </table>
-              <button type="submit" name="get_students[]" id="get_students" value="submit_students">Submit Students</button>
+              <input type="text" name='selected_role_id' id = 'selected_role_id' value="{{selected_role_id}}" hidden>
+              <button type="submit" name="get_students" id="get_students" value="submit_students">Submit Students</button>
               </form>
             <br>
          

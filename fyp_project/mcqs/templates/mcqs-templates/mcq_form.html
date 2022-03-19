@@ -1,0 +1,36 @@
+{% extends 'home-templates/base.html'%}
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-6 align-items-center">
+        <a href="#">
+            <div>
+                <div class="card-body">
+                <h5 class="card-title">Upload MCQ csv file</h5>
+                </div>
+            </div>
+        </a>
+    </div> 
+</div>
+<div class="row">
+    <div class="mcq-csv-form">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+            <br>
+            <button type="submit">Upload csv</button>
+            <!--
+            <div class="form-group">
+                <div>
+                    <label for="upload-csv">Upload MCQ .csv file here</label>
+                    <input type="file" name="mcq_csv" id="mcq_csv" required><br>
+                </div>
+                <br>
+                <input type="submit" value="Upload MCQ .csv" value="Post" name="mcq_csv_submit"/>
+            </div>
+        </form>
+        -->
+    </div>    
+</div>
+ 
+{% endblock body %}

@@ -27,17 +27,22 @@
     </div> -->
 
     <div class="resume-form">
-        <form>
+        <form action="" method="POST">
+            {% csrf_token %}
             <div class="form-group">
-            <label for="exampleFormControlFile1">Upload Your Resume</label><br>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1"  accept="application/pdf">
+            <label for="exampleFormControlFile1">Enter your skills</label><br>
+            <input type="text" name="skills" id="skills" size="50">
             </div>
-            <input type="submit" value="Upload"><br>
+            <br>
             <label for="jobRole">Select a Job Role</label><br>
             <select name="jobRole" id="jobRole">
-                <option>A</option>
-                <option>B</option>
+                {% for i in job_roles %}
+                <option value={{i.get_jd_id}}>{{i}}</option>
+                {% endfor %}
             </select>
+            <br>
+            <br>
+            <input type="submit" name="check_compatibility" id="check_compatibility" value="Check Compatibility"> 
         </form>
     </div>
 </div>
