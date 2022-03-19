@@ -7,7 +7,7 @@ import logging
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.shortcuts import render
-from .models import Company, Student, Jd, Skills
+from .models import Company, Student, Jd, Skills, Event
 from csvs.models import Csv
 from csvs.forms import CsvModelForm
 import csv
@@ -20,7 +20,10 @@ from nltk.tokenize import sent_tokenize
 import nltk
 import pickle
 nltk.download('punkt')
-
+from datetime import datetime
+from django.views import generic
+from django.utils.safestring import mark_safe
+from .utils import Calendar
 
 def home(request):
     return render(request, 'home-templates/home.html')
@@ -30,6 +33,20 @@ def home(request):
 def placecom_homepage(request):
     return render(request, 'home-templates/placecom_homepage.html')
 '''
+def schedule(request,role):
+    role=Jd.objects.filter(pk=role)[:1].get()
+    if request.method == 'POST':
+        event=Event()
+        event.event_type= request.POST.get('event_type')
+        event.title= request.POST.get('title')
+        event.description=request.POST.get('description')
+        event.start_time=request.POST.get('start_time')
+        event.end_time=request.POST.get('end_time')
+        event.role_id=role
+        event.save()
+        messages.success(request, f'New Event Scheduled!')
+        return render(request, 'home-templates/schedule.html',{'role':role})
+    return render(request, 'home-templates/schedule.html',{'role':role})
 
 
 def upload_file_view(request):
@@ -151,9 +168,12 @@ def check_compatibility(request, context):
 
 
 def view_roles(request):
-    roles_list = Jd.objects.all()
-    return render(request, 'home-templates/view_roles.html', {'roles_list': roles_list})
-
+    roles_list=Jd.objects.all()
+    if request.POST.get('schedule_event'):
+        role_id=request.POST.get('schedule_event')
+        #messages.success(request,f'{role_id}')
+        return redirect(schedule,role=role_id)
+    return render(request, 'home-templates/view_roles.html',{'roles_list':roles_list})
 
 def view_student(request):
     student_list = Student.objects.all()
@@ -277,6 +297,40 @@ def add_student(request):
 
 def schedule(request):
     return render(request, 'home-templates/schedule.html')
+    
+def view_schedule(request):
+    day=datetime.today()
+    future_events=Event.objects.filter(start_time__gte=day)
+    messages.success(request, f'Student Added - {future_events}!')
+    return render(request, 'home-templates/view_schedule.html')
+
+
+class CalendarView(generic.ListView):
+    model = Event
+    template_name = 'home-templates/calendar-base.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # use today's date for the calendar
+        d = get_date(self.request.GET.get('day', None))
+
+        # Instantiate our calendar class with today's year and date
+        cal = Calendar(d.year, d.month)
+
+        # Call the formatmonth method, which returns our calendar as a table
+        html_cal = cal.formatmonth(withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+        return context
+
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.today()
+
+
+
 
 
 @login_required

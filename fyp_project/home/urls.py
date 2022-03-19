@@ -1,5 +1,6 @@
 from xml.etree.ElementInclude import include
 from django.urls import path, include
+from django.conf.urls import url
 from . import views
 from django.contrib import admin
 from django.conf import settings
@@ -20,7 +21,7 @@ urlpatterns = [
          name='view_compatibility'),
     path('<selected_students>/<selected_role_id>/stfu/', views.stfu, name='stfu'),
     path('', include('csvs.urls', namespace='csvs')),
-    path('schedule/', views.schedule, name='schedule'),
+    # path('schedule/', views.schedule, name='schedule'),
     path('<context>/check_compatibility/',
          views.check_compatibility, name='check_compatibility'),
 
@@ -30,6 +31,9 @@ urlpatterns = [
     # path('admin/',admin.site.urls),
     #path('view_compatibility/', views.view_compatibility, name='view_compatibility'),
 
+    path('<role>/schedule/', views.schedule, name='schedule'),
+    path('view_schedule/', views.view_schedule, name='view_schedule'),
+    url(r'^calendar/$', views.CalendarView.as_view(), name='calendar'),
     #path('placecom_homepage/', views.placecom_homepage, name='placecom_homepage'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
