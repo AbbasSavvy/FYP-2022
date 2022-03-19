@@ -1,76 +1,89 @@
-{% extends 'home-templates/base.html'%} 
+{% extends 'home-templates/recruiter-base.html'%} 
 
 {% block body %}
-<div class="row">
-    <div class="col-sm-6 align-items-center">
-        <a href={% url 'add_student' %}>
-            <div>
-                <div class="card-body">
-                <h5 class="card-title">Add Students</h5>
+<div class="container">
+    <div class="rec row">
+        <div class="d-flex justify-content-between">
+            <a href={% url 'add_student' %}>
+                <div class="rec-card card bg-light mb-3" >
+                    <!-- <div class="card-header">I'm a Student</div> -->
+                    <div class="card-body">
+                    <h5 class="card-title">Add Student</h5>
+                    <!-- <p class="card-text"></p> -->
+                    </div>
                 </div>
-            </div>
-        </a>
-    </div>
+            </a>
 
-    <div class="col-sm-6 align-items-center">
-        <a href={% url 'view_student' %}>
-            <div>
-                <div class="card-body">
-                <h5 class="card-title">View Students</h5>
+            <a href={% url 'view_student' %}>
+                <div class="rec-card card bg-light mb-3" >
+                    <!-- <div class="card-header">I'm a Student</div> -->
+                    <div class="card-body">
+                    <h5 class="card-title">View Student</h5>
+                    <!-- <p class="card-text"></p> -->
+                    </div>
                 </div>
-            </div>
-        </a>
-    </div>
-    
-    <div class="col-sm-6 align-items-center">
-        <a href={% url 'add_company' %}>
-            <div>
-                <div class="card-body">
-                <h5 class="card-title">Add Company</h5>
-                </div>
-            </div>
-        </a>
-    </div>
+            </a>
 
-    <div class="col-sm-6 align-items-center">
-        <a href={% url 'view_company' %}>
-            <div>
-                <div class="card-body">
-                <h5 class="card-title">View Companies</h5>
-                </div>
-            </div>
-        </a>
-    </div>
+        </div>
 
-    <div class="col-sm-6 align-items-center">
-        <a href={% url 'add_role' %}>
-            <div>
-                <div class="card-body">
-                <h5 class="card-title">Add Role</h5>
+        <div class="d-flex justify-content-between">
+            <a href={% url 'add_company' %}>
+                <div class="rec-card card bg-light mb-3" >
+                    <!-- <div class="card-header">I'm a Student</div> -->
+                    <div class="card-body">
+                    <h5 class="card-title">Add Company</h5>
+                    <!-- <p class="card-text"></p> -->
+                    </div>
                 </div>
-            </div>
-        </a>
-    </div>
+            </a>
 
-    <div class="col-sm-6 align-items-center">
-        <a href={% url 'view_roles' %}>
-            <div>
-                <div class="card-body">
-                <h5 class="card-title">View Roles</h5>
+            <a href={% url 'view_company' %}>
+                <div class="rec-card card bg-light mb-3" >
+                    <!-- <div class="card-header">I'm a Student</div> -->
+                    <div class="card-body">
+                    <h5 class="card-title">View Company</h5>
+                    <!-- <p class="card-text"></p> -->
+                    </div>
                 </div>
-            </div>
-        </a>
-    </div>
+            </a>
+        </div>
 
-    <div class="col-sm-6 align-items-center">
-        <a href=#>
-            <div>
-                <div class="card-body">
-                <h5 class="card-title">View Compatibility</h5>
+        <div class="d-flex justify-content-between">
+            <a href={% url 'add_role' %}>
+                <div class="rec-card card bg-light mb-3" >
+                    <!-- <div class="card-header">I'm a Student</div> -->
+                    <div class="card-body">
+                    <h5 class="card-title">Add a Role</h5>
+                    <!-- <p class="card-text"></p> -->
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+            
+
+            <a href={% url 'view_roles' %}>
+                <div class="rec-card card bg-light mb-3" >
+                    <!-- <div class="card-header">I'm a Student</div> -->
+                    <div class="card-body">
+                    <h5 class="card-title">View Roles</h5>
+                    <!-- <p class="card-text"></p> -->
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+
+        <div class="d-flex justify-content-around">
+            <a href={% url 'view_compatibility' %}>
+                <div class="rec-card card bg-light mb-3" >
+                    <!-- <div class="card-header">I'm a Student</div> -->
+                    <div class="card-body">
+                    <h5 class="card-title">View Compatibility</h5>
+                    <!-- <p class="card-text"></p> -->
+                    </div>
+                </div>
+            </a>
+        </div>
+        
     </div>
-    
 </div>
 {% endblock body %}

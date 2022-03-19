@@ -60,7 +60,14 @@
             <nav id="navbar" class="navbar">
               <ul>
                 <li><a class="nav-link scrollto active" href="{% url 'homepage' %}">Home</a></li>
-                <li><a class="nav-link scrollto" href="#about">About</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'add_student' %}">Add Student</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'view_student' %}">View Student</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'add_company' %}">Add Company</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'view_company' %}">View Company</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'add_role' %}">Add Role</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'view_roles' %}">View Role</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'view_compatibility' %}">View Compatibility</a></li>
+                
                 <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li>
                 <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
                 <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
