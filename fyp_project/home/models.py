@@ -109,3 +109,12 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+class Placed_Students(models.Model):
+
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+    jd_id = models.ForeignKey(Jd, on_delete=models.CASCADE)
+    company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.id
