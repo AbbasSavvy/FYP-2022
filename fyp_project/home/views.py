@@ -20,6 +20,7 @@ from nltk.tokenize import sent_tokenize
 import nltk
 import pickle
 nltk.download('punkt')
+nltk.download('stopwords')
 from datetime import datetime
 from django.views import generic
 from django.utils.safestring import mark_safe
