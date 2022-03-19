@@ -89,7 +89,7 @@ def student(request):
         len_gen = len(gen_docs)
         tf_idf = gensim.models.TfidfModel(corpus)
         sims = gensim.similarities.Similarity(
-            ".\similarity_index\\similarity", tf_idf[corpus], num_features=len(dictionary))
+            ".\similarity", tf_idf[corpus], num_features=len(dictionary))
 
         filedocument2 = sentence_tokenize(skills)
 
@@ -345,7 +345,7 @@ def stfu(request, selected_students, selected_role_id):
     # print('-----------------------------------------')
 
     sims = gensim.similarities.Similarity(
-        ".\similarity_index\\similarity", tf_idf[corpus], num_features=len(dictionary))
+        ".\similarity", tf_idf[corpus], num_features=len(dictionary))
 
     # print('=========================================')
     # print(sims)
