@@ -288,9 +288,6 @@ def recruiter(request):
 def stfu(request, selected_students, selected_role_id):
     selected_role = Jd.objects.filter(id=selected_role_id).first()
     jd = selected_role.get_job_desc()
-    # print('=========================================')
-    # print(jd)
-    # print('=========================================')
 
     num_list = []
     skill_list = []
@@ -318,10 +315,11 @@ def stfu(request, selected_students, selected_role_id):
             else:
                 continue
 
+    id_skill_dict = dict()
     for i in num_list:
-
         skill = Student.objects.filter(pk=int(i)).first()
         skill_list.append(skill.skills)
+        id_skill_dict[skill.skills] = skill.id
 
     filedocument = sentence_tokenize(jd)
 
@@ -333,23 +331,16 @@ def stfu(request, selected_students, selected_role_id):
     gen_docs = alphabet_tokenize(gen_docs)
 
     dictionary = gensim.corpora.Dictionary(gen_docs)
-    # print('=========================================')
-    # print(dictionary)
-    # print('=========================================')
+
     gen_docs = single_words(gen_docs)
     corpus = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs]
     len_gen = len(gen_docs)
     tf_idf = gensim.models.TfidfModel(corpus)
-    # print('-----------------------------------------')
-    # print(tf_idf[corpus])
-    # print('-----------------------------------------')
 
     sims = gensim.similarities.Similarity(
         ".\similarity", tf_idf[corpus], num_features=len(dictionary))
 
-    # print('=========================================')
-    # print(sims)
-    # print('=========================================')
+    id_score_dict = dict()
     similarity_scores = []
     for i in skill_list:
 
@@ -373,8 +364,11 @@ def stfu(request, selected_students, selected_role_id):
             percentage_of_similarity = 100
         sims.destroy()
         similarity_scores.append(percentage_of_similarity)
+        id_score_dict[id_skill_dict[i]] = percentage_of_similarity
 
-    return render(request, 'home-templates/stfu.html', {'similarity_scores': similarity_scores})
+    ordered_id_score_dict = dict(
+        sorted(id_score_dict.items(), key=lambda x: x[1], reverse=True))
+    return render(request, 'home-templates/stfu.html', {'ordered_id_score_dict': ordered_id_score_dict})
 
 
 def tokenize(text):
