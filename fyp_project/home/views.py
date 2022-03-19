@@ -1,3 +1,4 @@
+from cmath import sin
 from xmlrpc.client import Boolean
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -100,7 +101,7 @@ def student(request):
 
         gen_docs = alphabet_tokenize(gen_docs)
         dictionary = gensim.corpora.Dictionary(gen_docs)
-
+        gen_docs = single_words(gen_docs)
         corpus = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs]
         len_gen = len(gen_docs)
         tf_idf = gensim.models.TfidfModel(corpus)
@@ -115,7 +116,7 @@ def student(request):
         gen_docs2 = [[w for w in list if w not in sw] for list in gen_docs2]
 
         gen_docs2 = alphabet_tokenize(gen_docs2)
-
+        gen_docs2 = single_words(gen_docs2)
         corpus2 = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs2]
 
         query_doc_tf_idf2 = tf_idf[corpus2]
@@ -124,7 +125,7 @@ def student(request):
             float((sum_of_sims/len_gen) * 100))
         if percentage_of_similarity > 100:
             percentage_of_similarity = 100
-
+        sims.destroy()
         absent_skills = []
         present_skills = []
         gen_docs_list = []
@@ -341,6 +342,9 @@ def recruiter(request):
 def stfu(request, selected_students, selected_role_id):
     selected_role = Jd.objects.filter(id=selected_role_id).first()
     jd = selected_role.get_job_desc()
+    # print('=========================================')
+    # print(jd)
+    # print('=========================================')
 
     num_list = []
     skill_list = []
@@ -383,13 +387,23 @@ def stfu(request, selected_students, selected_role_id):
     gen_docs = alphabet_tokenize(gen_docs)
 
     dictionary = gensim.corpora.Dictionary(gen_docs)
-
+    # print('=========================================')
+    # print(dictionary)
+    # print('=========================================')
+    gen_docs = single_words(gen_docs)
     corpus = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs]
     len_gen = len(gen_docs)
     tf_idf = gensim.models.TfidfModel(corpus)
+    # print('-----------------------------------------')
+    # print(tf_idf[corpus])
+    # print('-----------------------------------------')
+
     sims = gensim.similarities.Similarity(
         ".\similarity_index\\similarity", tf_idf[corpus], num_features=len(dictionary))
 
+    # print('=========================================')
+    # print(sims)
+    # print('=========================================')
     similarity_scores = []
     for i in skill_list:
 
@@ -401,7 +415,7 @@ def stfu(request, selected_students, selected_role_id):
         gen_docs2 = [[w for w in list if w not in sw] for list in gen_docs2]
 
         gen_docs2 = alphabet_tokenize(gen_docs2)
-
+        gen_docs2 = single_words(gen_docs2)
         # dictionary2 = gensim.corpora.Dictionary(gen_docs2)
         corpus2 = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs2]
 
@@ -411,7 +425,7 @@ def stfu(request, selected_students, selected_role_id):
             float((sum_of_sims/len_gen) * 100))
         if percentage_of_similarity > 100:
             percentage_of_similarity = 100
-
+        sims.destroy()
         similarity_scores.append(percentage_of_similarity)
 
     return render(request, 'home-templates/stfu.html', {'similarity_scores': similarity_scores})
@@ -441,3 +455,14 @@ def alphabet_tokenize(gen_docs):
         gen_doc.append(r)
         line = ''
     return gen_doc
+
+
+def single_words(list):
+    my_list = []
+    for i in list:
+        if len(i) <= 1:
+            my_list.append([i[0]])
+        else:
+            for j in i:
+                my_list.append([j])
+    return my_list
