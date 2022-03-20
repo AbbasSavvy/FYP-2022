@@ -4,11 +4,11 @@
 {% block body %}
     <div class="row container">
         <div class="welcome-message">
-            <h1>Add a new Student</h1>
+            <h1>Update existing Student</h1>
         </div>
             <div class="col-sm-6 align-items-center">
                 <div class="resume-form">
-                    <form action="" method="POST">
+                    <form action="" method="POST" id="form_id">
                         {% csrf_token %}
                         <div class="form-group">
                             <div>
@@ -28,16 +28,7 @@
                                 <input type="text" name="branch" id="branch" value="{{student.branch}}" disabled required><br>
                                 
                                 <label for="year">Year: </label>
-                                <!--<input type="number" name="year" id="year" required maxlength=1 min=1><br>-->
-                                <select name="year" id="year" required>
-                                    <option disabled selected value="{{student.year}}">{{student.year}}</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                </select><br>
+                                <input type="number" name="year" id="year" value="{{student.year}}" disabled required maxlength=1 min=1><br>
                                 
                                 <label for="division">Division: </label>
                                 <input type="text" name="division" id="division" value="{{student.division}}" disabled required maxlength=1><br>
@@ -55,31 +46,87 @@
                                 <input type="text" name="placement" id="placement" required><br> -->
 
                                 <label for="skills">Skills: </label>
-                                <textarea name="skills" id="skills" cols="50" rows ='5' value="{{student.skills}}" required></textarea><br>
+                                <textarea name="skills" id="skills" cols="50" rows ='5' value="{{student.skills}}" required>{{student.skills}}</textarea><br>
 
                             </div>
                             <br>
-                        </div>
-                        <input type="submit" value="Modify Student">
-                    </form>
+                            {% if check_student_placement_status %}
+                            <label for="placement_status">Change Placement Status: </label>
+                            <input type="radio" id="placement_status" name="placement_status" value="Unplaced">Unplaced</input>
+                            <input type="radio" id="placement_status" name="placement_status" value="Placed" onclick="myfun()">Placed</input>
+                            <input type="radio" id="placement_status" name="placement_status" value="NA">NA</input>
+
+                            {% else %}
+                            <label>Placement Status: Placed at {{placed_details.company_id}} for the role of {{placed_details.jd_id}}</label>
+                            {% endif %}
+                        </div>                 
                 </div>
             </div>
-            <div class="col-sm-6 align-items-center">
-                    <div class="recruiter-card card bg-light mb-3" style="color: black;">
-                        <!-- <div class="card-header">I'm a Recruiter</div> -->
-                        
-                        <h5 style="color: black;" class="card-title">Change Placement Status</h5>
-                        <p style="color: black;" class="card-text">Click Here</p>
-                        <input type="radio" id="change_placed" onclick="myfun()">Placed</input>
-                        
-                    </div>
-                </a>
-            </div>
+            <input type="submit" value="Modify Student">
+            </form>
             <script>
                 function myfun()
                    {
-                       
+                    
+                    //Getting data from django
+                    role_ids_str="{{role_id}}";
+                    var role_ids = role_ids_str.split(',');
+                    
+                    role_name_str="{{role_name}}";
+                    var role_name = role_name_str.split(',');
+                    
+
+                    company_name_str="{{company_name}}";
+                    var company_name = company_name_str.split(',');
+
+                    len=role_ids.length;
+
+                    //Creating the table
+                    var table = document.createElement("TABLE");
+
+                    //Creating header row
+                    var row = table.insertRow(-1);
+                    var headerCell1 = document.createElement("TH");
+                    headerCell1.innerHTML = "Select";
+
+                    var headerCell2 = document.createElement("TH");
+                    headerCell2.innerHTML = "Company Name";
+
+                    var headerCell3 = document.createElement("TH");
+                    headerCell3.innerHTML = "Role";
+
+                    //Adding header rows
+                    row.appendChild(headerCell1); 
+                    row.appendChild(headerCell2); 
+                    row.appendChild(headerCell3);
+                    
+                    for (var i = 0; i < len; i++) {
+                        row = table.insertRow(-1);
+
+                        var select_input = document.createElement("INPUT");
+                        select_input.setAttribute("type", "radio");
+                        select_input.name="selected_role_id";
+                        select_input.id=role_ids[i];
+                        select_input.value=role_ids[i];
+                        
+
+                        var cell1 = row.insertCell(-1);
+                        cell1.appendChild(select_input);
+
+                        var cell2 = row.insertCell(-1);
+                        cell2.innerHTML = company_name[i];
+
+                        var cell3 = row.insertCell(-1);
+                        cell3.innerHTML = role_name[i];
+
+                    }
+                    //select_input.onclick=alert("radio button clicked");
+                    //document.getElementById("display_roles").appendChild(table);
+                    let textNode = document.createTextNode("Please select the role for which the student has been placed: ");
+                    document.getElementById("form_id").appendChild(textNode);
+                    document.getElementById("form_id").appendChild(table);
                    }
+
             </script>
         <!-- </div> -->
     </div>
