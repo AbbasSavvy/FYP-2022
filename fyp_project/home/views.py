@@ -8,7 +8,7 @@ import logging
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.shortcuts import render
-from .models import Company, Student, Jd, Skills, Event
+from .models import Company, Student, Jd, Skills, Event, Placed_Students
 from csvs.models import Csv
 from csvs.forms import CsvModelForm
 import csv
@@ -21,6 +21,7 @@ from nltk.tokenize import sent_tokenize
 import nltk
 import pickle
 nltk.download('punkt')
+nltk.download('stopwords')
 from datetime import datetime
 from django.views import generic
 from django.utils.safestring import mark_safe
@@ -34,8 +35,8 @@ def home(request):
 def placecom_homepage(request):
     return render(request, 'home-templates/placecom_homepage.html')
 '''
-def schedule(request,role):
-    role=Jd.objects.filter(pk=role)[:1].get()
+def schedule(request,roles_id):
+    role=Jd.objects.filter(pk=roles_id)[:1].get()
     if request.method == 'POST':
         event=Event()
         event.event_type= request.POST.get('event_type')
@@ -171,13 +172,18 @@ def check_compatibility(request, context):
 def view_roles(request):
     roles_list=Jd.objects.all()
     if request.POST.get('schedule_event'):
-        role_id=request.POST.get('schedule_event')
+        roles_id=request.POST.get('schedule_event')
         #messages.success(request,f'{role_id}')
-        return redirect(schedule,role=role_id)
+        return redirect('schedule',roles_id=roles_id)
+        #return render(request, 'home-templates/view_roles.html',{'roles_list':roles_list})
     return render(request, 'home-templates/view_roles.html',{'roles_list':roles_list})
 
 def view_student(request):
     student_list = Student.objects.all()
+    if request.POST.get('get_student_id'):
+        student_id=request.POST.get('get_student_id')
+        return redirect('update_student',student_id=student_id)
+        #return render(request, 'home-templates/view_student.html', {'student_list': student_list})
     return render(request, 'home-templates/view_student.html', {'student_list': student_list})
 
 
@@ -295,9 +301,10 @@ def add_student(request):
     else:
         return render(request, 'home-templates/add_student.html')
 
-
+'''
 def schedule(request):
     return render(request, 'home-templates/schedule.html')
+'''
     
 def view_schedule(request):
     day=datetime.today()
@@ -331,7 +338,7 @@ def get_date(req_day):
     return datetime.today()
 
 
-
+#hello
 
 
 @login_required
@@ -429,6 +436,60 @@ def stfu(request, selected_students, selected_role_id):
         similarity_scores.append(percentage_of_similarity)
 
     return render(request, 'home-templates/stfu.html', {'similarity_scores': similarity_scores})
+
+def update_student(request,student_id):
+    student=Student.objects.filter(pk=student_id).first()
+    roles=Jd.objects.all()
+    placed_student=Placed_Students()
+    placement_status=student.placement
+    placed_details=""
+    placed_company=""
+    if placement_status=="Unplaced":
+        check_student_placement_status=True
+    else:
+        check_student_placement_status=False
+        placed_details=Placed_Students.objects.filter(pk=student.id).first()
+    role_id=""
+    role_name=""
+    company_name=""
+    for role in roles:
+        role_id+=str(role.id)
+        role_id+=","
+
+        role_name+=str(role)
+        role_name+=","
+
+        company_name+=str(role.company_id)
+        company_name+=","
+
+    role_id=role_id[:-1]
+    role_name=role_name[:-1]
+    company_name=company_name[:-1]
+
+    if request.method == 'POST':
+        student.student_name=request.POST.get("student_name")
+        student.email=request.POST.get("email")
+        student.cgpa=request.POST.get("cgpa")
+        student.skills=request.POST.get("skills")
+        if check_student_placement_status==True:
+            current_status=request.POST.get("placement_status")
+            student.placement=current_status
+            if current_status=="Placed":
+                get_selected_role_id=request.POST.get("selected_role_id")
+                selected_role=Jd.objects.filter(pk=get_selected_role_id).first()
+                placed_student.student_id=student
+                placed_student.jd_id=selected_role
+                placed_student.company_id=selected_role.company_id
+                placed_student.save()
+        get_role_id=request.POST.get("selected_role_id")
+        student.save()
+        messages.success(request, f'Student Updated!')
+        return render(request,'home-templates/update_student.html',{'student':student,'roles':roles})
+    
+    return render(request,'home-templates/update_student.html',{'student':student,'role_id':role_id,
+                 'role_name':role_name,'company_name':company_name,
+                 'check_student_placement_status':check_student_placement_status,
+                 'placed_details':placed_details})
 
 
 def tokenize(text):
