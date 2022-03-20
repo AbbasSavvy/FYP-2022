@@ -58,15 +58,16 @@
             </div>
     
             <nav id="navbar" class="navbar">
-              <ul>
-                <li><a class="nav-link scrollto active" href="{% url 'homepage' %}">Home</a></li>
-                <li><a class="nav-link scrollto active" href="{% url 'add_student' %}">Add Student</a></li>
+              <a class="nav-link scrollto active" href="{% url 'homepage' %}">Home</a>
+              <!-- <ul>
+                <li><a class="nav-link scrollto active" href="{% url 'homepage' %}">Home</a></li> -->
+                <!-- <li><a class="nav-link scrollto active" href="{% url 'add_student' %}">Add Student</a></li>
                 <li><a class="nav-link scrollto active" href="{% url 'view_student' %}">View Student</a></li>
                 <li><a class="nav-link scrollto active" href="{% url 'add_company' %}">Add Company</a></li>
                 <li><a class="nav-link scrollto active" href="{% url 'view_company' %}">View Company</a></li>
                 <li><a class="nav-link scrollto active" href="{% url 'add_role' %}">Add Role</a></li>
                 <li><a class="nav-link scrollto active" href="{% url 'view_roles' %}">View Role</a></li>
-                <li><a class="nav-link scrollto active" href="{% url 'view_compatibility' %}">View Compatibility</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'view_compatibility' %}">View Compatibility</a></li> -->
                 
                 <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li>
                 <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
@@ -90,7 +91,23 @@
                   </ul>
                 </li>
                 <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
-              </ul>
+              <!-- </ul> -->
+              <div class="dropdown dropdown-custom">
+                <button class="btn btn-custom dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Options
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href={% url 'recruiter' %}>Placecom Home</a>
+                  <a class="dropdown-item" href={% url 'add_student' %}>Add Student</a>
+                  <a class="dropdown-item" href={% url 'view_student' %}>View Student</a>
+                  <a class="dropdown-item" href={% url 'add_company' %}>Add a Company</a>
+                  <a class="dropdown-item" href={% url 'view_company' %}>View Companies</a>
+                  <a class="dropdown-item" href={% url 'add_role' %}>Add a Role</a>
+                  <a class="dropdown-item" href={% url 'view_roles' %}>View Roles</a>
+                  <a class="dropdown-item" href={% url 'view_compatibility' %}>View Compatibility</a>
+                  <a class="dropdown-item" href={% url 'calendar' %}>View Calendar</a>
+                </div>
+              </div>
               <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
     

@@ -1,4 +1,4 @@
-{% extends 'home-templates/recruiter-base.html'%} 
+{% extends 'home-templates/base.html'%} 
 
 {% block body %}
 <div class="container">
@@ -72,12 +72,22 @@
         </div>
         
 
-        <div class="d-flex justify-content-around">
+        <div class="d-flex justify-content-between">
             <a href={% url 'view_compatibility' %}>
                 <div class="rec-card card bg-light mb-3" >
                     <!-- <div class="card-header">I'm a Student</div> -->
                     <div class="card-body">
                     <h5 class="card-title">View Compatibility</h5>
+                    <!-- <p class="card-text"></p> -->
+                    </div>
+                </div>
+            </a>
+
+            <a href={% url 'calendar' %}>
+                <div class="rec-card card bg-light mb-3" >
+                    <!-- <div class="card-header">I'm a Student</div> -->
+                    <div class="card-body">
+                    <h5 class="card-title">View Calendar</h5>
                     <!-- <p class="card-text"></p> -->
                     </div>
                 </div>

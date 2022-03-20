@@ -1,13 +1,13 @@
-{% extends 'home-templates/base.html'%} 
+{% extends 'home-templates/recruiter-base.html'%} 
 {% load crispy_forms_tags %}
 
 {% block body %}
-    <div class="container">
+    <div class="row">
         <div class="welcome-message">
             <!-- <h1>Welcome {{ username }}!</h1> -->
             <h1>Add a new Student</h1>
         </div>
-        <div class="row">
+        <!-- <div class=""> -->
             <div class="col-sm-6 align-items-center">
                 <div class="resume-form">
                     <form action="" method="POST">
@@ -53,7 +53,7 @@
                                 <input type="text" name="placement" id="placement" required><br> -->
 
                                 <label for="skills">Skills: </label>
-                                <textarea name="skills" id="skills" cols="50" rows ='5' required></textarea><br>
+                                <textarea name="skills" id="skills" cols="50" rows ='2' required></textarea><br>
 
                             </div>
                             <br>
@@ -73,6 +73,6 @@
                     </div>
                 </a>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 {% endblock body %}

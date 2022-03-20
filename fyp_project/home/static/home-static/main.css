@@ -18,6 +18,12 @@ body {
 	height: 100%;
 }
 
+.nav-link{
+	margin-right: 5px;
+}
+
+
+
 a {
 	color: #ef6603;
 	text-decoration: none;
@@ -141,13 +147,13 @@ h6 {
 	color: #fff;
 	white-space: nowrap;
 	transition: 0.3s;
-	border-radius: 50px;
+	border-radius: 5px;
 }
 .navbar a i,
 .navbar a:focus i {
 	font-size: 12px;
 	line-height: 0;
-	margin-left: 5px;
+	margin-left: 20px;
 }
 .navbar a:hover,
 .navbar .active,
@@ -567,6 +573,67 @@ section {
 # Edited
 --------------------------------------------------------------*/
 
+label{
+	width: 150px;
+	vertical-align: text-top;
+}
+
+.job-desc{
+	width: 500px;
+}
+
+
+th, tr{
+	/* width: max-content; */
+	border: 2px solid gray	;
+	padding: 10px 10px;
+}
+
+td{
+	width: 100px;
+	border: 2px solid gray	;
+	padding: 10px 10px;
+}
+
+input, select{
+	width: 150px;
+}
+
+input[type=submit]{
+	width: fit-content;
+}
+
+
+/* .custom-textfield{
+	vertical-align: text-top;
+} */
+
+.btn-custom{
+	border-radius: 5px;
+	color: white;
+	background-color: #ef6603;
+	/* margin-left: 5px; */
+	height: 33px;
+	padding: 0 10px;
+}
+
+
+.dropdown-menu{
+	background-color: rgb(255, 255, 255);
+	width: fit-content;
+	border-radius: 5px;
+	padding-right: 5px;
+}
+
+.dropdown-item{
+	width: 155px;
+	background-color: #ef6603;
+	margin: 6px auto;
+	border-radius: 5px !important;
+	padding: auto;
+}
+
+
 .alert{
 	width: 50%;
 	margin: auto;
@@ -576,9 +643,18 @@ section {
 
 .welcome-message{
 	color: #fff;
+	width: 75%;
 	/* margin-top: em; */
-	padding-left: 10%;
-	margin-top: 100px;
+	/* padding-left: 10%; */
+	margin: 50px auto;
+}
+
+.welcome-message>h1{
+	color: #fff;
+	/* margin-top: em; */
+	/* padding-left: 10%; */
+	display: inline;
+	/* margin: 50px auto; */
 }
 
 .rec-card{
