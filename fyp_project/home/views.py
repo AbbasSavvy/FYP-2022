@@ -290,7 +290,7 @@ def stfu(request, selected_students, selected_role_id):
     jd = selected_role.get_job_desc()
 
     num_list = []
-    skill_list = []
+    # skill_list = []
     left_quote = False
     right_quote = False
     val = ''
@@ -315,11 +315,12 @@ def stfu(request, selected_students, selected_role_id):
             else:
                 continue
 
+    student_data_dict = dict()
     id_skill_dict = dict()
     for i in num_list:
-        skill = Student.objects.filter(pk=int(i)).first()
-        skill_list.append(skill.skills)
-        id_skill_dict[skill.skills] = skill.id
+        student = Student.objects.filter(pk=int(i)).first()
+        id_skill_dict[student.id] = student.skills
+        student_data_dict[student.id] = student
 
     filedocument = sentence_tokenize(jd)
 
@@ -341,10 +342,9 @@ def stfu(request, selected_students, selected_role_id):
         ".\similarity", tf_idf[corpus], num_features=len(dictionary))
 
     id_score_dict = dict()
-    similarity_scores = []
-    for i in skill_list:
+    for id, skills in id_skill_dict.items():
 
-        filedocument2 = sentence_tokenize(i)
+        filedocument2 = sentence_tokenize(skills)
 
         gen_docs2 = [[w.lower() for w in word_tokenize(text)]
                      for text in filedocument2]
@@ -353,7 +353,7 @@ def stfu(request, selected_students, selected_role_id):
 
         gen_docs2 = alphabet_tokenize(gen_docs2)
         gen_docs2 = single_words(gen_docs2)
-        # dictionary2 = gensim.corpora.Dictionary(gen_docs2)
+
         corpus2 = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs2]
 
         query_doc_tf_idf2 = tf_idf[corpus2]
@@ -363,12 +363,16 @@ def stfu(request, selected_students, selected_role_id):
         if percentage_of_similarity > 100:
             percentage_of_similarity = 100
         sims.destroy()
-        similarity_scores.append(percentage_of_similarity)
-        id_score_dict[id_skill_dict[i]] = percentage_of_similarity
+        id_score_dict[id] = percentage_of_similarity
 
     ordered_id_score_dict = dict(
         sorted(id_score_dict.items(), key=lambda x: x[1], reverse=True))
-    return render(request, 'home-templates/stfu.html', {'ordered_id_score_dict': ordered_id_score_dict})
+
+    student_data = dict()
+    for id, score in ordered_id_score_dict.items():
+        student_data[student_data_dict[id]] = score
+
+    return render(request, 'home-templates/stfu.html', {'student_data': student_data})
 
 
 def tokenize(text):
