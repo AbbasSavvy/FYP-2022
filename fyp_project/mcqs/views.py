@@ -15,7 +15,11 @@ import pandas as pd
 import xlsxwriter
 # Create your views here.
 
-id_of_skill=0
+qna_dict={}
+skill_set=[]
+ques_bank=[]
+ans_bank=[]
+qna_skill=[]
 
 def mcq_csv(request):
     form=McqModelForm(request.POST or None, request.FILES or None)
@@ -52,7 +56,78 @@ def mcq_csv(request):
 
 
 def mcq_ques(request):
-    global id_of_skill
+    global qna_dict,skill_set,ques_bank,ans_bank,qna_skill
+
+    actual_present_skills=['python','java','css']
+    actual_absent_skills=['c','sql']
+    len_present=len(actual_present_skills)
+    
+
+    if request.method=='POST':
+        if request.POST.get('skill_submit'):
+            for i in range(len_present):
+                id_skill=Skills.objects.filter(skill_name=actual_present_skills[i])
+                if id_skill.exists:
+                    for j in id_skill:
+                        get_id=str(j)
+                    skill_set.append([get_id,actual_present_skills[i]])
+
+            print(skill_set)
+            len_skill_set=len(skill_set)
+            for i in range(len_skill_set):
+                skill_ques=Ques_Ans.objects.filter(skill_id=skill_set[i][0]).values('ques')
+                skill_ans=Ques_Ans.objects.filter(skill_id=skill_set[i][0]).values('ans')
+                #print(skill_ques)
+                for k in skill_ques:
+                    for key, value in k.items():
+                        #print(value)
+                        ques_bank.append(value)
+
+                for l in skill_ans:
+                    for key, value in l.items():
+                        ans_bank.append(value)
+
+            for a in range(len_skill_set):
+                for b in range(10):
+                    qna_skill.append(skill_set[a][1])   
+        
+            print(qna_skill)
+            qna_dict = dict(zip(ques_bank, ans_bank))  
+            print(qna_dict)
+            #qna_skill_dict=dict(zip(qna_skill,qna_dict))
+            #print(qna_skill_dict)           
+
+            return render(request, 'mcqs-templates/mcq.html',{'present_skills':actual_present_skills,'absent_skills':actual_absent_skills,'qna_dict':qna_dict})
+
+        if request.POST.get('quiz_submit'):
+            #print("inside quiz submit")
+            score=0
+            count=1
+            your_ans=[]
+            len_dict=len(qna_dict)
+            for key,value in qna_dict.items():
+                j='choice'+str(count)
+                option=request.POST.get(j)
+                your_ans.append(option)
+                #print(value)
+                #print(f'Answer:{value[2]}')
+                #print('----------------------------------------')
+                if(option==value[2]):
+                    score+=1
+                count+=1
+            print(your_ans)
+            
+            #your_ans_dict = dict(zip(your_ans, qna_dict))
+            #print(your_ans_dict)
+            return render(request, 'mcqs-templates/mcq_analytics.html',{'score':score,'len_dict':len_dict,'qna_dict':qna_dict,'your_ans':your_ans})
+        
+        return render(request, 'mcqs-templates/mcq.html')
+
+
+    else:
+        return render(request, 'mcqs-templates/mcq.html')
+
+    '''
     if request.method=='POST':
         if request.POST.get('skill_submit'):
             skill_key=request.POST.get('skill_name')
@@ -61,75 +136,7 @@ def mcq_ques(request):
             for i in id_skill:
                 get_id=i
             id_of_skill=get_id
-            '''
-            q=[] #questions
-            a=[] #answer
-            q_id=[] #skill ques_id
-            r=requests.get('https://www.tutorialspoint.com/'+skill_key+'/'+skill_key+'_online_quiz.htm')
-            #parsing html
-            soup=BeautifulSoup(r.content,'html.parser')
-            #print(soup.prettify())
-            print(soup.title)
-
             
-            #finding div to extract info
-            entry_div = soup.find('div', class_='mui-col-md-6 tutorial-content')
-            entry_div_content = entry_div.findAll('div',class_='QA')
-            ques_div=entry_div.find_all('div',class_='Q')
-            ans_div=entry_div.find_all('div',class_='A')
-            print(ques_div)
-            print(ans_div)
-            
-
-            #cleaning out tags
-            lines = entry_div.findAll('p')
-
-            for line in lines:
-                print(line.text)
-
-            for line in ques_div:
-                sq=line.text.replace('\n'," ")
-                q.append(sq)
-                print(line.text)
-            for line in ans_div:
-                sa=line.text.replace('\n',"")
-                sa=line.text.replace('Answer :','')
-                a.append(sa)
-                print(line.text)    
-                q_id.append(get_id)
-
-            print(q)
-            print(a)
-            print(q_id)
-            
-            #creating a csv file to store data
-            data={
-                "Question":q,
-                "Answer":a,
-                "Skill id": q_id,
-                }
-            df=pd.DataFrame(data)
-            writer = pd.ExcelWriter("{}_mcqs.xlsx".format(skill_key), engine='xlsxwriter')
-            df.to_excel(writer, index =False)
-            writer.save()
-            print("data exported to excel file")
-            
-            #combining with previous file
-            file1=pd.read_excel("mcqs_skills.xlsx")
-            file2=pd.read_excel(skill_key+"_mcqs.xlsx")
-            list_of_files=[file1,file2]
-            new_file=pd.concat(list_of_files)
-            new_file.to_excel("mcqs_skills.xlsx",index=False)
-
-            
-
-            #converting xlsx file to csv
-            read_file=pd.read_excel("mcqs_skills.xlsx")
-            read_file.to_csv("mcqs_skills.csv",index=None,header=False,encoding='utf-8')
-            print("data exported to csv file")
-
-            #answer column isnt getting added in this
-            '''
 
             skill_ques=Ques_Ans.objects.filter(skill_id=get_id).values('ques')
             return render(request, 'mcqs-templates/mcq.html',{'skills':id_skill,'mcqs':skill_ques})
@@ -153,22 +160,10 @@ def mcq_ques(request):
                     count+=1
                     
 
-                # print(i)
-                # print(f'Answer is: {i.'ans[3]}')
-                # print('****************************')
-
-            # print(ideal_ans)
-            # for i in range(1,11):
-            #     j='choice'+str(i)
-            #     option=request.POST.get(j)
-            #     #print(option)
-            #     #print(ideal_ans[])
-            #     if(option==ideal_ans['ans'][3]):
-            #         score+=1
-                
 
             return render(request, 'mcqs-templates/mcq.html',{'score':score})
 
     else:
         return render(request, 'mcqs-templates/mcq.html')
+'''
 
