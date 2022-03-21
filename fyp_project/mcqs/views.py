@@ -58,22 +58,21 @@ def mcq_csv(request):
     return render(request, 'mcqs-templates/mcq_form.html', {'form': form})
 
 
-def mcq_ques(request):
+def mcq_ques(request,present_skills,absent_skills):
     global qna_dict,skill_set,ques_bank,ans_bank,qna_skill,ques_skill_id,score_dict
-
-    actual_present_skills = ['python', 'java', 'css']
-    actual_absent_skills = ['c', 'sql']
-    len_present = len(actual_present_skills)
+    #actual_present_skills=['python','java','css']
+    #actual_absent_skills=['c','sql']
+    print(present_skills)
+    len_present = len(present_skills)
 
     if request.method == 'POST':
         if request.POST.get('skill_submit'):
             for i in range(len_present):
-                id_skill = Skills.objects.filter(
-                    skill_name=actual_present_skills[i])
+                id_skill = Skills.objects.filter(skill_name=present_skills[i])
                 if id_skill.exists:
                     for j in id_skill:
                         get_id = str(j)
-                    skill_set.append([get_id, actual_present_skills[i]])
+                    skill_set.append([get_id,present_skills[i]])
 
             print(skill_set)
             len_skill_set = len(skill_set)
@@ -104,7 +103,7 @@ def mcq_ques(request):
             #qna_skill_dict=dict(zip(qna_skill,qna_dict))
             #print(qna_skill_dict)
 
-            return render(request, 'mcqs-templates/mcq.html', {'present_skills': actual_present_skills, 'absent_skills': actual_absent_skills, 'qna_dict': qna_dict})
+            return render(request, 'mcqs-templates/mcq.html', {'present_skills': present_skills, 'absent_skills': absent_skills, 'qna_dict': qna_dict,'p':p})
 
         if request.POST.get('quiz_submit'):
             #print("inside quiz submit")
