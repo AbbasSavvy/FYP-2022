@@ -5,6 +5,9 @@
         <h5>Your profile matches {{context}}% with the selected job role</h5>
         <progress id="precentage_similarity" value={{context}} max="100"> {{context}} </progress>
         <h5>Test your skills and get a detailed reports on your strengths and weakness!</h5>
-        <button>Take Test</button>
+        <form action="" method="POST">
+            {% csrf_token %}
+        <button id="take_test" name="take_test">Take Test</button>
+        </form>
     </div>
 {% endblock body %}

@@ -1,3 +1,7 @@
+from .utils import Calendar
+from django.utils.safestring import mark_safe
+from django.views import generic
+from datetime import datetime
 from cmath import sin
 from xmlrpc.client import Boolean
 from django.shortcuts import render
@@ -11,6 +15,7 @@ from django.shortcuts import render
 from .models import Company, Student, Jd, Skills, Event, Placed_Students
 from csvs.models import Csv
 from csvs.forms import CsvModelForm
+from mcqs.views import *
 import csv
 #import mcqs.views as mq
 from nltk.corpus import stopwords
@@ -23,10 +28,7 @@ import nltk
 import pickle
 nltk.download('punkt')
 nltk.download('stopwords')
-from datetime import datetime
-from django.views import generic
-from django.utils.safestring import mark_safe
-from .utils import Calendar
+
 
 def home(request):
     return render(request, 'home-templates/home.html')
@@ -36,20 +38,22 @@ def home(request):
 def placecom_homepage(request):
     return render(request, 'home-templates/placecom_homepage.html')
 '''
-def schedule(request,roles_id):
-    role=Jd.objects.filter(pk=roles_id)[:1].get()
+
+
+def schedule(request, roles_id):
+    role = Jd.objects.filter(pk=roles_id)[:1].get()
     if request.method == 'POST':
-        event=Event()
-        event.event_type= request.POST.get('event_type')
-        event.title= request.POST.get('title')
-        event.description=request.POST.get('description')
-        event.start_time=request.POST.get('start_time')
-        event.end_time=request.POST.get('end_time')
-        event.role_id=role
+        event = Event()
+        event.event_type = request.POST.get('event_type')
+        event.title = request.POST.get('title')
+        event.description = request.POST.get('description')
+        event.start_time = request.POST.get('start_time')
+        event.end_time = request.POST.get('end_time')
+        event.role_id = role
         event.save()
         messages.success(request, f'New Event Scheduled!')
-        return render(request, 'home-templates/schedule.html',{'role':role})
-    return render(request, 'home-templates/schedule.html',{'role':role})
+        return render(request, 'home-templates/schedule.html', {'role': role})
+    return render(request, 'home-templates/schedule.html', {'role': role})
 
 
 def upload_file_view(request):
@@ -160,32 +164,37 @@ def student(request):
                 actual_absent_skills.append(i)
 
         context = percentage_of_similarity
-        #return redirect(check_compatibility, context=context)
-        return redirect(mcqs.views/mcq_ques)
+        return redirect(check_compatibility, context=context, present_skills=actual_present_skills, absent_skills=actual_absent_skills)
+        # return redirect(mcqs.views/mcq_ques)
 
     return render(request, 'home-templates/student.html', {'job_roles': job_roles})
 
 
-def check_compatibility(request, context):
+def check_compatibility(request, context, present_skills, absent_skills):
+    if request.method == 'POST':
+        print("*************************hefhsuhf")
+        print(present_skills)
+        return redirect(mcq_ques, present_skills=present_skills, absent_skills=absent_skills)
     return render(request, 'home-templates/check_compatibility.html', {'context': context})
     # return HttpResponse('<h1> Hello </h1>')
 
 
 def view_roles(request):
-    roles_list=Jd.objects.all()
+    roles_list = Jd.objects.all()
     if request.POST.get('schedule_event'):
-        roles_id=request.POST.get('schedule_event')
-        #messages.success(request,f'{role_id}')
-        return redirect('schedule',roles_id=roles_id)
-        #return render(request, 'home-templates/view_roles.html',{'roles_list':roles_list})
-    return render(request, 'home-templates/view_roles.html',{'roles_list':roles_list})
+        roles_id = request.POST.get('schedule_event')
+        # messages.success(request,f'{role_id}')
+        return redirect('schedule', roles_id=roles_id)
+        # return render(request, 'home-templates/view_roles.html',{'roles_list':roles_list})
+    return render(request, 'home-templates/view_roles.html', {'roles_list': roles_list})
+
 
 def view_student(request):
     student_list = Student.objects.all()
     if request.POST.get('get_student_id'):
-        student_id=request.POST.get('get_student_id')
-        return redirect('update_student',student_id=student_id)
-        #return render(request, 'home-templates/view_student.html', {'student_list': student_list})
+        student_id = request.POST.get('get_student_id')
+        return redirect('update_student', student_id=student_id)
+        # return render(request, 'home-templates/view_student.html', {'student_list': student_list})
     return render(request, 'home-templates/view_student.html', {'student_list': student_list})
 
 
@@ -303,14 +312,16 @@ def add_student(request):
     else:
         return render(request, 'home-templates/add_student.html')
 
+
 '''
 def schedule(request):
     return render(request, 'home-templates/schedule.html')
 '''
-    
+
+
 def view_schedule(request):
-    day=datetime.today()
-    future_events=Event.objects.filter(start_time__gte=day)
+    day = datetime.today()
+    future_events = Event.objects.filter(start_time__gte=day)
     messages.success(request, f'Student Added - {future_events}!')
     return render(request, 'home-templates/view_schedule.html')
 
@@ -333,6 +344,7 @@ class CalendarView(generic.ListView):
         context['calendar'] = mark_safe(html_cal)
         return context
 
+
 def get_date(req_day):
     if req_day:
         year, month = (int(x) for x in req_day.split('-'))
@@ -340,7 +352,7 @@ def get_date(req_day):
     return datetime.today()
 
 
-#hello
+# hello
 
 
 @login_required
@@ -441,59 +453,61 @@ def stfu(request, selected_students, selected_role_id):
 
     return render(request, 'home-templates/stfu.html', {'student_data': student_data})
 
-def update_student(request,student_id):
-    student=Student.objects.filter(pk=student_id).first()
-    roles=Jd.objects.all()
-    placed_student=Placed_Students()
-    placement_status=student.placement
-    placed_details=""
-    placed_company=""
-    if placement_status=="Unplaced":
-        check_student_placement_status=True
+
+def update_student(request, student_id):
+    student = Student.objects.filter(pk=student_id).first()
+    roles = Jd.objects.all()
+    placed_student = Placed_Students()
+    placement_status = student.placement
+    placed_details = ""
+    placed_company = ""
+    if placement_status == "Unplaced":
+        check_student_placement_status = True
     else:
-        check_student_placement_status=False
-        placed_details=Placed_Students.objects.filter(pk=student.id).first()
-    role_id=""
-    role_name=""
-    company_name=""
+        check_student_placement_status = False
+        placed_details = Placed_Students.objects.filter(pk=student.id).first()
+    role_id = ""
+    role_name = ""
+    company_name = ""
     for role in roles:
-        role_id+=str(role.id)
-        role_id+=","
+        role_id += str(role.id)
+        role_id += ","
 
-        role_name+=str(role)
-        role_name+=","
+        role_name += str(role)
+        role_name += ","
 
-        company_name+=str(role.company_id)
-        company_name+=","
+        company_name += str(role.company_id)
+        company_name += ","
 
-    role_id=role_id[:-1]
-    role_name=role_name[:-1]
-    company_name=company_name[:-1]
+    role_id = role_id[:-1]
+    role_name = role_name[:-1]
+    company_name = company_name[:-1]
 
     if request.method == 'POST':
-        student.student_name=request.POST.get("student_name")
-        student.email=request.POST.get("email")
-        student.cgpa=request.POST.get("cgpa")
-        student.skills=request.POST.get("skills")
-        if check_student_placement_status==True:
-            current_status=request.POST.get("placement_status")
-            student.placement=current_status
-            if current_status=="Placed":
-                get_selected_role_id=request.POST.get("selected_role_id")
-                selected_role=Jd.objects.filter(pk=get_selected_role_id).first()
-                placed_student.student_id=student
-                placed_student.jd_id=selected_role
-                placed_student.company_id=selected_role.company_id
+        student.student_name = request.POST.get("student_name")
+        student.email = request.POST.get("email")
+        student.cgpa = request.POST.get("cgpa")
+        student.skills = request.POST.get("skills")
+        if check_student_placement_status == True:
+            current_status = request.POST.get("placement_status")
+            student.placement = current_status
+            if current_status == "Placed":
+                get_selected_role_id = request.POST.get("selected_role_id")
+                selected_role = Jd.objects.filter(
+                    pk=get_selected_role_id).first()
+                placed_student.student_id = student
+                placed_student.jd_id = selected_role
+                placed_student.company_id = selected_role.company_id
                 placed_student.save()
-        get_role_id=request.POST.get("selected_role_id")
+        get_role_id = request.POST.get("selected_role_id")
         student.save()
         messages.success(request, f'Student Updated!')
-        return render(request,'home-templates/update_student.html',{'student':student,'roles':roles})
-    
-    return render(request,'home-templates/update_student.html',{'student':student,'role_id':role_id,
-                 'role_name':role_name,'company_name':company_name,
-                 'check_student_placement_status':check_student_placement_status,
-                 'placed_details':placed_details})
+        return render(request, 'home-templates/update_student.html', {'student': student, 'roles': roles})
+
+    return render(request, 'home-templates/update_student.html', {'student': student, 'role_id': role_id,
+                                                                  'role_name': role_name, 'company_name': company_name,
+                                                                  'check_student_placement_status': check_student_placement_status,
+                                                                  'placed_details': placed_details})
 
 
 def tokenize(text):
