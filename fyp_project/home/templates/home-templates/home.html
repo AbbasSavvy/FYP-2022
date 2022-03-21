@@ -1,30 +1,26 @@
 {% extends 'home-templates/base.html'%}
 {% block body %}
 
+<div class="container">
+    <div class="rec row">
+        <div class="d-flex justify-content-between">
+            <a href="student/">
+                <div class="student-card card bg-light mb-3" >
+                    <div class="card-body">
+                    <h5 class="card-title">I'm a Student</h5>
+                    </div>
+                </div>
+            </a>
 
-<div class="row">
-    <div class="col-sm-6 align-items-center">
-        <a href="student/">
-            <div class="student-card card bg-light mb-3" >
-                <!-- <div class="card-header">I'm a Student</div> -->
-                <div class="card-body">
-                <h5 class="card-title">I'm a Student</h5>
-                <!-- <p class="card-text"></p> -->
+            <a href="recruiter/">
+                <div class="recruiter-card card bg-light mb-3" ">
+                    <div class="card-body">
+                    <h5 class="card-title">I'm a Placecom User</h5>
+                    </div>
                 </div>
-            </div>
-        </a>
-    </div>
-    
-    <div class="col-sm-6 align-items-center">
-        <a href="recruiter/">
-            <div class="recruiter-card card bg-light mb-3" ">
-                <!-- <div class="card-header">I'm a Recruiter</div> -->
-                <div class="card-body">
-                <h5 class="card-title">I'm a Placecom User</h5>
-                <!-- <p class="card-text"></p> -->
-                </div>
-            </div>
-        </a>
+            </a>
+        </div>
+        
     </div>
 </div>
 

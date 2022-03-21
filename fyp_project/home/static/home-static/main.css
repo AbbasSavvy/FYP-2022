@@ -8,6 +8,11 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+
+html{
+	height: 100%;
+}
+
 body {
 	font-family: "Open Sans", sans-serif;
 	color: #444444;
@@ -86,17 +91,18 @@ h6 {
 --------------------------------------------------------------*/
 #header {
 	height: 70px;
-	transition: all 0.5s;
-	z-index: 997;
-	transition: all 0.5s;
+	z-index: 0;
 	background: rgba(42, 44, 57, 0.9);
+	position: absolute;
+	top: 0;
+	margin-bottom: 5%;
 }
-#header.header-transparent {
+/* #header.header-transparent {
 	background: transparent;
 }
 #header.header-scrolled {
 	background: rgba(42, 44, 57, 0.9);
-}
+} */
 #header .logo h1 {
 	font-size: 28px;
 	margin: 0;
@@ -675,6 +681,7 @@ input[type=submit]{
 	margin: 5% 0;
 	/* margin-top: 100px; */
 	/* height: fit-content; */
+	/* margin-bottom: 5%; */
 }
 
 .col-sm-6{
@@ -1579,7 +1586,10 @@ input[type=submit]{
 	width: 101%;
 } */
 
-.footer-svg-relative{
+
+
+
+/* .footer-svg-relative{
 	position:relative;
    	bottom:0;
 	width: 100%;
@@ -1589,7 +1599,7 @@ input[type=submit]{
 	position:absolute;
    	bottom:0;
 	width: 100%;
-}
+} */
 
 /* .footer-svg{
 	z-index: -10000000000;
@@ -1598,17 +1608,22 @@ input[type=submit]{
 
 
 #footer {
-	/* background-color: #ffffff; */
+	background-color: #ffffff;
 	/* background-image: */
-    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(208,205,215,1) 22%, rgba(204,200,211,1) 24%, rgba(196,191,204,1) 28%, rgba(188,182,197,1) 32%, rgba(175,168,186,1) 38%, rgba(164,156,177,1) 43%, rgba(156,147,170,1) 47%, rgba(139,129,155,1) 55%, rgba(118,106,137,1) 65%, rgba(107,95,128,1) 70%, rgba(92,79,115,1) 77%, rgba(81,68,106,1) 82%, rgba(75,61,101,1) 85%, rgba(69,54,96,1) 88%, rgba(61,45,89,1) 92%, rgba(50,34,80,1) 97%, rgba(50,34,80,1) 100%);
+    
 	color: #14151c;
 	font-size: 14px;
 	text-align: center;
-	padding: 50px 0;
+	/* padding: 50px 0; */
+	padding: 0;
+	
+	/* height: fit-content; */
+	height: 100px;
+	position: sticky;
 	bottom: 0;
-	height: fit-content;
-	min-height: 100px;
 }
+
+
 #footer h3 {
 	font-size: 36px;
 	font-weight: 700;
