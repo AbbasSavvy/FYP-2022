@@ -12,6 +12,7 @@ from .models import Company, Student, Jd, Skills, Event
 from csvs.models import Csv
 from csvs.forms import CsvModelForm
 import csv
+#import mcqs.views as mq
 from nltk.corpus import stopwords
 import re
 import gensim
@@ -21,6 +22,7 @@ from nltk.tokenize import sent_tokenize
 import nltk
 import pickle
 nltk.download('punkt')
+nltk.download('stopwords')
 from datetime import datetime
 from django.views import generic
 from django.utils.safestring import mark_safe
@@ -158,7 +160,8 @@ def student(request):
                 actual_absent_skills.append(i)
 
         context = percentage_of_similarity
-        return redirect(check_compatibility, context=context)
+        #return redirect(check_compatibility, context=context)
+        return redirect(mcqs.views/mcq_ques)
 
     return render(request, 'home-templates/student.html', {'job_roles': job_roles})
 

@@ -1,0 +1,48 @@
+{% extends 'home-templates/base.html'%}
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-6 align-items-center">
+        {% for i in skills %}
+            <div style="margin-left: 100px;">{{i}}</div><br>
+        {% endfor %}
+            <div>
+                <div class="card-body">
+                <h5 class="card-title">Multiple Choice Questions</h5>
+                </div>
+            </div>
+    </div> 
+</div>
+<div class="row">
+    <div class="col-sm-6 align-items-center">
+            <div>
+                <div class="card-body">
+                <h5 class="card-title">Score is:{{ score }}/{{ len_dict }}</h5>
+                <table>
+                    <tr>
+                      <th>Question</th>
+                      <th>Your Answer</th>
+                      <th>Correct Answer</th>
+                    </tr>
+                    
+                    {% for key,value in qna_dict.items %}
+                   
+                    <tr>
+                      <td>{{ key }}</td>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Download Analytics" name="download"/>
+                </form>
+                </div>
+            </div>
+    </div> 
+</div>
+
+
+ 
+{% endblock body %}
