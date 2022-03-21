@@ -16,6 +16,8 @@ import xlsxwriter
 # Create your views here.
 
 qna_dict={}
+ques_skill_id={}
+score_dict={}
 skill_set=[]
 ques_bank=[]
 ans_bank=[]
@@ -43,7 +45,6 @@ def mcq_csv(request):
                     print("2:",answer)
                     print("3:",s_id)
                     print(row)
-                    #print(row[3])
                     Ques_Ans.objects.create(
                         ques=question,
                         ans=answer,
@@ -56,7 +57,7 @@ def mcq_csv(request):
 
 
 def mcq_ques(request):
-    global qna_dict,skill_set,ques_bank,ans_bank,qna_skill
+    global qna_dict,skill_set,ques_bank,ans_bank,qna_skill,ques_skill_id,score_dict
 
     actual_present_skills=['python','java','css']
     actual_absent_skills=['c','sql']
@@ -94,6 +95,8 @@ def mcq_ques(request):
             print(qna_skill)
             qna_dict = dict(zip(ques_bank, ans_bank))  
             print(qna_dict)
+            ques_skill_id=dict(zip(ques_bank,qna_skill))
+            print(ques_skill_id)
             #qna_skill_dict=dict(zip(qna_skill,qna_dict))
             #print(qna_skill_dict)           
 
@@ -105,6 +108,11 @@ def mcq_ques(request):
             count=1
             your_ans=[]
             len_dict=len(qna_dict)
+
+            for i in range(len(skill_set)):
+                var=skill_set[i][1]
+                score_dict[var]=0
+            
             for key,value in qna_dict.items():
                 j='choice'+str(count)
                 option=request.POST.get(j)
@@ -113,9 +121,13 @@ def mcq_ques(request):
                 #print(f'Answer:{value[2]}')
                 #print('----------------------------------------')
                 if(option==value[2]):
+                    #if(key==ques_skill_id[])
+                    tp=ques_skill_id[key]
+                    score_dict[tp]+=1
                     score+=1
                 count+=1
             print(your_ans)
+            print(score_dict)
             
             #your_ans_dict = dict(zip(your_ans, qna_dict))
             #print(your_ans_dict)
