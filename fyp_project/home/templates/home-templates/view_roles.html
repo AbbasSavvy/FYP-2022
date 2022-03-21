@@ -1,19 +1,22 @@
 {% extends 'home-templates/recruiter-base.html'%} 
 
 {% block body %}
-    <div class="row">
+<div class="container">
+    <div class="rec row">
         <div class="welcome-message">
             <!-- <h1>Welcome {{ username }}!</h1> -->
             <h1>View Roles</h1>
         </div>
         <div class="container">
-            <table style="width:100%">
+            <table class="table table-light table-striped" style="width:100%">
                 <tr>
-                  <th>Company</th>
-                  <th>Job Role</th>
-                  <th>Package</th>
-                  <th>Description</th>
-                  <th>Schedule</th>
+                    <thead class="thead-dark">
+                        <th>Company</th>
+                        <th>Job Role</th>
+                        <th>Package</th>
+                        <th>Description</th>
+                        <th>Schedule</th>
+                    </thead>
                 </tr>
                 {% for role in roles_list %}
                     <tr>
@@ -23,7 +26,7 @@
                     <td class="job-desc">{{role.get_job_desc}}</td>
                     <form action="" method="POST">
                         {% csrf_token %}
-                        <td><button id="schedule_event" name="schedule_event" value="{{role.get_jd_id}}">Schedule</button></td>
+                        <td><button id="schedule_event" class="btn btn-info btn-sm" name="schedule_event" value="{{role.get_jd_id}}">Schedule</button></td>
                     </form>
                     </tr>
                 {% endfor %}
@@ -32,4 +35,5 @@
          
         </div>
     </div>
+</div>
 {% endblock body %}

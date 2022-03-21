@@ -2,36 +2,18 @@
 
 {% block body %}
 
-<div class="row container">
-    <div class="welcome-message">
-        <h1>Welcome Student!</h1>
-    </div>
-    <!-- <div class="col-sm-6 align-items-center">
-        <a href="student/">
-            <div class="student-card card bg-light mb-3" >
-                <div class="card-body">
-                <h5 class="card-title">I'm a Student</h5>
-                </div>
-            </div>
-        </a>
-    </div>
-    
-    <div class="col-sm-6 align-items-center">
-        <a href="recruiter/">
-            <div class="recruiter-card card bg-light mb-3" ">
-                <div class="card-body">
-                <h5 class="card-title">I'm a Recruiter</h5>
-                </div>
-            </div>
-        </a>
-    </div> -->
+<div class="container">
+    <div class="rec row">
+        <div class="welcome-message">
+            <h1>Welcome Student!</h1>
+        </div>
 
     <div class="resume-form">
         <form action="" method="POST">
             {% csrf_token %}
             <div class="form-group">
-            <label for="exampleFormControlFile1">Enter your skills</label><br>
-            <input type="text" name="skills" id="skills" size="50">
+                <label for="exampleFormControlFile1">Enter your skills</label><br>
+                <input type="text" name="skills" id="skills" size="50">
             </div>
             <br>
             <label for="jobRole">Select a Job Role</label><br>
@@ -60,6 +42,7 @@
             <br>
             <input type="submit" name="check_compatibility" id="check_compatibility" value="Check Compatibility"> 
         </form>
+    </div>
     </div>
 </div>
 

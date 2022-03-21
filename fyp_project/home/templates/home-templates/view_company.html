@@ -1,16 +1,18 @@
 {% extends 'home-templates/recruiter-base.html'%} 
 
 {% block body %}
-    <div class="row container">
+<div class="container">
+    <div class="rec row">
         <div class="welcome-message">
             <!-- <h1>Welcome {{ username }}!</h1> -->
             <h1>View Companies</h1>
         </div>
-        <div>
-         {% for company in companies_list %}
-            {{company}}
-            <br>
-         {% endfor %}
-        </div>
+            <ul class="list-group" style="width: 50%;">
+                <li class="list-group-item list-group-item-primary">Companies Currently Hiring</li>
+                {% for company in companies_list %}
+                        <li class="list-group-item">{{ company }}</li>
+                {% endfor %}
+            </ul>
     </div>
+</div>
 {% endblock body %}

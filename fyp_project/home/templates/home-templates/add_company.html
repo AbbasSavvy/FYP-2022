@@ -1,7 +1,8 @@
 {% extends 'home-templates/recruiter-base.html'%} 
 
 {% block body %}
-    <div class="row container">
+<div class="container">
+    <div class="rec row">
         <div class="welcome-message">
             <!-- <h1>Welcome {{ username }}!</h1> -->
             <h1>Add a new Company</h1>
@@ -12,14 +13,16 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
-                    <div>
-                        <label for="enter_username">Company Name</label>
-                        <input type="text" name="company_name" id="company_name" required><br>
-                    </div>
-                    <br>
+                    <label for="enter_username">Company Name: </label>
+                    <input type="text" class="input-width form-control" name="company_name" id="company_name" placeholder="Eg: Infosys" required>
                 </div>
-                <input type="submit" value="Add Company" value="Post"/>
+                <input type="submit" class="btn btn-success" value="Add Company" value="Post"/>
             </form>
+            <br>
+            <br>
+            <br>
+            <br>
         </div>
     </div>
+</div>
 {% endblock body %}

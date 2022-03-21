@@ -90,9 +90,11 @@ h6 {
 # Header
 --------------------------------------------------------------*/
 #header {
+	/* margin-top: 5; */
 	height: 70px;
 	z-index: 0;
-	background: rgba(42, 44, 57, 0.9);
+	background: rgba(32, 0, 58, 0);
+	color: #14151c;
 	position: absolute;
 	top: 0;
 	margin-bottom: 5%;
@@ -113,7 +115,7 @@ h6 {
 }
 #header .logo h1 a,
 #header .logo h1 a:hover {
-	color: #fff;
+	color: #fdfdff;
 	text-decoration: none;
 }
 #header .logo img {
@@ -407,8 +409,8 @@ h6 {
 	display: block;
 	width: 100%;
 	height: 60px;
-	/* position: sticky;
-	bottom: 0; */
+	position: sticky;
+	bottom: 1000px;
 }
 
 .wave1 use {
@@ -579,6 +581,20 @@ section {
 # Edited
 --------------------------------------------------------------*/
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-width{
+	width: 475px;
+}
+
+.input-width-small{
+	width: fit-content;
+}
+
 label{
 	width: 150px;
 	vertical-align: text-top;
@@ -591,13 +607,13 @@ label{
 
 th, tr{
 	/* width: max-content; */
-	border: 2px solid gray	;
+	/* border: 2px solid gray	; */
 	padding: 10px 10px;
 }
 
 td{
 	width: 100px;
-	border: 2px solid gray	;
+	/* border: 2px solid gray	; */
 	padding: 10px 10px;
 }
 
@@ -650,9 +666,10 @@ input[type=submit]{
 .welcome-message{
 	color: #fff;
 	width: 75%;
-	/* margin-top: em; */
+
+	margin-bottom: 50px;
 	/* padding-left: 10%; */
-	margin: 50px auto;
+	/* margin: 25px auto; */
 }
 
 .welcome-message>h1{
@@ -713,8 +730,8 @@ input[type=submit]{
 .resume-form{
 	color: #fff;
 	/* margin-top: em; */
-	padding-left: 10%;
-	margin-top: 2%;
+	/* padding-left: 10%; */
+	/* margin-top: 2%; */
 }
 
 .border{
@@ -1605,20 +1622,19 @@ input[type=submit]{
 	z-index: -10000000000;
 } */
 
+.svg-custom{
+	position: sticky;
+	bottom: 133px;
+}
 
 
 #footer {
 	background-color: #ffffff;
-	/* background-image: */
-    
 	color: #14151c;
 	font-size: 14px;
 	text-align: center;
-	/* padding: 50px 0; */
 	padding: 0;
-	
-	/* height: fit-content; */
-	height: 100px;
+	height: 133px;
 	position: sticky;
 	bottom: 0;
 }
