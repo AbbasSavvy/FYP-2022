@@ -4,32 +4,15 @@
 
 <div class="row">
     <div class="col-sm-6 align-items-center">
-        <a href="#">
-            <div>
-                <div class="card-body">
-                <h5 class="card-title">MCQs for testing skills!</h5>
-                </div>
-            </div>
-        </a>
-    </div> 
-</div>
-<div class="row">
-    <div class="mcq-skill-form">
-        <form action="" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <div>
-                    <label for="enter-skill">Enter Skill</label>
-                    <input type="text" name="skill_name" id="skill_name" required><br>
-                </div>
-                <br>
-            </div>
-            <input type="submit" value="Submit" value="Post" name="skill_submit"/>
-        </form>
+        <div class="mcq-skill-form" >
+            <form action="" method="POST">
+                {% csrf_token %}
+                <label>Want to test your skills?</label><br>
+                <input type="submit" value="Submit" value="Post" name="skill_submit"/>
+            </form>
+        </div>
     </div>
-    {% for i in skills %}
-    <div style="margin-left: 100px;">{{i}}</div>
-    {% endfor %}
+    
 </div>
 
 
@@ -38,12 +21,24 @@
             <div>
                 <div class="card-body">
                 <h5 class="card-title">Multiple Choice Questions</h5>
-        
+
+                <p>Your skills present in  the job description: {{ present_skills }}</p> <br>
+                <p>Your skills absent from the job description: {{ absent_skills }}</p> <br>
+
                 <form action="" method="POST">
-                    {% for i in mcqs %}
+                    <!--
+                    {% for i in qna_skills %}
+                    <div>
+                        <p>Skill :{{ i }}</p>
+                    </div>
+                    {% endfor %}
+                    -->
+
+                    {% for key,value in qna_dict.items %}
 
                     <div>
-                        <p> {{ i.ques }}<br></p> <br>
+                        <p>{{ key }}</p>
+                        <!--<p> {{ i.ques }}<br></p> <br>-->
                         {% csrf_token %}
                         <div class="quiz-div">
                              <!--<input type="text" placeholder="Enter Choice" id="option" minlength="1" maxlength="1" name="option[]"> <br><br> -->
@@ -63,7 +58,4 @@
             </div>
     </div> 
 </div>
-
-    <div style="margin-left: 100px;">Score is:{{score}}/10</div>
-   
 {% endblock body %}
