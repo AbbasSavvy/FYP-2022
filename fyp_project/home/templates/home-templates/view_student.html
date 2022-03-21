@@ -1,4 +1,4 @@
-{% extends 'home-templates/base.html'%} 
+{% extends 'home-templates/recruiter-base.html'%} 
 
 {% block body %}
     <div class="row container">
@@ -19,6 +19,7 @@
                   <th>Email</th>
                   <th>CGPA</th>
                   <th>Placement Status</th>
+                  <th>Modify Student</th>
                 </tr>
                 {% for student in student_list %}
                     <tr>
@@ -32,7 +33,10 @@
                     <td>{{student.email}}</td>
                     <td>{{student.cgpa}}</td>
                     <td>{{student.placement}}</td>
-
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <td> <button value="{{student.id}}" name="get_student_id" id="get_student_id">Modify</button></td>
+                    </form>
                     </tr>
                 {% endfor %}
               </table>

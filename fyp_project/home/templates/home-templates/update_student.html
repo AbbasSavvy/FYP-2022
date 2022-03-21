@@ -1,0 +1,133 @@
+{% extends 'home-templates/recruiter-base.html'%} 
+{% load crispy_forms_tags %}
+
+{% block body %}
+    <div class="row container">
+        <div class="welcome-message">
+            <h1>Update existing Student</h1>
+        </div>
+            <div class="col-sm-6 align-items-center">
+                <div class="resume-form">
+                    <form action="" method="POST" id="form_id">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div>
+
+                                <label for="student_name">Student Name: </label>
+                                <input type="text" name="student_name" id="student_name" value="{{student.student_name}}" required><br>
+
+                                <label for="sap_id">SAP ID: </label>
+                                <input type="number" name="sap_id" id="sap_id" value="{{student.sap_id}}" disabled required maxlength=11><br>
+
+                                <label for="program">Program: </label>
+                                <!--<input type="text" name="program" id="program" required><br>-->
+                                <input type="text" name="program" id="program" value="{{student.program}}" disabled required><br><br>
+
+                                
+                                <label for="branch">Branch: </label>
+                                <input type="text" name="branch" id="branch" value="{{student.branch}}" disabled required><br>
+                                
+                                <label for="year">Year: </label>
+                                <input type="number" name="year" id="year" value="{{student.year}}" disabled required maxlength=1 min=1><br>
+                                
+                                <label for="division">Division: </label>
+                                <input type="text" name="division" id="division" value="{{student.division}}" disabled required maxlength=1><br>
+                                
+                                <label for="phone_number">Phone Number: </label>
+                                <input type="number" name="phone_number" id="phone_number" value="{{student.number}}" disabled required maxlength=10><br>
+                                
+                                <label for="email">Email: </label>
+                                <input type="email" name="email" id="email" value="{{student.email}}" required><br>
+
+                                <label for="cgpa">CGPA: </label>
+                                <input type="number" step="0.01" name="cgpa" id="cgpa" value="{{student.cgpa}}" required maxlength=4 max=4.00><br>
+
+                                <!-- <label for="placement">Placed: </label>
+                                <input type="text" name="placement" id="placement" required><br> -->
+
+                                <label for="skills">Skills: </label>
+                                <textarea name="skills" id="skills" cols="50" rows ='5' value="{{student.skills}}" required>{{student.skills}}</textarea><br>
+
+                            </div>
+                            <br>
+                            {% if check_student_placement_status %}
+                            <label for="placement_status">Change Placement Status: </label>
+                            <input type="radio" id="placement_status" name="placement_status" value="Unplaced">Unplaced</input>
+                            <input type="radio" id="placement_status" name="placement_status" value="Placed" onclick="myfun()">Placed</input>
+                            <input type="radio" id="placement_status" name="placement_status" value="NA">NA</input>
+
+                            {% else %}
+                            <label>Placement Status: Placed at {{placed_details.company_id}} for the role of {{placed_details.jd_id}}</label>
+                            {% endif %}
+                        </div>                 
+                </div>
+            </div>
+            <input type="submit" value="Modify Student">
+            </form>
+            <script>
+                function myfun()
+                   {
+                    
+                    //Getting data from django
+                    role_ids_str="{{role_id}}";
+                    var role_ids = role_ids_str.split(',');
+                    
+                    role_name_str="{{role_name}}";
+                    var role_name = role_name_str.split(',');
+                    
+
+                    company_name_str="{{company_name}}";
+                    var company_name = company_name_str.split(',');
+
+                    len=role_ids.length;
+
+                    //Creating the table
+                    var table = document.createElement("TABLE");
+
+                    //Creating header row
+                    var row = table.insertRow(-1);
+                    var headerCell1 = document.createElement("TH");
+                    headerCell1.innerHTML = "Select";
+
+                    var headerCell2 = document.createElement("TH");
+                    headerCell2.innerHTML = "Company Name";
+
+                    var headerCell3 = document.createElement("TH");
+                    headerCell3.innerHTML = "Role";
+
+                    //Adding header rows
+                    row.appendChild(headerCell1); 
+                    row.appendChild(headerCell2); 
+                    row.appendChild(headerCell3);
+                    
+                    for (var i = 0; i < len; i++) {
+                        row = table.insertRow(-1);
+
+                        var select_input = document.createElement("INPUT");
+                        select_input.setAttribute("type", "radio");
+                        select_input.name="selected_role_id";
+                        select_input.id=role_ids[i];
+                        select_input.value=role_ids[i];
+                        
+
+                        var cell1 = row.insertCell(-1);
+                        cell1.appendChild(select_input);
+
+                        var cell2 = row.insertCell(-1);
+                        cell2.innerHTML = company_name[i];
+
+                        var cell3 = row.insertCell(-1);
+                        cell3.innerHTML = role_name[i];
+
+                    }
+                    //select_input.onclick=alert("radio button clicked");
+                    //document.getElementById("display_roles").appendChild(table);
+                    let textNode = document.createTextNode("Please select the role for which the student has been placed: ");
+                    document.getElementById("form_id").appendChild(textNode);
+                    document.getElementById("form_id").appendChild(table);
+                   }
+
+            </script>
+        <!-- </div> -->
+    </div>
+{% endblock body %}

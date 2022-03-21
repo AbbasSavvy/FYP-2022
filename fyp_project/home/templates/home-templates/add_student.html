@@ -1,13 +1,13 @@
-{% extends 'home-templates/base.html'%} 
+{% extends 'home-templates/recruiter-base.html'%} 
 {% load crispy_forms_tags %}
 
 {% block body %}
-    <div class="row container">
+    <div class="row">
         <div class="welcome-message">
             <!-- <h1>Welcome {{ username }}!</h1> -->
             <h1>Add a new Student</h1>
         </div>
-        <!-- <div> -->
+        <!-- <div class=""> -->
             <div class="col-sm-6 align-items-center">
                 <div class="resume-form">
                     <form action="" method="POST">
@@ -29,13 +29,39 @@
                                 <input type="number" name="sap_id" id="sap_id" required maxlength=11><br>
 
                                 <label for="program">Program: </label>
-                                <input type="text" name="program" id="program" required><br>
+                                <!--<input type="text" name="program" id="program" required><br>-->
+                                <select name="program" id="program" required>
+                                    <option disabled selected>Select Program</option>
+                                    <option value="B.Tech">B.Tech</option>
+                                    <option value="MBA.Tech">MBA.Tech</option>
+                                    <option value="MCA">MCA</option>
+                                    <option value="BTI">BTI</option>
+                                </select><br>
                                 
                                 <label for="branch">Branch: </label>
-                                <input type="text" name="branch" id="branch" required><br>
+                                <!--<input type="text" name="branch" id="branch" required><br>-->
+                                <select name="branch" id="branch" required>
+                                    <option disabled selected>Select Branch</option>
+                                    <option value="CS">CS</option>
+                                    <option value="IT">IT</option>
+                                    <option value="Mechanical">Mechanical</option>
+                                    <option value="EXTC">EXTC</option>
+                                    <option value="Civil">Civil</option>
+                                    <option value="Mechantronics">Mechantronics</option>
+                                    <option value="Data Science">Data Science</option>
+                                </select><br>
                                 
                                 <label for="year">Year: </label>
-                                <input type="number" name="year" id="year" required maxlength=1 min=1><br>
+                                <!--<input type="number" name="year" id="year" required maxlength=1 min=1><br>-->
+                                <select name="year" id="year" required>
+                                    <option disabled selected>Select Year</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select><br>
                                 
                                 <label for="division">Division: </label>
                                 <input type="text" name="division" id="division" required maxlength=1><br>
@@ -53,7 +79,7 @@
                                 <input type="text" name="placement" id="placement" required><br> -->
 
                                 <label for="skills">Skills: </label>
-                                <textarea name="skills" id="skills" cols="50" rows ='5' required></textarea><br>
+                                <textarea name="skills" id="skills" cols="50" rows ='2' required></textarea><br>
 
                             </div>
                             <br>

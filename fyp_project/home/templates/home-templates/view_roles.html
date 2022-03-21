@@ -1,12 +1,12 @@
-{% extends 'home-templates/base.html'%} 
+{% extends 'home-templates/recruiter-base.html'%} 
 
 {% block body %}
-    <div class="row container">
+    <div class="row">
         <div class="welcome-message">
             <!-- <h1>Welcome {{ username }}!</h1> -->
             <h1>View Roles</h1>
         </div>
-        <div>
+        <div class="container">
             <table style="width:100%">
                 <tr>
                   <th>Company</th>
@@ -20,7 +20,7 @@
                     <td>{{role.get_jd_company_id}}</td>
                     <td>{{role}}</td>
                     <td>{{role.get_package}}</td>
-                    <td>{{role.get_job_desc}}</td>
+                    <td class="job-desc">{{role.get_job_desc}}</td>
                     <form action="" method="POST">
                         {% csrf_token %}
                         <td><button id="schedule_event" name="schedule_event" value="{{role.get_jd_id}}">Schedule</button></td>
