@@ -18,6 +18,12 @@ body {
 	height: 100%;
 }
 
+.nav-link{
+	margin-right: 5px;
+}
+
+
+
 a {
 	color: #ef6603;
 	text-decoration: none;
@@ -128,6 +134,7 @@ h6 {
 }
 .navbar li {
 	position: relative;
+	font-size: smaller;
 }
 .navbar a,
 .navbar a:focus {
@@ -140,13 +147,13 @@ h6 {
 	color: #fff;
 	white-space: nowrap;
 	transition: 0.3s;
-	border-radius: 50px;
+	border-radius: 5px;
 }
 .navbar a i,
 .navbar a:focus i {
 	font-size: 12px;
 	line-height: 0;
-	margin-left: 5px;
+	margin-left: 20px;
 }
 .navbar a:hover,
 .navbar .active,
@@ -566,6 +573,67 @@ section {
 # Edited
 --------------------------------------------------------------*/
 
+label{
+	width: 150px;
+	vertical-align: text-top;
+}
+
+.job-desc{
+	width: 500px;
+}
+
+
+th, tr{
+	/* width: max-content; */
+	border: 2px solid gray	;
+	padding: 10px 10px;
+}
+
+td{
+	width: 100px;
+	border: 2px solid gray	;
+	padding: 10px 10px;
+}
+
+input, select{
+	width: 150px;
+}
+
+input[type=submit]{
+	width: fit-content;
+}
+
+
+/* .custom-textfield{
+	vertical-align: text-top;
+} */
+
+.btn-custom{
+	border-radius: 5px;
+	color: white;
+	background-color: #ef6603;
+	/* margin-left: 5px; */
+	height: 33px;
+	padding: 0 10px;
+}
+
+
+.dropdown-menu{
+	background-color: rgb(255, 255, 255);
+	width: fit-content;
+	border-radius: 5px;
+	padding-right: 5px;
+}
+
+.dropdown-item{
+	width: 155px;
+	background-color: #ef6603;
+	margin: 6px auto;
+	border-radius: 5px !important;
+	padding: auto;
+}
+
+
 .alert{
 	width: 50%;
 	margin: auto;
@@ -575,13 +643,38 @@ section {
 
 .welcome-message{
 	color: #fff;
+	width: 75%;
 	/* margin-top: em; */
-	padding-left: 10%;
+	/* padding-left: 10%; */
+	margin: 50px auto;
+}
+
+.welcome-message>h1{
+	color: #fff;
+	/* margin-top: em; */
+	/* padding-left: 10%; */
+	display: inline;
+	/* margin: 50px auto; */
+}
+
+.rec-card{
+	max-height: fit-content !important;
+	/* width: max-content; */
+	width: 250px;
+}
+
+
+
+
+.rec{
+	margin: 10% 0 !important;
+	margin: 5px auto;
 }
 
 .row{
-	margin-top: 5%;
-	height: 100%;
+	margin: 5% 0;
+	/* margin-top: 100px; */
+	/* height: fit-content; */
 }
 
 .col-sm-6{
@@ -661,10 +754,6 @@ section {
   ul {
 	height: 100%;
 	padding: 0px 5px 0px 20px;
-  }
-  
-  a {
-	color: #17a2b8;
   }
 
 
@@ -1506,17 +1595,19 @@ section {
 	z-index: -10000000000;
 } */
 
+
+
 #footer {
-	background: #fff;
+	/* background-color: #ffffff; */
+	/* background-image: */
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(208,205,215,1) 22%, rgba(204,200,211,1) 24%, rgba(196,191,204,1) 28%, rgba(188,182,197,1) 32%, rgba(175,168,186,1) 38%, rgba(164,156,177,1) 43%, rgba(156,147,170,1) 47%, rgba(139,129,155,1) 55%, rgba(118,106,137,1) 65%, rgba(107,95,128,1) 70%, rgba(92,79,115,1) 77%, rgba(81,68,106,1) 82%, rgba(75,61,101,1) 85%, rgba(69,54,96,1) 88%, rgba(61,45,89,1) 92%, rgba(50,34,80,1) 97%, rgba(50,34,80,1) 100%);
 	color: #14151c;
 	font-size: 14px;
 	text-align: center;
-	padding: 30px 0;
+	padding: 50px 0;
 	bottom: 0;
-	/* max-height: 50px; */
-	/* position:absolute;
-   	bottom:0;
-	width: 100%; */
+	height: fit-content;
+	min-height: 100px;
 }
 #footer h3 {
 	font-size: 36px;

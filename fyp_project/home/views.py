@@ -418,7 +418,11 @@ def stfu(request, selected_students, selected_role_id):
         corpus2 = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs2]
 
         query_doc_tf_idf2 = tf_idf[corpus2]
+        print(gen_docs2)
+        print('**************************************************************')
+        print(gen_docs)
         sum_of_sims = (np.sum(sims[query_doc_tf_idf2], dtype=np.float32))
+        print(sims[query_doc_tf_idf2])
         percentage_of_similarity = round(
             float((sum_of_sims/len_gen) * 100))
         if percentage_of_similarity > 100:

@@ -58,9 +58,17 @@
             </div>
     
             <nav id="navbar" class="navbar">
-              <ul>
-                <li><a class="nav-link scrollto active" href="{% url 'homepage' %}">Home</a></li>
-                <li><a class="nav-link scrollto" href="#about">About</a></li>
+              <a class="nav-link scrollto active" href="{% url 'homepage' %}">Home</a>
+              <!-- <ul>
+                <li><a class="nav-link scrollto active" href="{% url 'homepage' %}">Home</a></li> -->
+                <!-- <li><a class="nav-link scrollto active" href="{% url 'add_student' %}">Add Student</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'view_student' %}">View Student</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'add_company' %}">Add Company</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'view_company' %}">View Company</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'add_role' %}">Add Role</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'view_roles' %}">View Role</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'view_compatibility' %}">View Compatibility</a></li> -->
+                
                 <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li>
                 <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
                 <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
@@ -83,7 +91,23 @@
                   </ul>
                 </li>
                 <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
-              </ul>
+              <!-- </ul> -->
+              <div class="dropdown dropdown-custom">
+                <button class="btn btn-custom dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Options
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href={% url 'recruiter' %}>Placecom Home</a>
+                  <a class="dropdown-item" href={% url 'add_student' %}>Add Student</a>
+                  <a class="dropdown-item" href={% url 'view_student' %}>View Student</a>
+                  <a class="dropdown-item" href={% url 'add_company' %}>Add a Company</a>
+                  <a class="dropdown-item" href={% url 'view_company' %}>View Companies</a>
+                  <a class="dropdown-item" href={% url 'add_role' %}>Add a Role</a>
+                  <a class="dropdown-item" href={% url 'view_roles' %}>View Roles</a>
+                  <a class="dropdown-item" href={% url 'view_compatibility' %}>View Compatibility</a>
+                  <a class="dropdown-item" href={% url 'calendar' %}>View Calendar</a>
+                </div>
+              </div>
               <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
     
@@ -102,21 +126,21 @@
         
         <!-- <div class="footer-svg"> -->
         <div>
-          <!-- <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none" style="z-index: 1000;">
-            <defs>
-            <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
-            </defs>
-            <g class="wave1">
-            <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,0, 0, .1)">
-            </g>
-            <g class="wave2">
-            <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,0, 0, .2)">
-            </g>
-            <g class="wave3">
-            <use xlink:href="#wave-path" x="50" y="9" fill="#ff0000">
-            </g>
-          </svg> -->
           <footer id="footer">
+            <!-- <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+              <defs>
+              <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+              </defs>
+              <g class="wave1">
+              <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,0, 0, .1)">
+              </g>
+              <g class="wave2">
+              <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,0, 0, .2)">
+              </g>
+              <g class="wave3">
+              <use xlink:href="#wave-path" x="50" y="9" fill="#ff0000">
+              </g>
+            </svg> -->
             <!-- <div class="container"> -->
               <h4 style="color: white;">Resume Screener</h4>
               <!-- <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p> -->
