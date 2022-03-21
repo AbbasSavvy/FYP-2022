@@ -1,44 +1,45 @@
 {% extends 'home-templates/recruiter-base.html'%} 
 
 {% block body %}
-    <div class="row container">
+<div class="container">
+    <div class="rec row">
         <div class="welcome-message">
             <h1>View Compatibility of Student</h1>
         </div>
+
         {% if check_display_company %}
-        <div>
-            <div class="resume-form">
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <div>
-                            <label for="company">Select a Company</label>
-                                <select name="company" id="company" required>
-                                    <option disabled selected>Select Company</option>
-                                    {% for company in companies_list %}
-                                        <option value={{company.id}}>{{company}}</option>
-                                    {% endfor %}
-                                </select><br>
-                            <button type="submit" name="check_company" id="check_company" value="submit_company">Select Company</button>
-                        </div>
-                        <br>
-                    </div>
-                </form>
-            </div>
-        </div>
-        {% endif %}
-        {% if check_set_company %}
-          <div>
             <form action="" method="POST">
                 {% csrf_token %}
-                <p>Please select a role of the company:</p>
-                {% for role in roles_list %}
-                <input type="radio" id="{{role.get_jd_id}}" name="selected_role" value="{{role.get_jd_id}}">
-                <label for="{{role.get_jd_id}}" style="color: black;">{{role.get_jd_role}}</label><br>
-                {% endfor %}
-                <button type="submit" name="get_role" id="get_role" value="submit_role">Submit Role</button>
-              </form>
-          </div>
+                <div class="form-group">
+                    <label for="company">Select a Company</label>
+                    <select class="form-select form-control input-width" name="company" id="company" required>
+                        <option disabled selected>Select Company</option>
+                        {% for company in companies_list %}
+                            <option value={{company.id}}>{{company}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success" name="check_company" id="check_company" value="submit_company">Select Company</button>
+            </form>
+        {% endif %}
+
+        {% if check_set_company %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <br>
+                    <h6>Select a Role of the Company</h6>
+                    <div class="form-control input-width-small">
+                        {% for role in roles_list %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="{{role.get_jd_id}}" name="selected_role" value="{{role.get_jd_id}}">
+                            <label class="form-check-label" for="{{role.get_jd_id}}">{{role.get_jd_role}}</label><br>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button class="btn btn-success" type="submit" name="get_role" id="get_role" value="submit_role">Submit Role</button>
+            </form>
         {% endif %}
         {% if check_select_students %}
         <div>
@@ -79,8 +80,8 @@
               <button type="submit" name="get_students" id="get_students" value="submit_students">Submit Students</button>
               </form>
             <br>
-         
         </div>
        {% endif %}
     </div>
+</div>
 {% endblock body %}
