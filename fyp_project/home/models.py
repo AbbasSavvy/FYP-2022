@@ -98,3 +98,23 @@ class Skills(models.Model):
 
     def get_skill_id(self):
         return self.id
+class Event(models.Model):
+    event_type=models.CharField(max_length=50)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    role_id = models.ForeignKey(Jd, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return self.title
+
+class Placed_Students(models.Model):
+
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+    jd_id = models.ForeignKey(Jd, on_delete=models.CASCADE)
+    company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.id
