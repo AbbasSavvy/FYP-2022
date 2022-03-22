@@ -1,43 +1,45 @@
-{% extends 'home-templates/base.html'%} 
+{% extends 'home-templates/recruiter-base.html'%} 
 
 {% block body %}
 
-<div class="row container">
-    <div class="welcome-message"> 
-        <h1>Compatibility of Students</h1>
-    </div>
-    <div>
-        <table style="width:100%">
-            <tr>
-              <th>Student Name</th>
-              <th>SAP ID</th>
-              <th>Program</th>
-              <th>Branch</th>
-              <th>Year</th>
-              <th>Division</th>
-              <th>Phone Number</th>
-              <th>Email</th>
-              <th>CGPA</th>
-              <th>Compatibility Percent</th>
-            </tr>
-            {% for student,score in student_data.items %}
-                <tr>
-                    <td>{{student.student_name}}</td>
-                    <td>{{student.sap_id}}</td>
-                    <td>{{student.program}}</td>
-                    <td>{{student.branch}}</td>
-                    <td>{{student.year}}</td>
-                    <td>{{student.division}}</td>
-                    <td>{{student.phone_number}}</td>
-                    <td>{{student.email}}</td>
-                    <td>{{student.cgpa}}</td>
-                    <td>{{score}} %</td>
-
-                </tr>
-            {% endfor %}
-          </table>
-        <br>
-     
+<div class="container">
+    <div class="rec row">
+        <div class="welcome-message"> 
+            <h1>Compatibility of Students</h1>
+        </div>
+        <div>
+            <table class="table table-light table-striped" style="width:100%">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Student Name</th>
+                        <th>SAP ID</th>
+                        <th>Program</th>
+                        <th>Branch</th>
+                        <th>Year</th>
+                        <th>Division</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>CGPA</th>
+                        <th>Compatibility Percent</th>
+                    </tr>
+                </thead>
+                {% for student,score in student_data.items %}
+                    <tr>
+                        <td>{{student.student_name}}</td>
+                        <td>{{student.sap_id}}</td>
+                        <td>{{student.program}}</td>
+                        <td>{{student.branch}}</td>
+                        <td>{{student.year}}</td>
+                        <td>{{student.division}}</td>
+                        <td>{{student.phone_number}}</td>
+                        <td>{{student.email}}</td>
+                        <td>{{student.cgpa}}</td>
+                        <td>{{score}} %</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+        </div>
     </div>
 </div>
 {% endblock body %}
