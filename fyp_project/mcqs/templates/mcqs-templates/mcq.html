@@ -26,6 +26,7 @@
                 <p>Your skills absent from the job description: {{ absent_skills }}</p> <br>
 
                 <form action="" method="POST">
+                    {% csrf_token %}
                     <!--
                     {% for i in qna_skills %}
                     <div>
@@ -39,7 +40,6 @@
                     <div>
                         <p>{{ key }}</p>
                         <!--<p> {{ i.ques }}<br></p> <br>-->
-                        {% csrf_token %}
                         <div class="quiz-div">
                              <!--<input type="text" placeholder="Enter Choice" id="option" minlength="1" maxlength="1" name="option[]"> <br><br> -->
                              <input type="radio" id="a" name="choice{{forloop.counter}}" value="A">

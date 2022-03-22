@@ -172,8 +172,7 @@ def student(request):
 
 def check_compatibility(request, context, present_skills, absent_skills):
     if request.method == 'POST':
-        print("*************************hefhsuhf")
-        print(present_skills)
+        #print(present_skills)
         return redirect(mcq_ques, present_skills=present_skills, absent_skills=absent_skills)
     return render(request, 'home-templates/check_compatibility.html', {'context': context})
     # return HttpResponse('<h1> Hello </h1>')
