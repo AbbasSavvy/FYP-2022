@@ -29,11 +29,14 @@
                    
                     <tr>
                       <td>{{ key }}</td>
-                      <td>{{ forloop.counter }}</td>
+                      <td>B</td>
                       <td>{{ value }}</td>
                     </tr>
                     {% endfor %}
-                  </table>
+                </table>
+                {% for key,value in score_dict.items %}
+                <p>{{key}} 's score is : {{value}}</p>
+                {% endfor %}
                 <form action="" method="POST">
                     {% csrf_token %}
                     <input type="submit" value="Download Analytics" name="download"/>
