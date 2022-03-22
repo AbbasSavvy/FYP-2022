@@ -208,7 +208,7 @@ def view_compatibility(request):
             check_set_company = True
             jd_company_id = request.POST.get('company')
             roles = Jd.objects.filter(company_id=jd_company_id)
-            messages.success(request, f'{check_set_company}')
+            # messages.success(request, f'{check_set_company}')
             return render(request, 'home-templates/view_compatibility.html',
                           {'companies_list': companies_list,
                            'roles_list': roles,
@@ -216,7 +216,7 @@ def view_compatibility(request):
                            'check_display_company': check_display_company})
         if request.POST.get('get_role') == "submit_role":
             role_id = request.POST.get('selected_role')
-            student_list = Student.objects.all()
+            student_list = Student.objects.filter(placement = 'Unplaced')
             check_display_company = False
             check_select_students = True
             check_set_company = False

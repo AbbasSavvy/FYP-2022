@@ -35,10 +35,15 @@
                         <td>{{student.phone_number}}</td>
                         <td>{{student.email}}</td>
                         <td>{{student.cgpa}}</td>
-                        <td>{{student.placement}}</td>
+                        {% if student.placement == 'Placed' %}
+                            <td><span class="badge bg-success input-width-small">{{student.placement}}</span></td>
+                        {% else %}
+                        <td><span class="badge bg-warning text-dark">{{student.placement}}</span></td>
+                        {% endif %}
+
                         <form action="" method="POST">
                             {% csrf_token %}
-                            <td> <button class="btn btn-info btn-sm" value="{{student.id}}" name="get_student_id" id="get_student_id">Modify</button></td>
+                            <td><button class="btn btn-info btn-sm" value="{{student.id}}" name="get_student_id" id="get_student_id">Modify</button></td>
                         </form>
                         </tr>
                     {% endfor %}
