@@ -1,24 +1,27 @@
 {% extends 'home-templates/base.html'%} 
 {% load crispy_forms_tags %}
 {% block body %}
-    <div class="row container">
-        <div class="welcome-message">
-            <h1>Welcome Placement Coordinator!</h1>
-        </div>
-        <div class="resume-form">
-            <form method="POST">
-                {% csrf_token %}
-                <fieldset class="form-group ">
-                    {{ form|crispy }}
-                </fieldset>
-                <div class="form-group">
-                    <button class="btn btn-outline-primary" type="submit">Sign Up</button>
+    <div class="wrapper container">
+        <div class="rec row">
+            <div class="welcome-message">
+                <h1>Welcome Placement Coordinator!</h1>
+            </div>
+            <div class="resume-form">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group ">
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-primary" type="submit">Sign Up</button>
+                    </div>
+                </form>
+                <div class="pt-3">
+                    <small class="text-muted">Already Have Account? <a href="{% url 'login' %}">Click here</a></small>
                 </div>
-            </form>
-            <div class="pt-3">
-                <small class="text-muted">Already Have Account? <a href="{% url 'login' %}">Click here</a></small>
             </div>
         </div>
+        <div class="push"></div>
     </div>
     
 {% endblock body %}

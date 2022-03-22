@@ -1,8 +1,11 @@
 {% extends 'home-templates/base.html'%} 
 
 {% block body %}
-<div class="container">
-    <div class="rec">
+<div class="container wrapper">
+    <div class="rec row">
+        <div class="welcome-message">
+            <h1>Welcome Placement Coordinator!</h1>
+        </div>
         <div class="d-flex justify-content-between">
             <a href={% url 'add_student' %}>
                 <div class="rec-card card bg-light mb-3" >
@@ -95,5 +98,6 @@
         </div>
         
     </div>
+    <div class="push"></div>
 </div>
 {% endblock body %}

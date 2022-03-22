@@ -2,17 +2,21 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
-    <div class="row container">
-        <div class="welcome-message">
-            <h1>Upload Student CSV!</h1>
-        </div>
-        <div class="resume-form">
-            <form action="" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{form}}
-                <br>
-                <button type="submit">Upload</button>
-            </form>
-        </div>
+    <div class="container wrapper">
+        <div class="rec row">
+            <div class="welcome-message">
+                <h1>Upload Student CSV!</h1>
+            </div>
+            <div class="resume-form">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form}}
+                    <br>
+                    <button class="btn btn-success" type="submit">Upload</button>
+                </form>
+            </div>
+        </div> 
+        <div class="push"></div>
+        <div class="push"></div>
     </div>
 {% endblock body %}
