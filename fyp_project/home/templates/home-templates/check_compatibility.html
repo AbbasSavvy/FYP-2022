@@ -1,13 +1,22 @@
 {% extends 'home-templates/base.html'%} 
 
 {% block body %}
-    <div class="container row">
+    <div class="container wrapper">
+        <div class="rec row">
         <h5>Your profile matches {{context}}% with the selected job role</h5>
-        <progress id="precentage_similarity" value={{context}} max="100"> {{context}} </progress>
+        <progress id="precentage_similarity" value={{context}} max="100"  style="width: 50%;font-size: 40px;color: green;"> {{context}} </progress>
+        <!-- <div class="progress">
+            <div class="progress-bar" style="width: 25%;" role="progressbar" aria-valuenow={{context}} aria-valuemin="0" aria-valuemax="100">{{context}} %</div>
+          </div> -->
         <h5>Test your skills and get a detailed reports on your strengths and weakness!</h5>
         <form action="" method="POST">
             {% csrf_token %}
         <button id="take_test" name="take_test">Take Test</button>
         </form>
+        </div>
+        <div class="push"></div>
+        <div class="push"></div>
+        <div class="push"></div>
+
     </div>
 {% endblock body %}
