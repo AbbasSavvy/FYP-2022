@@ -134,7 +134,7 @@ def mcq_ques(request,present_skills,absent_skills):
                     score+=1
                 count+=1
 
-            return render(request, 'mcqs-templates/mcq_analytics.html', {'score': score, 'len_dict': len_dict, 'qna_dict': qna_dict, 'your_ans': your_ans, 'score_dict':score_dict})
+            return render(request, 'mcqs-templates/mcq_analytics.html', {'score': score, 'len_dict': len_dict, 'qna_dict': qna_dict, 'your_ans': your_ans, 'score_dict':score_dict,'present_skills': present_skills, 'absent_skills': absent_skills})
 
         return render(request, 'mcqs-templates/mcq.html')
 

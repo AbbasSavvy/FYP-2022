@@ -1691,3 +1691,5 @@ body {
 .footer {
 	height: 142px;
 }
+
+progress::-webkit-progress-value { background: green; }
