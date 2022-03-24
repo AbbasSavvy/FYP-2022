@@ -28,6 +28,7 @@ import nltk
 import pickle
 nltk.download('punkt')
 nltk.download('stopwords')
+from django.core.mail import send_mail
 
 
 def home(request):
@@ -50,6 +51,15 @@ def schedule(request, roles_id):
         event.start_time = request.POST.get('start_time')
         event.end_time = request.POST.get('end_time')
         event.role_id = role
+        send_email=request.POST.get('send_email')
+        messages.success(request,f'{send_email}')
+        if send_email=="send_email":
+            email_msg='Dear Student, you are invited to attend the'
+            email_subject='hello'
+            from_email='riya.tendulkar16@nmims.edu.in'
+            to_email=['riya.tendulkar16@nmims.edu.in']
+            send_mail(email_subject,email_msg,from_email,to_email)
+
         event.save()
         messages.success(request, f'New Event Scheduled!')
         return render(request, 'home-templates/schedule.html', {'role': role})
