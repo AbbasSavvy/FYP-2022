@@ -1,14 +1,21 @@
 {% extends 'home-templates/base.html'%}
 {% block body %}
 
-
 <div class="row">
     <div class="col-sm-6 align-items-center">
-        <div class="mcq-skill-form" >
+        <div class="mcq-skill-form" style="margin-top:100px;" >
+            <h3>Instructions:</h3>
+            <ol>
+                <li>Attempt all questions</li>
+                <li>Every question has only one correct answer</li>
+                <li>The quiz comprises of different questions from skills present with student</li>
+                <li>Submit the quiz once all the questions are answered</li>
+                <li>A score of the quiz and correct answers will be displayed on submission</li>
+            </ol>
             <form action="" method="POST">
                 {% csrf_token %}
-                <label>Want to test your skills?</label><br>
-                <input type="submit" value="Submit" value="Post" name="skill_submit"/>
+                <br><br>
+                <input type="submit" value="Start the Quiz" name="skill_submit" class="btn btn-success"/>
             </form>
         </div>
     </div>
@@ -20,18 +27,11 @@
     <div class="col-sm-6 align-items-center">
             <div>
                 <div class="card-body">
-                <h5 class="card-title">Multiple Choice Questions</h5>
+                {% if checking %}
+                <h3 class="card-title">Multiple Choice Questions</h3>
 
                 <form action="" method="POST">
                     {% csrf_token %}
-                    <!--
-                    {% for i in qna_skills %}
-                    <div>
-                        <p>Skill :{{ i }}</p>
-                    </div>
-                    {% endfor %}
-                    -->
-
                     {% for key,value in qna_dict.items %}
 
                     <div>
@@ -50,9 +50,11 @@
                         </div>
                     </div>
                     {% endfor %}
-                    <input type="submit" value="Submit Quiz" value="Post" name="quiz_submit"/>
+                    <input type="submit" value="Submit Quiz" name="quiz_submit" class="btn btn-success"/>
                 </form>
+                {% endif %}
             </div>
+            
     </div> 
 </div>
 {% endblock body %}

@@ -95,24 +95,44 @@ def mcq_ques(request,present_skills,absent_skills):
                 # print(skill_ques)
                 for k in skill_ques:
                     for key, value in k.items():
-                        # print(value)
+                        value=value.replace('Q 1 -','')
+                        value=value.replace('Q 2 -','')
+                        value=value.replace('Q 3 -','')
+                        value=value.replace('Q 4 -','')
+                        value=value.replace('Q 5 -','')
+                        value=value.replace('Q 6 -','')
+                        value=value.replace('Q 7 -','')
+                        value=value.replace('Q 8 -','')
+                        value=value.replace('Q 9 -','')
+                        value=value.replace('Q 10 -','')
                         ques_bank.append(value)
 
                 for l in skill_ans:
                     for key, value in l.items():
+                        # value=value.replace(' _x000D_','')
+                        # value=value.replace('â€˜','')
+                        # value=value.replace('â€™','')
                         ans_bank.append(value)
 
             for a in range(len_skill_set):
                 for b in range(10):
                     qna_skill.append(skill_set[a][1])
 
+            #print(ques_bank)
+            #print(ans_bank)
             #print(qna_skill)
-            qna_dict = dict(zip(ques_bank, ans_bank))
+            temp=[]
+            qna_dict_res = dict(zip(ques_bank, ans_bank))
+            for key, val in qna_dict_res.items():
+                if val not in temp:
+                    temp.append(val)
+                    qna_dict[key] = val
+            #qna_dict = {val : key for key, val in qna_dict_res.items()}
             #print(qna_dict)
             ques_skill_id=dict(zip(ques_bank,qna_skill))
             #print(ques_skill_id)
-
-            return render(request, 'mcqs-templates/mcq.html', {'present_skills': present_skills, 'absent_skills': absent_skills, 'qna_dict': qna_dict})
+            checking=True
+            return render(request, 'mcqs-templates/mcq.html', {'present_skills': present_skills, 'absent_skills': absent_skills, 'qna_dict': qna_dict, 'checking':checking})
 
         if request.POST.get('quiz_submit'):
             score=0
