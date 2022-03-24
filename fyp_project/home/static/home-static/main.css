@@ -735,6 +735,7 @@ input[type="submit"] {
 /*--------------------------------------------------------------
 # Calendar
 --------------------------------------------------------------*/
+
 .calendar-body{
 	height: 100% !important;
 }
@@ -744,19 +745,25 @@ input[type="submit"] {
 }
 
 .calendar {
-	background-color: rgba(256, 256, 256, 0.4);
+	background-color: rgb(256, 256, 256);
 	color: black;
 	width: 90%;
 	margin: auto;
 	/* margin-top: 100px; */
 	font-size: 13px;
-
+	border-radius: 50px;
+	border: 1px solid #322250;
 	margin-bottom: 50px;
 }
 
-.calendar tr,
+.calendar tr{
+	border: 1px solid #322250;
+	border-radius: 50px;
+}
+
+
 .calendar td {
-	border: 1px solid black;
+	border: 1px solid #322250;
 }
 
 .calendar th {
@@ -773,6 +780,13 @@ input[type="submit"] {
 
 .month {
 	font-size: 25px;
+	background-color: #ef6603;
+	color: white;
+	border-radius: 15px 15px 0 0;
+}
+
+.mon, .tue, .wed, .thu, .fri, .sat, .sun{
+	background-color: rgb(172, 172, 172);
 }
 
 .date {
