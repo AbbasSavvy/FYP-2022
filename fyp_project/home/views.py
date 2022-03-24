@@ -107,7 +107,33 @@ def student(request):
             for i in job_roles:
                 dict_jd_id_skill[i.id] = i.job_desc
 
-            skills = request.POST.get('skills')
+            # skills = request.POST.get('skills')
+            skills = request.FILES.get('skills')
+
+            text = convert_pdf_to_txt(skills)
+
+            start = 'familiar with'
+            end = 'key projects'
+            header = 'objective'
+            text = text.lower()
+            # print(text)
+
+            header = text.index(header)
+            header_val = ''
+            for i in range(header):
+                header_val += text[i]
+            text = text.replace(header_val, '')
+
+            tech_skills = text.index(start)+13
+            tech_skills_end = text.index(end)
+
+            val = ''
+            for i in range(tech_skills, tech_skills_end):
+                val += text[i]
+
+            val = val.strip()
+            val = val.replace(',', '')
+            skills = val
             id_similarity = dict()
             for id, jd in dict_jd_id_skill.items():
                 filedocument = sentence_tokenize(jd)
@@ -161,17 +187,34 @@ def student(request):
 
             return render(request, 'home-templates/student.html', {'job_roles': job_roles, 'display_roles': display_roles})
         if request.POST.get("check_compatibility") == 'Check Compatibility':
-            skills = request.POST.get('skills')
-            # skills = request.FILES['skills'].read()
+            # skills = request.POST.get('skills')
+            skills = request.FILES.get('skills')
 
-            # print("****************************************")
-            # print(skills)
-            # print("****************************************")
-            # text = convert_pdf_to_txt(skills)
+            text = convert_pdf_to_txt(skills)
 
-            # start = 'familiar with'
-            # end = 'key projects'
-            # header = 'objective'
+            start = 'familiar with'
+            end = 'key projects'
+            header = 'objective'
+            text = text.lower()
+            # print(text)
+
+            header = text.index(header)
+            header_val = ''
+            for i in range(header):
+                header_val += text[i]
+            text = text.replace(header_val, '')
+
+            tech_skills = text.index(start)+13
+            tech_skills_end = text.index(end)
+
+            val = ''
+            for i in range(tech_skills, tech_skills_end):
+                val += text[i]
+
+            val = val.strip()
+            val = val.replace(',', '')
+            skills = val
+            # print(val)
             job_role = request.POST.get('jobRole')
             jd = Jd.objects.filter(pk=job_role).first()
             jd = jd.get_job_desc()
@@ -260,7 +303,33 @@ def student(request):
             # print(placed_students_skills)
 
             # Comparing Resumes
-            check_resume = request.POST.get('skills')
+            # check_resume = request.POST.get('skills')
+            check_resume = request.FILES.get('skills')
+
+            text = convert_pdf_to_txt(check_resume)
+
+            start = 'familiar with'
+            end = 'key projects'
+            header = 'objective'
+            text = text.lower()
+            # print(text)
+
+            header = text.index(header)
+            header_val = ''
+            for i in range(header):
+                header_val += text[i]
+            text = text.replace(header_val, '')
+
+            tech_skills = text.index(start)+13
+            tech_skills_end = text.index(end)
+
+            val = ''
+            for i in range(tech_skills, tech_skills_end):
+                val += text[i]
+
+            val = val.strip()
+            val = val.replace(',', '')
+            check_resume = val
             percentage_list = []
             for i in placed_students_skills:
 
@@ -698,20 +767,20 @@ def convert_pdf_to_txt(path):
     codec = 'utf-8'
     laparams = LAParams()
     device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
-    fp = open(path, 'rb')
+    # fp = open(path, 'rb')
     interpreter = PDFPageInterpreter(rsrcmgr, device)
     password = ""
     maxpages = 0
     caching = True
     pagenos = set()
 
-    for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
+    for page in PDFPage.get_pages(path, pagenos, maxpages=maxpages,
                                   password=password,
                                   caching=caching,
                                   check_extractable=True):
         interpreter.process_page(page)
 
-    fp.close()
+    # fp.close()
     device.close()
     text = retstr.getvalue()
     retstr.close()

@@ -11,17 +11,17 @@
             </p>
         </div>
         <div class="resume-form">
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 
                 <button class="btn btn-success" name="single_role" id="single_role" value="single_role">Select a job role</button>
-                <button class="btn btn-success" name="multiple_role" id="multiple_role" value="multiple_role">See your best fit job role</button>
+                <button style="margin-left: 50px;" class="btn btn-success" name="multiple_role" id="multiple_role" value="multiple_role">See your best fit job role</button>
                 <br>
                 <br>
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Enter your skills</label><br>
-                    <textarea name="skills" id="skills" placeholder="eg: Python, Java, HTML, CSS..." class="form-control" style="width:50%" rows ='4'></textarea>
-                    <!-- <input type="file" name="skills" id="skills" accept=".pdf" required> -->
+                    <!-- <textarea name="skills" id="skills" placeholder="eg: Python, Java, HTML, CSS..." class="form-control" style="width:50%" rows ='4'></textarea> -->
+                    <input type="file" name="skills" id="skills" accept=".pdf">
                 </div>
                 <br>
                 {% if display_roles %}
@@ -63,6 +63,8 @@
         </div>
     </div>
     <div class="push"></div>
+    <div class="push"></div>
+
 </div>
 
 
