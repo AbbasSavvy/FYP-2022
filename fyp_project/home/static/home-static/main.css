@@ -735,13 +735,23 @@ input[type="submit"] {
 /*--------------------------------------------------------------
 # Calendar
 --------------------------------------------------------------*/
+.calendar-body{
+	height: 100% !important;
+}
+
+.calendar-html{
+	height: 100% !important;
+}
+
 .calendar {
 	background-color: rgba(256, 256, 256, 0.4);
 	color: black;
-	width: 50%;
+	width: 90%;
 	margin: auto;
-	margin-top: 100px;
+	/* margin-top: 100px; */
 	font-size: 13px;
+
+	margin-bottom: 50px;
 }
 
 .calendar tr,

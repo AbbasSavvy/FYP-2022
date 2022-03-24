@@ -1,23 +1,35 @@
 {% extends 'home-templates/new-cal-base.html' %}
-
 {% block body %}
-<!-- <div class="row container">
-    {{ calendar }}
-</div> -->
-<div class="container wrapper">
-    <div class="rec row">
-        <div class="welcome-message">
-            <!-- <h1>Welcome {{ username }}!</h1> -->
-            <h1>Current Schedule</h1>
+<div>
+    <div class="container">
+        <div class="rec row">
+            <div class="welcome-message">
+                <h1>Current Schedule</h1>
+            </div>
+            <div>
+                {{ calendar }}
+            </div>
+<!--             
+            <br>
+            <div class="push"></div>
+            <div class="push"></div>
+            <div class="push"></div>
+            <div class="push"></div>
+            <div class="push"></div>
+            <div class="push"></div> -->
+            
         </div>
-        <!-- <div>
-            {{ calendar }}
-        </div> -->
     </div>
-    
-
+    <!-- <div>
+        <footer id="footer">
+            <img style="width: 110px; height: 40px; margin-top: 20px;" src="https://portal.svkm.ac.in/MPSTME-NM-M/resources/images/logo.png">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Talent Acquisition</span></strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                Designed by <a href="#">Vaishnavi, Riya, Vinay, Abbas</a>
+            </div>
+        </footer>
+    </div> -->
 </div>
-<div class="push"></div>
-<div class="push"></div>
-<div class="push"></div>
-{% endblock %}
+{% endblock body %}
