@@ -6,17 +6,25 @@
     <div class="rec row">
         <div class="welcome-message">
             <h1>Welcome Student!</h1>
-        </div>
+            <p>Select a job role to see how your current profile matches with it! You can also check how good your skills are with this job role and see the missing skills!
 
+            </p>
+        </div>
         <div class="resume-form">
             <form action="" method="POST">
                 {% csrf_token %}
+                
+                <button class="btn btn-success" name="single_role" id="single_role" value="single_role">Select a job role</button>
+                <button class="btn btn-success" name="multiple_role" id="multiple_role" value="multiple_role">See your best fit job role</button>
+                <br>
+                <br>
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Enter your skills</label><br>
-                    <!-- <textarea type="text" name="skills" id="skills" size="50"> -->
-                        <textarea name="skills" id="skills" placeholder="eg: Python, Java, HTML, CSS..." class="form-control" style="width:50%" rows ='4' required></textarea>
+                    <textarea name="skills" id="skills" placeholder="eg: Python, Java, HTML, CSS..." class="form-control" style="width:50%" rows ='4'></textarea>
+                    <!-- <input type="file" name="skills" id="skills" accept=".pdf" required> -->
                 </div>
                 <br>
+                {% if display_roles %}
                 <label for="jobRole">Select a Job Role</label><br>
                 <!--
                 <select name="jobRole" id="jobRole">
@@ -43,8 +51,15 @@
                 </table>
                 <br>
                 <br>
-                <input class="btn btn-success" type="submit" name="check_compatibility" id="check_compatibility" value="Check Compatibility"> 
+                <input class="btn btn-success" type="submit" name="check_compatibility" id="check_compatibility" value="Check Compatibility">
+                    <button style="margin-left: 50px;" class="btn btn-success" id="resume_to_resume" name="resume_to_resume" value="resume_to_resume">Compare with another resume?</button>
+            {% endif %}
             </form>
+        </div>
+        <div>
+        {% if avg_similarity %}
+            Your Compatibility compared to placed students for {{selected_job_role}} role is {{avg_similarity}}%
+        {% endif %}
         </div>
     </div>
     <div class="push"></div>
