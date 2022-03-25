@@ -93,7 +93,10 @@ def mcq_ques(request,present_skills,absent_skills):
                 skill_ans = Ques_Ans.objects.filter(
                     skill_id=skill_set[i][0]).values('ans')
                 # print(skill_ques)
+
+                count_qa=0
                 for k in skill_ques:
+                    count_qa=count_qa+1
                     for key, value in k.items():
                         value=value.replace('Q 1 -','')
                         value=value.replace('Q 2 -','')
@@ -106,31 +109,30 @@ def mcq_ques(request,present_skills,absent_skills):
                         value=value.replace('Q 9 -','')
                         value=value.replace('Q 10 -','')
                         ques_bank.append(value)
-
+                    if count_qa==4:
+                            break
+                
+                count_qa=0
                 for l in skill_ans:
+                    count_qa=count_qa+1
                     for key, value in l.items():
-                        # value=value.replace(' _x000D_','')
-                        # value=value.replace('â€˜','')
-                        # value=value.replace('â€™','')
                         ans_bank.append(value)
+                    if count_qa==4:
+                        break
 
             for a in range(len_skill_set):
-                for b in range(10):
+                for b in range(5):
+                    count_qa=count_qa+1
                     qna_skill.append(skill_set[a][1])
 
-            #print(ques_bank)
-            #print(ans_bank)
-            #print(qna_skill)
             temp=[]
+            #print(ques_bank)
             qna_dict_res = dict(zip(ques_bank, ans_bank))
             for key, val in qna_dict_res.items():
                 if val not in temp:
                     temp.append(val)
                     qna_dict[key] = val
-            #qna_dict = {val : key for key, val in qna_dict_res.items()}
-            #print(qna_dict)
             ques_skill_id=dict(zip(ques_bank,qna_skill))
-            #print(ques_skill_id)
             checking=True
             return render(request, 'mcqs-templates/mcq.html', {'present_skills': present_skills, 'absent_skills': absent_skills, 'qna_dict': qna_dict, 'checking':checking})
 
@@ -139,6 +141,7 @@ def mcq_ques(request,present_skills,absent_skills):
             count=1
             your_ans=[]
             len_dict=len(qna_dict)
+            #print("length of questions:", len_dict)
 
             for i in range(len(skill_set)):
                 var=skill_set[i][1]
@@ -151,7 +154,9 @@ def mcq_ques(request,present_skills,absent_skills):
                 if(option==value[2]):
                     tp=ques_skill_id[key]
                     score_dict[tp]+=1
+                    #print("score dict",score_dict[tp])
                     score+=1
+                    #print(score)
                 count+=1
 
             return render(request, 'mcqs-templates/mcq_analytics.html', {'score': score, 'len_dict': len_dict, 'qna_dict': qna_dict, 'your_ans': your_ans, 'score_dict':score_dict,'present_skills': present_skills, 'absent_skills': absent_skills})

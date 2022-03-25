@@ -1,60 +1,63 @@
 {% extends 'home-templates/base.html'%}
 {% block body %}
 
-<div class="row">
-    <div class="col-sm-6 align-items-center">
-        <div class="mcq-skill-form" style="margin-top:100px;" >
-            <h3>Instructions:</h3>
-            <ol>
-                <li>Attempt all questions</li>
-                <li>Every question has only one correct answer</li>
-                <li>The quiz comprises of different questions from skills present with student</li>
-                <li>Submit the quiz once all the questions are answered</li>
-                <li>A score of the quiz and correct answers will be displayed on submission</li>
-            </ol>
-            <form action="" method="POST">
-                {% csrf_token %}
-                <br><br>
-                <input type="submit" value="Start the Quiz" name="skill_submit" class="btn btn-success"/>
-            </form>
-        </div>
-    </div>
-    
-</div>
+<div class="container"`>
+    <div class="rec row">
+        <!-- <div class="col-sm-6 align-items-center"> -->
+            <div class="mcq-skill-form" style="margin-top:100px;" >
+                <h3>Instructions:</h3>
+                <ol>
+                    <li>Attempt all questions</li>
+                    <li>Every question has only one correct answer</li>
+                    <li>The quiz comprises of different questions from skills present with student</li>
+                    <li>Submit the quiz once all the questions are answered</li>
+                    <li>A score of the quiz and correct answers will be displayed on submission</li>
+                </ol>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <br><br>
+                    <input type="submit" value="Start the Quiz" name="skill_submit" class="btn btn-success"/>
+                </form>
+            </div>
+        <!-- </div> -->
 
 
-<div class="row">
-    <div class="col-sm-6 align-items-center">
-            <div>
+
+
+    <!-- <div class="col-sm-6 align-items-center"> -->
+        <div>
                 <div class="card-body">
                 {% if checking %}
                 <h3 class="card-title">Multiple Choice Questions</h3>
-
+                </div>
                 <form action="" method="POST">
                     {% csrf_token %}
                     {% for key,value in qna_dict.items %}
 
-                    <div>
-                        <p>{{ key }}</p>
-                        <!--<p> {{ i.ques }}<br></p> <br>-->
-                        <div class="quiz-div">
-                             <!--<input type="text" placeholder="Enter Choice" id="option" minlength="1" maxlength="1" name="option[]"> <br><br> -->
-                             <input type="radio" id="a" name="choice{{forloop.counter}}" value="A">
-                             <label for="a">A</label><br>
-                             <input type="radio" id="b" name="choice{{forloop.counter}}" value="B">
-                             <label for="b">B</label><br>
-                             <input type="radio" id="c" name="choice{{forloop.counter}}" value="C">
-                             <label for="c">C</label><br>
-                             <input type="radio" id="d" name="choice{{forloop.counter}}" value="D">
-                             <label for="d">D</label><br><br>
+                    <div class="card text-left justify-content-left" style="margin-bottom: 10px;">
+                        <div class="card-body justify-content-left" style="margin: 0;">
+                            <h5 class="card-title text-dark" style="border-bottom: 1px solid gray; padding-bottom: 10px;">{{ key }}</h5>
+                            <!--<p> {{ i.ques }}<br></p> <br>-->
+                            <div class="quiz-div text-dark" style="margin-top: 25px;">
+                                <!--<input type="text" placeholder="Enter Choice" id="option" minlength="1" maxlength="1" name="option[]"> <br><br> -->
+                                <input type="radio" id="a" name="choice{{forloop.counter}}" value="A">
+                                <label for="a">A</label><br>
+                                <input type="radio" id="b" name="choice{{forloop.counter}}" value="B">
+                                <label for="b">B</label><br>
+                                <input type="radio" id="c" name="choice{{forloop.counter}}" value="C">
+                                <label for="c">C</label><br>
+                                <input type="radio" id="d" name="choice{{forloop.counter}}" value="D">
+                                <label for="d">D</label><br><br>
+                            </div>
                         </div>
+                        
                     </div>
                     {% endfor %}
                     <input type="submit" value="Submit Quiz" name="quiz_submit" class="btn btn-success"/>
                 </form>
                 {% endif %}
-            </div>
-            
-    </div> 
+            </div>    
+    <!-- </div>  -->
+</div>
 </div>
 {% endblock body %}
