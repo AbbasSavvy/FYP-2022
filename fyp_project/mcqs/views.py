@@ -134,6 +134,8 @@ def mcq_ques(request,present_skills,absent_skills):
                     qna_dict[key] = val
             ques_skill_id=dict(zip(ques_bank,qna_skill))
             checking=True
+
+            
             return render(request, 'mcqs-templates/mcq.html', {'present_skills': present_skills, 'absent_skills': absent_skills, 'qna_dict': qna_dict, 'checking':checking})
 
         if request.POST.get('quiz_submit'):
@@ -159,7 +161,18 @@ def mcq_ques(request,present_skills,absent_skills):
                     #print(score)
                 count+=1
 
-            return render(request, 'mcqs-templates/mcq_analytics.html', {'score': score, 'len_dict': len_dict, 'qna_dict': qna_dict, 'your_ans': your_ans, 'score_dict':score_dict,'present_skills': present_skills, 'absent_skills': absent_skills})
+            label_str=''
+            data_str=''
+            for key,value in score_dict.items():
+                label_str=label_str+','+key
+                data_str=data_str+','+str(value)
+            # print("**********************")
+            # print("label values",label_str)
+            # print(data_str)
+            label_str=label_str[1:]
+            data_str=data_str[1:]
+
+            return render(request, 'mcqs-templates/mcq_analytics.html', {'score': score, 'len_dict': len_dict, 'qna_dict': qna_dict, 'your_ans': your_ans, 'score_dict':score_dict,'present_skills': present_skills, 'absent_skills': absent_skills,'label_str':label_str,'data_str':data_str})
 
         return render(request, 'mcqs-templates/mcq.html')
 

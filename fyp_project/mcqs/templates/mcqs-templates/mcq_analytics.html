@@ -68,15 +68,26 @@
     window.onload = function() {
         //alert("hello pie");
         var ctx = document.querySelector("#chart-line");
+        var label_names="{{label_str}}";
+        var label_list=label_names.split(',');
+        var data_names="{{data_str}}";
+        var data_list=data_names.split(',');
+       
+        var color_list=[];
+        var len_label=label_list.length;
+        for(var i=0;i<len_label;i++){
+            color_list.push(getRandomColor());
+        }
         var myLineChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ["c", "sql", "python"],
+                labels: label_list,
                 datasets: [{
-                    data: [10,10,40],
-                    backgroundColor: ["rgba(255, 0, 0, 0.5)", "rgba(100, 255, 0, 0.5)", "rgba(200, 50, 255, 0.5)"]
+                    data: data_list,
+                    backgroundColor: color_list
                 }]
             },
+
             options: {
                 responsive: false,
                 title: {
@@ -86,6 +97,16 @@
             }
         });
     };
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
 </script>
 
 {% endblock body %}
