@@ -4,6 +4,10 @@ from pdfminer.layout import LAParams
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 import io
+# from django.core.mail import send_mail
+import socket
+from django.conf import settings
+from django.core import mail
 from .utils import Calendar
 from django.utils.safestring import mark_safe
 from django.views import generic
@@ -34,6 +38,8 @@ import nltk
 import pickle
 nltk.download('punkt')
 nltk.download('stopwords')
+socket.getaddrinfo('localhost', 587)
+# _socket.getaddrinfo('localhost', 587)
 
 
 def home(request):
@@ -56,7 +62,24 @@ def schedule(request, roles_id):
         event.start_time = request.POST.get('start_time')
         event.end_time = request.POST.get('end_time')
         event.role_id = role
+        send_email = request.POST.get('send_email')
+        messages.success(request, f'{send_email}')
+        if send_email == "send_email":
+
+            connection = mail.get_connection()
+            connection.open()
+            email_msg = 'Dear Student, you are invited to attend the'
+            email_subject = 'Hello'
+            from_email = settings.EMAIL_HOST_USER
+            to_email = ['riya.tendulkar16@nmims.edu.in']
+
+            email1 = mail.EmailMessage(email_subject, email_msg, from_email,
+                                       to_email, connection=connection)
+            email1.send()
+            connection.close()
+
         event.save()
+
         messages.success(request, f'New Event Scheduled!')
         return render(request, 'home-templates/schedule.html', {'role': role})
     return render(request, 'home-templates/schedule.html', {'role': role})
@@ -98,6 +121,7 @@ def upload_file_view(request):
 def student(request):
     job_roles = Jd.objects.all()
     display_roles = False
+    # display_best_fit_job = False
     if request.method == 'POST':
         if request.POST.get("single_role") == "single_role":
             display_roles = True
@@ -181,11 +205,12 @@ def student(request):
                 max_id = max(id_similarity, key=id_similarity.get)
                 best_similarity_ids.append(max_id)
                 id_similarity.pop(max_id)
-            first_job = Jd.objects.filter(pk=best_similarity_ids[0])
-            second_job = Jd.objects.filter(pk=best_similarity_ids[1])
-            third_job = Jd.objects.filter(pk=best_similarity_ids[2])
+            first_job = Jd.objects.filter(pk=best_similarity_ids[0]).first()
+            second_job = Jd.objects.filter(pk=best_similarity_ids[1]).first()
+            third_job = Jd.objects.filter(pk=best_similarity_ids[2]).first()
+            display_best_fit_job = True
 
-            return render(request, 'home-templates/student.html', {'job_roles': job_roles, 'display_roles': display_roles})
+            return render(request, 'home-templates/student.html', {'job_roles': job_roles, 'display_roles': display_roles, 'first_job': first_job, 'second_job': second_job, 'third_job': third_job, 'display_best_fit_job': display_best_fit_job})
         if request.POST.get("check_compatibility") == 'Check Compatibility':
             # skills = request.POST.get('skills')
             skills = request.FILES.get('skills')
@@ -430,7 +455,8 @@ def view_compatibility(request):
                            'check_display_company': check_display_company})
         if request.POST.get('get_role') == "submit_role":
             role_id = request.POST.get('selected_role')
-            student_list = Student.objects.filter(placement='Unplaced').order_by('-cgpa')
+            student_list = Student.objects.filter(
+                placement='Unplaced').order_by('-cgpa')
             check_display_company = False
             check_select_students = True
             check_set_company = False
@@ -443,11 +469,12 @@ def view_compatibility(request):
                            'check_set_company': check_set_company,
                            'student_list': student_list,
                            'selected_role_id': role_id})
-        if request.POST.get('filter_data')=="filter_data":
+        if request.POST.get('filter_data') == "filter_data":
             role_id = request.POST.get('selected_role')
-            branch_name=request.POST.get('branch')
-            program_name=request.POST.get('program')
-            student_list = Student.objects.filter(placement='Unplaced',branch=branch_name,program=program_name).order_by('-cgpa')
+            branch_name = request.POST.get('branch')
+            program_name = request.POST.get('program')
+            student_list = Student.objects.filter(
+                placement='Unplaced', branch=branch_name, program=program_name).order_by('-cgpa')
             check_display_company = False
             check_select_students = True
             check_set_company = False
@@ -460,7 +487,6 @@ def view_compatibility(request):
                            'check_set_company': check_set_company,
                            'student_list': student_list,
                            'selected_role_id': role_id})
-
 
         if request.POST.get('get_students') == "submit_students":
             selected_students = request.POST.getlist('selected_students[]')
@@ -684,16 +710,16 @@ def stfu(request, selected_students, selected_role_id):
     student_score_str = ''
     for id, score in ordered_id_score_dict.items():
         student_data[student_data_dict[id]] = score
-        student_name_str = student_name_str + ',' + student_data_dict[id].student_name
+        student_name_str = student_name_str + \
+            ',' + student_data_dict[id].student_name
         student_score_str = student_score_str + ',' + str(score)
-    
+
     student_name_str = student_name_str[1:]
     student_score_str = student_score_str[1:]
     # print('/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/')
     # print(student_name_str)
     # print(student_score_str)
     # print('/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/')
-    
 
     return render(request, 'home-templates/stfu.html', {'student_data': student_data, 'student_names': student_name_str, 'student_scores': student_score_str})
 
@@ -709,7 +735,8 @@ def update_student(request, student_id):
         check_student_placement_status = True
     else:
         check_student_placement_status = False
-        placed_details = Placed_Students.objects.filter(pk=student.id).first()
+        placed_details = Placed_Students.objects.filter(
+            student_id=student.id).first()
     role_id = ""
     role_name = ""
     company_name = ""

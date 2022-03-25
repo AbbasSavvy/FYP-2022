@@ -54,15 +54,18 @@
                 <button style="margin-left: 50px;" class="btn btn-success" name="multiple_role" id="multiple_role" value="multiple_role">See your best fit job role</button>
                 <br>
                 <br>
-                <div class="h3 bg-info text-center student-custom-div-margin">
+                
                     {% if avg_similarity %}
+                    <div class="h3 bg-info text-center student-custom-div-margin">
                         Your Compatibility compared to placed students for {{selected_job_role}} role is {{avg_similarity}}% 
+                    </div>
                     {% endif %}
-                </div>
+                    
+
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Enter your skills</label><br>
                     <!-- <textarea name="skills" id="skills" placeholder="eg: Python, Java, HTML, CSS..." class="form-control" style="width:50%" rows ='4'></textarea> -->
-                    <input type="file" name="skills" id="skills" accept=".pdf">
+                    <input style="width: 50%;" type="file" name="skills" id="skills" accept=".pdf">
                 </div>
                 <br>
                 {% if display_roles %}
@@ -74,6 +77,7 @@
                     {% endfor %}
                 </select>
             -->
+                
                 <table class="table table-light table-striped"  style="width:50%">
                     <thead class="thead-dark">
                         <tr>
@@ -84,7 +88,7 @@
                     </thead>
                     {% for role in job_roles %}
                         <tr>
-                        <td><input type="radio" id="jobRole" name="jobRole" value="{{role.get_jd_id}}"></td>
+                        <td><input type="radio" id="jobRole" name="jobRole" value="{{role.get_jd_id}}" required></td>
                         <td>{{role.get_jd_company_id}}</td>
                         <td>{{role}}</td>
                         </tr>
@@ -96,6 +100,12 @@
                     <button style="margin-left: 50px;" class="btn btn-success" id="resume_to_resume" name="resume_to_resume" value="resume_to_resume">Compare with another resume?</button>
             {% endif %}
             </form>
+            {% if display_best_fit_job %}
+                    <h4>Your top 3 most Compatible Job Roles are:</h4>
+                    <h5>{{first_job}}</h5>
+                    <h5>{{second_job}}</h5>
+                    <h5>{{third_job}}</h5>
+            {% endif %}
         </div>
         
     </div>
