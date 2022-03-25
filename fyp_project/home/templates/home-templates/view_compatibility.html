@@ -46,6 +46,25 @@
             <h3>Select students for the role: </h3>
             <form action="" method="POST">
                 {% csrf_token %}
+                <select class="input-width form-control form-select" name="program" id="program" required>
+                    <option disabled selected>Filter Program</option>
+                    <option value="B.Tech">B.Tech</option>
+                    <option value="MBA.Tech">MBA.Tech</option>
+                    <option value="MCA">MCA</option>
+                    <option value="BTI">BTI</option>
+                </select>
+                <select class="input-width form-control form-select" name="branch" id="branch" required>
+                    <option disabled selected>Filter Branch</option>
+                    <option value="CS">CS</option>
+                    <option value="IT">IT</option>
+                    <option value="Mechanical">Mechanical</option>
+                    <option value="EXTC">EXTC</option>
+                    <option value="Civil">Civil</option>
+                    <option value="Mechantronics">Mechantronics</option>
+                    <option value="Data Science">Data Science</option>
+                </select>
+                <button name="filter_data" id="filter_data" value="filter_data">Filter</button>
+                <input type="checkbox" onClick="toggle(this)"> Select all<br>
             <table class="table table-light table-striped" style="width:100%">
                 <thead class="thead-dark">
                     <tr>
@@ -91,4 +110,13 @@
     <div class="push"></div>
 
 </div>
+<script language="JavaScript">
+    function toggle(source) {
+    checkboxes = document.getElementsByName('selected_students[]');
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+        checkboxes[i].checked = source.checked;
+    }
+}
+
+</script>
 {% endblock body %}

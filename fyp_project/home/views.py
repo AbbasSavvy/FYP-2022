@@ -430,7 +430,7 @@ def view_compatibility(request):
                            'check_display_company': check_display_company})
         if request.POST.get('get_role') == "submit_role":
             role_id = request.POST.get('selected_role')
-            student_list = Student.objects.filter(placement='Unplaced')
+            student_list = Student.objects.filter(placement='Unplaced').order_by('-cgpa')
             check_display_company = False
             check_select_students = True
             check_set_company = False
@@ -443,6 +443,24 @@ def view_compatibility(request):
                            'check_set_company': check_set_company,
                            'student_list': student_list,
                            'selected_role_id': role_id})
+        if request.POST.get('filter_data')=="filter_data":
+            role_id = request.POST.get('selected_role')
+            branch_name=request.POST.get('branch')
+            program_name=request.POST.get('program')
+            student_list = Student.objects.filter(placement='Unplaced',branch=branch_name,program=program_name).order_by('-cgpa')
+            check_display_company = False
+            check_select_students = True
+            check_set_company = False
+            # Selected role is fetching correct but not readable-CHECK!
+            # messages.success(request,f'{selected_role.get_package}')
+            return render(request, 'home-templates/view_compatibility.html',
+                          {'companies_list': companies_list,
+                           'check_display_company': check_display_company,
+                           'check_select_students': check_select_students,
+                           'check_set_company': check_set_company,
+                           'student_list': student_list,
+                           'selected_role_id': role_id})
+
 
         if request.POST.get('get_students') == "submit_students":
             selected_students = request.POST.getlist('selected_students[]')
