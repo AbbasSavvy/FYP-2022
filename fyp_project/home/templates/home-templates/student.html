@@ -2,98 +2,107 @@
 
 {% block body %}
 
-<div class="container">
+<div class="container wrapper">
     <div class="rec row">
-        <div class="welcome-message">
+        <div class="welcome-message" style="margin-bottom: 0;">
             <h1>Welcome Student!</h1>
+            <p>
+                Select a job role to see how your current profile matches with it! You can also check how good your skills are with this job role and see the missing skills!
+            </p>
+            <h3>
+                Why should you use our Website? 
+            </h3>
+            
         </div>
 
-    <div class="resume-form">
-        <form action="" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="exampleFormControlFile1">Enter your skills</label><br>
-                <input type="text" name="skills" id="skills" size="50">
+        <div class="row student-custom-row">
+            <div class="col-sm-3">
+              <div class="card text-dark student-card-custom-height">
+                <div class="card-body">
+                  <h5 class="card-title">You can view your profile compatibility with your desired job role</h5>
+                </div>
+              </div>
             </div>
-            <br>
-            <label for="jobRole">Select a Job Role</label><br>
-            <!--
-            <select name="jobRole" id="jobRole">
-                {% for i in job_roles %}
-                <option value={{i.get_jd_id}}>{{i}}</option>
-                {% endfor %}
-            </select>
-        -->
-            <table>
-                <tr>
-                  <th>Select</th>
-                  <th>Company</th>
-                  <th>Job Role</th>
-                </tr>
-                {% for role in job_roles %}
-                    <tr>
-                    <td><input type="radio" id="jobRole" name="jobRole" value="{{role.get_jd_id}}"></td>
-                    <td>{{role.get_jd_company_id}}</td>
-                    <td>{{role}}</td>
-                    </tr>
-                {% endfor %}
-              </table>
-            <br>
-            <br>
-            <input type="submit" name="check_compatibility" id="check_compatibility" value="Check Compatibility"> 
-        </form>
+            <div class="col-sm-3">
+              <div class="card text-dark student-card-custom-height">
+                <div class="card-body">
+                  <h5 class="card-title">See the job role best suitable for your skills</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card text-dark student-card-custom-height">
+                  <div class="card-body">
+                    <h5 class="card-title">Test your knowledge with latest job requirements</h5>
+                  </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card text-dark student-card-custom-height">
+                  <div class="card-body">
+                    <h5 class="card-title">Compare your resume to see where you stand</h5>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="resume-form">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <button class="btn btn-success" name="single_role" id="single_role" value="single_role">Select a job role</button>
+                <button style="margin-left: 50px;" class="btn btn-success" name="multiple_role" id="multiple_role" value="multiple_role">See your best fit job role</button>
+                <br>
+                <br>
+                <div class="h3 bg-info text-center student-custom-div-margin">
+                    {% if avg_similarity %}
+                        Your Compatibility compared to placed students for {{selected_job_role}} role is {{avg_similarity}}% 
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">Enter your skills</label><br>
+                    <!-- <textarea name="skills" id="skills" placeholder="eg: Python, Java, HTML, CSS..." class="form-control" style="width:50%" rows ='4'></textarea> -->
+                    <input type="file" name="skills" id="skills" accept=".pdf">
+                </div>
+                <br>
+                {% if display_roles %}
+                <label for="jobRole">Select a Job Role</label><br>
+                <!--
+                <select name="jobRole" id="jobRole">
+                    {% for i in job_roles %}
+                    <option value={{i.get_jd_id}}>{{i}}</option>
+                    {% endfor %}
+                </select>
+            -->
+                <table class="table table-light table-striped"  style="width:50%">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th>Select</th>
+                        <th>Company</th>
+                        <th>Job Role</th>
+                        </tr>
+                    </thead>
+                    {% for role in job_roles %}
+                        <tr>
+                        <td><input type="radio" id="jobRole" name="jobRole" value="{{role.get_jd_id}}"></td>
+                        <td>{{role.get_jd_company_id}}</td>
+                        <td>{{role}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <br>
+                <br>
+                <input class="btn btn-success" type="submit" name="check_compatibility" id="check_compatibility" value="Check Compatibility">
+                    <button style="margin-left: 50px;" class="btn btn-success" id="resume_to_resume" name="resume_to_resume" value="resume_to_resume">Compare with another resume?</button>
+            {% endif %}
+            </form>
+        </div>
+        
     </div>
-    </div>
+    <div class="push"></div>
+    <!-- <div class="push"></div> -->
+
 </div>
 
-
-<!-- <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br> -->
 
 {% endblock body %}

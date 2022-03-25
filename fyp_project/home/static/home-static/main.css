@@ -578,6 +578,39 @@ section {
 /*--------------------------------------------------------------
 # Edited
 --------------------------------------------------------------*/
+.student-card-custom-height{
+	height: 135px;
+}
+
+.student-custom-div-margin{
+	width: fit-content;
+	margin: auto;
+	margin-top: 2.5%;
+	margin-bottom: 5%;
+	padding: 10px 15px;
+	border-radius: 5px;
+}
+
+
+.student-custom-row{
+	margin-top: 2.5% !important;
+}
+
+
+.dropdown-custom{
+	z-index: 1000;
+}
+
+.show{
+	z-index: 10000;
+}
+
+.chart-card{
+	z-index: 0;
+	width: 80%;
+	margin: auto;
+	/* margin: ; */
+}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -735,18 +768,35 @@ input[type="submit"] {
 /*--------------------------------------------------------------
 # Calendar
 --------------------------------------------------------------*/
-.calendar {
-	background-color: rgba(256, 256, 256, 0.4);
-	color: black;
-	width: 50%;
-	margin: auto;
-	margin-top: 100px;
-	font-size: 13px;
+
+.calendar-body{
+	height: 100% !important;
 }
 
-.calendar tr,
+.calendar-html{
+	height: 100% !important;
+}
+
+.calendar {
+	background-color: rgb(256, 256, 256);
+	color: black;
+	width: 90%;
+	margin: auto;
+	/* margin-top: 100px; */
+	font-size: 13px;
+	border-radius: 50px;
+	border: 1px solid #322250;
+	margin-bottom: 50px;
+}
+
+.calendar tr{
+	border: 1px solid #322250;
+	border-radius: 50px;
+}
+
+
 .calendar td {
-	border: 1px solid black;
+	border: 1px solid #322250;
 }
 
 .calendar th {
@@ -763,6 +813,13 @@ input[type="submit"] {
 
 .month {
 	font-size: 25px;
+	background-color: #ef6603;
+	color: white;
+	border-radius: 15px 15px 0 0;
+}
+
+.mon, .tue, .wed, .thu, .fri, .sat, .sun{
+	background-color: rgb(172, 172, 172);
 }
 
 .date {
@@ -1690,4 +1747,23 @@ body {
 }
 .footer {
 	height: 142px;
+}
+
+progress::-webkit-progress-value { background: green; }
+
+
+#timer{
+	width: fit-content;
+	margin-top: 5%;
+	margin-bottom: 0;
+	position: fixed;
+	float: right;
+	top: 8%;
+	right: 100px;
+	border-radius: 5px
+  	/* left: 0.5rem; */
+}
+
+.added-padding{
+	padding: 15px 15px;
 }

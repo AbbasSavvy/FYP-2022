@@ -2,60 +2,106 @@
 {% block body %}
 
 
-<div class="row">
-    <div class="col-sm-6 align-items-center">
-        <div class="mcq-skill-form" >
-            <form action="" method="POST">
-                {% csrf_token %}
-                <label>Want to test your skills?</label><br>
-                <input type="submit" value="Submit" value="Post" name="skill_submit"/>
-            </form>
-        </div>
-    </div>
-    
+<div id="timer" class="bg-danger">
+    Time Left
+    <br>
 </div>
-
-
-<div class="row">
-    <div class="col-sm-6 align-items-center">
-            <div>
-                <div class="card-body">
-                <h5 class="card-title">Multiple Choice Questions</h5>
-
-                <p>Your skills present in  the job description: {{ present_skills }}</p> <br>
-                <p>Your skills absent from the job description: {{ absent_skills }}</p> <br>
-
+<div class="container"`>
+    <div class="rec row">
+        <!-- <div class="col-sm-6 align-items-center"> -->
+            <div class="mcq-skill-form" >
+                <h3>Instructions:</h3>
+                <ol>
+                    <li>Attempt all questions</li>
+                    <li>Every question has only one correct answer</li>
+                    <li>The quiz comprises of different questions from skills present with student</li>
+                    <li>Submit the quiz once all the questions are answered</li>
+                    <li>A score of the quiz and correct answers will be displayed on submission</li>
+                </ol>
                 <form action="" method="POST">
                     {% csrf_token %}
-                    <!--
-                    {% for i in qna_skills %}
-                    <div>
-                        <p>Skill :{{ i }}</p>
-                    </div>
-                    {% endfor %}
-                    -->
-
-                    {% for key,value in qna_dict.items %}
-
-                    <div>
-                        <p>{{ key }}</p>
-                        <!--<p> {{ i.ques }}<br></p> <br>-->
-                        <div class="quiz-div">
-                             <!--<input type="text" placeholder="Enter Choice" id="option" minlength="1" maxlength="1" name="option[]"> <br><br> -->
-                             <input type="radio" id="a" name="choice{{forloop.counter}}" value="A">
-                             <label for="a">A</label><br>
-                             <input type="radio" id="b" name="choice{{forloop.counter}}" value="B">
-                             <label for="b">B</label><br>
-                             <input type="radio" id="c" name="choice{{forloop.counter}}" value="C">
-                             <label for="c">C</label><br>
-                             <input type="radio" id="d" name="choice{{forloop.counter}}" value="D">
-                             <label for="d">D</label><br><br>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    <input type="submit" value="Submit Quiz" value="Post" name="quiz_submit"/>
+                    <br><br>
+                    <input type="submit" value="Start the Quiz" name="skill_submit" class="btn btn-success"/>
                 </form>
             </div>
-    </div> 
+        <!-- </div> -->
+
+
+
+
+    <!-- <div class="col-sm-6 align-items-center"> -->
+        <div>
+                <div class="card-body">
+                {% if checking %}
+                <h3 class="card-title">Multiple Choice Questions</h3>
+                </div>
+                
+                <form action="" method="POST" id="myForm" name="myform">
+                    {% csrf_token %}
+                    {% for key,value in qna_dict.items %}
+
+                    <div class="card text-left justify-content-left" style="margin-bottom: 10px;">
+                        <div class="card-body justify-content-left" style="margin: 0;">
+                            <h5 class="card-title text-dark" style="border-bottom: 1px solid gray; padding-bottom: 10px;">{{ key }}</h5>
+                            <!--<p> {{ i.ques }}<br></p> <br>-->
+                            <div class="quiz-div text-dark" style="margin-top: 25px;">
+                                <!--<input type="text" placeholder="Enter Choice" id="option" minlength="1" maxlength="1" name="option[]"> <br><br> -->
+                                <input type="radio" id="a" name="choice{{forloop.counter}}" value="A">
+                                <label for="a">A</label><br>
+                                <input type="radio" id="b" name="choice{{forloop.counter}}" value="B">
+                                <label for="b">B</label><br>
+                                <input type="radio" id="c" name="choice{{forloop.counter}}" value="C">
+                                <label for="c">C</label><br>
+                                <input type="radio" id="d" name="choice{{forloop.counter}}" value="D">
+                                <label for="d">D</label><br><br>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    {% endfor %}
+                    <input type="submit" value="Submit Quiz" id="quiz_submit" name="quiz_submit" class="btn btn-success"/>
+                </form>
+                {% endif %}
+            </div>    
+    <!-- </div>  -->
 </div>
+</div>
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("March 25, 2022 18:07:59").getTime();
+
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+  document.getElementById("timer").classList.add('added-padding');
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    // submitform()
+    document.getElementById("quiz_submit").click();
+    
+    // document.getElementById("myForm").submit();
+  }
+}, 1000);
+
+function submitform()
+{
+  document.myform.submit();
+}
+
+</script>
 {% endblock body %}
