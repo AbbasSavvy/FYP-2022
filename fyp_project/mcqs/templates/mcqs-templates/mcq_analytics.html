@@ -15,7 +15,7 @@
               </div> <br>
 
             <div class="card">
-                <div class="card-header bg-dark text-white">Skills Score Distribution</div>
+                <div class="card-header bg-dark text-white">Skill Wise Score Distribution</div>
                 <div class="card-body" style="height: 420px">
                     <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
                         <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
@@ -27,15 +27,14 @@
                     </div> <canvas id="chart-line" width="750px" height="390px" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
                 </div>
             </div>
-    
+            <br><br>
             {% for key,value in score_dict.items %}
-        
-            <p style="float:left;padding-top: 20px;">{{key}}</p>
+            <p style="float:left;padding-top: 20px;padding-left: 60px">{{key}}</p>
             <p style="float:right;padding-right: 60px;padding-top: 20px;">{{value}}</p>
-            <progress class="progress-bar" id="skill_score" value={{value}} max="10"  style="width: 100%;font-size: 30px;color: #9ADCFF;background-color: #EEEEEE;"> {{value}}*10 </progress>
+            <progress class="progress-bar" id="skill_score" value={{value}} max="10"  style="width: 100%;font-size: 30px;color: #0a1f2b;background-color: black;"> {{value}}*10 </progress>
             {% endfor %}
             <br>
-
+    
           <div class="card bg-warning">
             <div class="card-body text-center">
               <p class="card-text">Your skills present in  the job description : {{ present_skills }}</p>

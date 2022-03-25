@@ -1,10 +1,15 @@
 {% extends 'home-templates/base.html'%}
 {% block body %}
 
+
+<div id="timer" class="bg-danger">
+    Time Left
+    <br>
+</div>
 <div class="container"`>
     <div class="rec row">
         <!-- <div class="col-sm-6 align-items-center"> -->
-            <div class="mcq-skill-form" style="margin-top:100px;" >
+            <div class="mcq-skill-form" >
                 <h3>Instructions:</h3>
                 <ol>
                     <li>Attempt all questions</li>
@@ -30,7 +35,8 @@
                 {% if checking %}
                 <h3 class="card-title">Multiple Choice Questions</h3>
                 </div>
-                <form action="" method="POST">
+                
+                <form action="" method="POST" id="myForm" name="myform">
                     {% csrf_token %}
                     {% for key,value in qna_dict.items %}
 
@@ -53,11 +59,49 @@
                         
                     </div>
                     {% endfor %}
-                    <input type="submit" value="Submit Quiz" name="quiz_submit" class="btn btn-success"/>
+                    <input type="submit" value="Submit Quiz" id="quiz_submit" name="quiz_submit" class="btn btn-success"/>
                 </form>
                 {% endif %}
             </div>    
     <!-- </div>  -->
 </div>
 </div>
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("March 25, 2022 18:07:59").getTime();
+
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+  document.getElementById("timer").classList.add('added-padding');
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    // submitform()
+    document.getElementById("quiz_submit").click();
+    
+    // document.getElementById("myForm").submit();
+  }
+}, 1000);
+
+function submitform()
+{
+  document.myform.submit();
+}
+
+</script>
 {% endblock body %}
