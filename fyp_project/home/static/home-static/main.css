@@ -578,6 +578,39 @@ section {
 /*--------------------------------------------------------------
 # Edited
 --------------------------------------------------------------*/
+.student-card-custom-height{
+	height: 135px;
+}
+
+.student-custom-div-margin{
+	width: fit-content;
+	margin: auto;
+	margin-top: 2.5%;
+	margin-bottom: 5%;
+	padding: 10px 15px;
+	border-radius: 5px;
+}
+
+
+.student-custom-row{
+	margin-top: 2.5% !important;
+}
+
+
+.dropdown-custom{
+	z-index: 1000;
+}
+
+.show{
+	z-index: 10000;
+}
+
+.chart-card{
+	z-index: 0;
+	width: 80%;
+	margin: auto;
+	/* margin: ; */
+}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

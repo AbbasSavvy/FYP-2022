@@ -10,8 +10,8 @@
             <h1>Compatibility of Students</h1>
         </div>
         <div>
-            <div class="card">
-                <div class="card-header">Horizontal Bar chart</div>
+            <div class="card chart-card">
+                <div class="card-header bg-dark text-white">Horizontal Bar chart</div>
                 <div class="card-body" style="height: 420px">
                     <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
                         <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
@@ -23,6 +23,7 @@
                     </div> <canvas id="chart-line" width="750px" height="390px" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
                 </div>
             </div>
+            <br>
 
             <table class="table table-light table-striped" style="width:100%">
                 <thead class="thead-dark">
@@ -62,30 +63,34 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js'></script>
 <script>
     window.onload = function() {
-        alert('HELLO');
+        // alert('HELLO');
         var ctx = document.querySelector("#chart-line");
+        var names = "{{student_names}}";
+        var names_list = names.split(",");
+
+        var scores = "{{student_scores}}";
+        var scores_list = scores.split(",");
+
+        // alert(typeof names_list);
+        // for(var i = 0; )
         var myLineChart = new Chart(ctx, {
             type: 'horizontalBar',
             data: {
-                labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050],
+                labels: names_list,
                 datasets: [{
-                    data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
-                    label: "Africa",
+                    data: scores_list,
+                    label: "Student Score",
                     borderColor: "#458af7",
                     backgroundColor: '#458af7',
                     fill: false
-                }, {
-                    data: [168, 170, 178, 190, 203, 276, 408, 547, 675, 734],
-                    label: "Europe",
-                    borderColor: "#3cba9f",
-                    fill: false,
-                    backgroundColor: '#3cba9f'
-                }]
+                },]
             },
             options: {
                 title: {
                     display: true,
-                    text: 'World population per region (in millions)'
+                    text: 'Student Compatibility Scores',
+                    borderWidth: 50,
+                    inflateAmount: 2,
                 }
             }
         });
