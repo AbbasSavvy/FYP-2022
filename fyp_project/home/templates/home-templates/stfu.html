@@ -82,7 +82,8 @@
                     label: "Student Score",
                     borderColor: "#458af7",
                     backgroundColor: '#458af7',
-                    fill: false
+                    fill: false,
+
                 },]
             },
             options: {
@@ -91,7 +92,16 @@
                     text: 'Student Compatibility Scores',
                     borderWidth: 50,
                     inflateAmount: 2,
+                },
+                scales: {
+                    xAxes : [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }]
                 }
+
             }
         });
     };
