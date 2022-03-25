@@ -1717,3 +1717,20 @@ body {
 }
 
 progress::-webkit-progress-value { background: green; }
+
+
+#timer{
+	width: fit-content;
+	margin-top: 5%;
+	margin-bottom: 0;
+	position: fixed;
+	float: right;
+	top: 8%;
+	right: 100px;
+	border-radius: 5px
+  	/* left: 0.5rem; */
+}
+
+.added-padding{
+	padding: 15px 15px;
+}
