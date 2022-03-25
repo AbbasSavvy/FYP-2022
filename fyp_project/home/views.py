@@ -63,15 +63,17 @@ def schedule(request, roles_id):
         event.end_time = request.POST.get('end_time')
         event.role_id = role
         send_email = request.POST.get('send_email')
-        messages.success(request, f'{send_email}')
         if send_email == "send_email":
 
             connection = mail.get_connection()
             connection.open()
-            email_msg = 'Dear Student, you are invited to attend the'
-            email_subject = 'Hello'
+            email_msg = 'Dear Student, you are invited to attend the ' + event.event_type + " of " + role.job_role + \
+                ' of Company: ' + role.company_id.company_name + " from " + \
+                event.start_time + ' to ' + event.end_time + "."
+            email_subject = 'New Event Scheduled for Placement: ' + event.event_type
             from_email = settings.EMAIL_HOST_USER
-            to_email = ['riya.tendulkar16@nmims.edu.in']
+            to_email = ['riya.tendulkar16@nmims.edu.in', 'shahv65@gmail.com',
+                        'asavliwala0@gmail.com', 'vaishnavirathod311@gmail.com']
 
             email1 = mail.EmailMessage(email_subject, email_msg, from_email,
                                        to_email, connection=connection)
@@ -208,9 +210,13 @@ def student(request):
             first_job = Jd.objects.filter(pk=best_similarity_ids[0]).first()
             second_job = Jd.objects.filter(pk=best_similarity_ids[1]).first()
             third_job = Jd.objects.filter(pk=best_similarity_ids[2]).first()
+            first_job_company = first_job.company_id.company_name
+            second_job_company = first_job.company_id.company_name
+            third_job_company = first_job.company_id.company_name
+
             display_best_fit_job = True
 
-            return render(request, 'home-templates/student.html', {'job_roles': job_roles, 'display_roles': display_roles, 'first_job': first_job, 'second_job': second_job, 'third_job': third_job, 'display_best_fit_job': display_best_fit_job})
+            return render(request, 'home-templates/student.html', {'job_roles': job_roles, 'display_roles': display_roles, 'first_job': first_job, 'second_job': second_job, 'third_job': third_job, 'display_best_fit_job': display_best_fit_job, 'first_job_company': first_job_company,'second_job_company': second_job_company,'third_job_company': third_job_company})
         if request.POST.get("check_compatibility") == 'Check Compatibility':
             # skills = request.POST.get('skills')
             skills = request.FILES.get('skills')
