@@ -4,6 +4,10 @@ from pdfminer.layout import LAParams
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 import io
+# from django.core.mail import send_mail
+import socket
+from django.conf import settings
+from django.core import mail
 from .utils import Calendar
 from django.utils.safestring import mark_safe
 from django.views import generic
@@ -34,6 +38,8 @@ import nltk
 import pickle
 nltk.download('punkt')
 nltk.download('stopwords')
+socket.getaddrinfo('localhost', 587)
+# _socket.getaddrinfo('localhost', 587)
 
 
 def home(request):
@@ -56,7 +62,24 @@ def schedule(request, roles_id):
         event.start_time = request.POST.get('start_time')
         event.end_time = request.POST.get('end_time')
         event.role_id = role
+        send_email = request.POST.get('send_email')
+        messages.success(request, f'{send_email}')
+        if send_email == "send_email":
+
+            connection = mail.get_connection()
+            connection.open()
+            email_msg = 'Dear Student, you are invited to attend the'
+            email_subject = 'Hello'
+            from_email = settings.EMAIL_HOST_USER
+            to_email = ['riya.tendulkar16@nmims.edu.in']
+
+            email1 = mail.EmailMessage(email_subject, email_msg, from_email,
+                                       to_email, connection=connection)
+            email1.send()
+            connection.close()
+
         event.save()
+
         messages.success(request, f'New Event Scheduled!')
         return render(request, 'home-templates/schedule.html', {'role': role})
     return render(request, 'home-templates/schedule.html', {'role': role})
