@@ -4,12 +4,48 @@
 
 <div class="container wrapper">
     <div class="rec row">
-        <div class="welcome-message">
+        <div class="welcome-message" style="margin-bottom: 0;">
             <h1>Welcome Student!</h1>
-            <p>Select a job role to see how your current profile matches with it! You can also check how good your skills are with this job role and see the missing skills!
-
+            <p>
+                Select a job role to see how your current profile matches with it! You can also check how good your skills are with this job role and see the missing skills!
             </p>
+            <h3>
+                Why should you use our Website? 
+            </h3>
+            
         </div>
+
+        <div class="row student-custom-row">
+            <div class="col-sm-3">
+              <div class="card text-dark student-card-custom-height">
+                <div class="card-body">
+                  <h5 class="card-title">You can view your profile compatibility with your desired job role</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="card text-dark student-card-custom-height">
+                <div class="card-body">
+                  <h5 class="card-title">See the job role best suitable for your skills</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card text-dark student-card-custom-height">
+                  <div class="card-body">
+                    <h5 class="card-title">Test your knowledge with latest job requirements</h5>
+                  </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card text-dark student-card-custom-height">
+                  <div class="card-body">
+                    <h5 class="card-title">Compare your resume to see where you stand</h5>
+                  </div>
+                </div>
+            </div>
+        </div>
+
         <div class="resume-form">
             <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -18,6 +54,11 @@
                 <button style="margin-left: 50px;" class="btn btn-success" name="multiple_role" id="multiple_role" value="multiple_role">See your best fit job role</button>
                 <br>
                 <br>
+                <div class="h3 bg-info text-center student-custom-div-margin">
+                    {% if avg_similarity %}
+                        Your Compatibility compared to placed students for {{selected_job_role}} role is {{avg_similarity}}% 
+                    {% endif %}
+                </div>
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Enter your skills</label><br>
                     <!-- <textarea name="skills" id="skills" placeholder="eg: Python, Java, HTML, CSS..." class="form-control" style="width:50%" rows ='4'></textarea> -->
@@ -56,14 +97,10 @@
             {% endif %}
             </form>
         </div>
-        <div>
-        {% if avg_similarity %}
-            Your Compatibility compared to placed students for {{selected_job_role}} role is {{avg_similarity}}%
-        {% endif %}
-        </div>
+        
     </div>
     <div class="push"></div>
-    <div class="push"></div>
+    <!-- <div class="push"></div> -->
 
 </div>
 
