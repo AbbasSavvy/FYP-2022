@@ -1,3 +1,9 @@
+from django.core.files.storage import FileSystemStorage
+from pdfminer.pdfpage import PDFPage
+from pdfminer.layout import LAParams
+from pdfminer.converter import TextConverter
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+import io
 from .utils import Calendar
 from django.utils.safestring import mark_safe
 from django.views import generic
@@ -17,7 +23,7 @@ from csvs.models import Csv
 from csvs.forms import CsvModelForm
 from mcqs.views import *
 import csv
-#import mcqs.views as mq
+# import mcqs.views as mq
 from nltk.corpus import stopwords
 import re
 import gensim
@@ -91,88 +97,297 @@ def upload_file_view(request):
 
 def student(request):
     job_roles = Jd.objects.all()
+    display_roles = False
     if request.method == 'POST':
+        if request.POST.get("single_role") == "single_role":
+            display_roles = True
+        if request.POST.get("multiple_role") == "multiple_role":
+            display_roles = False
+            dict_jd_id_skill = {}
+            for i in job_roles:
+                dict_jd_id_skill[i.id] = i.job_desc
 
-        skills = request.POST.get('skills')
-        job_role = request.POST.get('jobRole')
-        jd = Jd.objects.filter(pk=job_role).first()
-        jd = jd.get_job_desc()
+            # skills = request.POST.get('skills')
+            skills = request.FILES.get('skills')
 
-        filedocument = sentence_tokenize(jd)
+            text = convert_pdf_to_txt(skills)
 
-        gen_docs = [[w.lower() for w in word_tokenize(text)]
-                    for text in filedocument]
-        sw = set(stopwords.words('english'))
-        gen_docs = [[w for w in list if w not in sw] for list in gen_docs]
+            start = 'familiar with'
+            end = 'key projects'
+            header = 'objective'
+            text = text.lower()
+            # print(text)
 
-        gen_docs = alphabet_tokenize(gen_docs)
-        dictionary = gensim.corpora.Dictionary(gen_docs)
-        gen_docs = single_words(gen_docs)
-        corpus = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs]
-        len_gen = len(gen_docs)
-        tf_idf = gensim.models.TfidfModel(corpus)
-        sims = gensim.similarities.Similarity(
-            ".\similarity", tf_idf[corpus], num_features=len(dictionary))
+            header = text.index(header)
+            header_val = ''
+            for i in range(header):
+                header_val += text[i]
+            text = text.replace(header_val, '')
 
-        filedocument2 = sentence_tokenize(skills)
+            tech_skills = text.index(start)+13
+            tech_skills_end = text.index(end)
 
-        gen_docs2 = [[w.lower() for w in word_tokenize(text)]
-                     for text in filedocument2]
+            val = ''
+            for i in range(tech_skills, tech_skills_end):
+                val += text[i]
 
-        gen_docs2 = [[w for w in list if w not in sw] for list in gen_docs2]
+            val = val.strip()
+            val = val.replace(',', '')
+            skills = val
+            id_similarity = dict()
+            for id, jd in dict_jd_id_skill.items():
+                filedocument = sentence_tokenize(jd)
 
-        gen_docs2 = alphabet_tokenize(gen_docs2)
-        gen_docs2 = single_words(gen_docs2)
-        corpus2 = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs2]
+                gen_docs = [[w.lower() for w in word_tokenize(text)]
+                            for text in filedocument]
+                sw = set(stopwords.words('english'))
+                gen_docs = [[w for w in list if w not in sw]
+                            for list in gen_docs]
 
-        query_doc_tf_idf2 = tf_idf[corpus2]
-        sum_of_sims = (np.sum(sims[query_doc_tf_idf2], dtype=np.float32))
-        percentage_of_similarity = round(
-            float((sum_of_sims/len_gen) * 100))
-        if percentage_of_similarity > 100:
-            percentage_of_similarity = 100
-        sims.destroy()
-        absent_skills = []
-        present_skills = []
-        gen_docs_list = []
-        gen_docs_list2 = []
+                gen_docs = alphabet_tokenize(gen_docs)
+                dictionary = gensim.corpora.Dictionary(gen_docs)
+                gen_docs = single_words(gen_docs)
+                corpus = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs]
+                len_gen = len(gen_docs)
+                tf_idf = gensim.models.TfidfModel(corpus)
+                sims = gensim.similarities.Similarity(
+                    ".\similarity", tf_idf[corpus], num_features=len(dictionary))
 
-        len(gen_docs2)
+                filedocument2 = sentence_tokenize(skills)
 
-        for i in range(len(gen_docs)):
-            for j in gen_docs[i]:
-                gen_docs_list.append(j)
+                gen_docs2 = [[w.lower() for w in word_tokenize(text)]
+                             for text in filedocument2]
 
-        for i in range(len(gen_docs2)):
-            for j in gen_docs2[i]:
-                gen_docs_list2.append(j)
+                gen_docs2 = [[w for w in list if w not in sw]
+                             for list in gen_docs2]
 
-        # print(gen_docs_list,gen_docs_list2)
-        for i in gen_docs_list:
-            if i not in gen_docs_list2:
-                absent_skills.append(i)
-            else:
-                present_skills.append(i)
+                gen_docs2 = alphabet_tokenize(gen_docs2)
+                gen_docs2 = single_words(gen_docs2)
+                corpus2 = [dictionary.doc2bow(gen_doc)
+                           for gen_doc in gen_docs2]
 
-        actual_present_skills = []
-        actual_absent_skills = []
-        for i in present_skills:
-            if Skills.objects.filter(skill_name=i.lower()).exists():
-                actual_present_skills.append(i)
-        for i in absent_skills:
-            if Skills.objects.filter(skill_name=i.lower()).exists():
-                actual_absent_skills.append(i)
+                query_doc_tf_idf2 = tf_idf[corpus2]
+                sum_of_sims = (
+                    np.sum(sims[query_doc_tf_idf2], dtype=np.float32))
+                percentage_of_similarity = round(
+                    float((sum_of_sims/len_gen) * 100))
+                if percentage_of_similarity > 100:
+                    percentage_of_similarity = 100
+                sims.destroy()
+                id_similarity[id] = percentage_of_similarity
 
-        context = percentage_of_similarity
-        return redirect(check_compatibility, context=context, present_skills=actual_present_skills, absent_skills=actual_absent_skills)
+            best_similarity_ids = []
+            for i in range(3):
+                max_id = max(id_similarity, key=id_similarity.get)
+                best_similarity_ids.append(max_id)
+                id_similarity.pop(max_id)
+            first_job = Jd.objects.filter(pk=best_similarity_ids[0])
+            second_job = Jd.objects.filter(pk=best_similarity_ids[1])
+            third_job = Jd.objects.filter(pk=best_similarity_ids[2])
+
+            return render(request, 'home-templates/student.html', {'job_roles': job_roles, 'display_roles': display_roles})
+        if request.POST.get("check_compatibility") == 'Check Compatibility':
+            # skills = request.POST.get('skills')
+            skills = request.FILES.get('skills')
+
+            text = convert_pdf_to_txt(skills)
+
+            start = 'familiar with'
+            end = 'key projects'
+            header = 'objective'
+            text = text.lower()
+            # print(text)
+
+            header = text.index(header)
+            header_val = ''
+            for i in range(header):
+                header_val += text[i]
+            text = text.replace(header_val, '')
+
+            tech_skills = text.index(start)+13
+            tech_skills_end = text.index(end)
+
+            val = ''
+            for i in range(tech_skills, tech_skills_end):
+                val += text[i]
+
+            val = val.strip()
+            val = val.replace(',', '')
+            skills = val
+            # print(val)
+            job_role = request.POST.get('jobRole')
+            jd = Jd.objects.filter(pk=job_role).first()
+            jd = jd.get_job_desc()
+
+            filedocument = sentence_tokenize(jd)
+
+            gen_docs = [[w.lower() for w in word_tokenize(text)]
+                        for text in filedocument]
+            sw = set(stopwords.words('english'))
+            gen_docs = [[w for w in list if w not in sw] for list in gen_docs]
+
+            gen_docs = alphabet_tokenize(gen_docs)
+            dictionary = gensim.corpora.Dictionary(gen_docs)
+            gen_docs = single_words(gen_docs)
+            corpus = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs]
+            len_gen = len(gen_docs)
+            tf_idf = gensim.models.TfidfModel(corpus)
+            sims = gensim.similarities.Similarity(
+                ".\similarity", tf_idf[corpus], num_features=len(dictionary))
+
+            filedocument2 = sentence_tokenize(skills)
+
+            gen_docs2 = [[w.lower() for w in word_tokenize(text)]
+                         for text in filedocument2]
+
+            gen_docs2 = [[w for w in list if w not in sw]
+                         for list in gen_docs2]
+
+            gen_docs2 = alphabet_tokenize(gen_docs2)
+            gen_docs2 = single_words(gen_docs2)
+            corpus2 = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs2]
+
+            query_doc_tf_idf2 = tf_idf[corpus2]
+            sum_of_sims = (np.sum(sims[query_doc_tf_idf2], dtype=np.float32))
+            percentage_of_similarity = round(
+                float((sum_of_sims/len_gen) * 100))
+            if percentage_of_similarity > 100:
+                percentage_of_similarity = 100
+            sims.destroy()
+            absent_skills = []
+            present_skills = []
+            gen_docs_list = []
+            gen_docs_list2 = []
+
+            len(gen_docs2)
+
+            for i in range(len(gen_docs)):
+                for j in gen_docs[i]:
+                    gen_docs_list.append(j)
+
+            for i in range(len(gen_docs2)):
+                for j in gen_docs2[i]:
+                    gen_docs_list2.append(j)
+
+            # print(gen_docs_list,gen_docs_list2)
+            for i in gen_docs_list:
+                if i not in gen_docs_list2:
+                    absent_skills.append(i)
+                else:
+                    present_skills.append(i)
+
+            actual_present_skills = []
+            actual_absent_skills = []
+            for i in present_skills:
+                if Skills.objects.filter(skill_name=i.lower()).exists():
+                    actual_present_skills.append(i)
+            for i in absent_skills:
+                if Skills.objects.filter(skill_name=i.lower()).exists():
+                    actual_absent_skills.append(i)
+
+            context = percentage_of_similarity
+            return redirect(check_compatibility, context=context, present_skills=actual_present_skills, absent_skills=actual_absent_skills)
+
+        if request.POST.get("resume_to_resume") == 'resume_to_resume':
+            job_role = request.POST.get('jobRole')
+            jd = Jd.objects.filter(pk=job_role).first()
+            # print(jd)
+            display_roles = True
+            placed_students_skills = []
+            placed_skills = Placed_Students.objects.filter(
+                jd_id=jd).values('student_id')
+            for i in placed_skills:
+                student_skill = Student.objects.filter(
+                    pk=int(i['student_id'])).first()
+                placed_students_skills.append(student_skill.skills)
+            # print(placed_students_skills)
+
+            # Comparing Resumes
+            # check_resume = request.POST.get('skills')
+            check_resume = request.FILES.get('skills')
+
+            text = convert_pdf_to_txt(check_resume)
+
+            start = 'familiar with'
+            end = 'key projects'
+            header = 'objective'
+            text = text.lower()
+            # print(text)
+
+            header = text.index(header)
+            header_val = ''
+            for i in range(header):
+                header_val += text[i]
+            text = text.replace(header_val, '')
+
+            tech_skills = text.index(start)+13
+            tech_skills_end = text.index(end)
+
+            val = ''
+            for i in range(tech_skills, tech_skills_end):
+                val += text[i]
+
+            val = val.strip()
+            val = val.replace(',', '')
+            check_resume = val
+            percentage_list = []
+            for i in placed_students_skills:
+
+                filedocument = sentence_tokenize(i)
+
+                gen_docs = [[w.lower() for w in word_tokenize(text)]
+                            for text in filedocument]
+                sw = set(stopwords.words('english'))
+                gen_docs = [[w for w in list if w not in sw]
+                            for list in gen_docs]
+
+                gen_docs = alphabet_tokenize(gen_docs)
+                dictionary = gensim.corpora.Dictionary(gen_docs)
+                gen_docs = single_words(gen_docs)
+                corpus = [dictionary.doc2bow(gen_doc) for gen_doc in gen_docs]
+                len_gen = len(gen_docs)
+                tf_idf = gensim.models.TfidfModel(corpus)
+                sims = gensim.similarities.Similarity(
+                    ".\similarity", tf_idf[corpus], num_features=len(dictionary))
+
+                filedocument2 = sentence_tokenize(check_resume)
+
+                gen_docs2 = [[w.lower() for w in word_tokenize(text)]
+                             for text in filedocument2]
+
+                gen_docs2 = [[w for w in list if w not in sw]
+                             for list in gen_docs2]
+
+                gen_docs2 = alphabet_tokenize(gen_docs2)
+                gen_docs2 = single_words(gen_docs2)
+                corpus2 = [dictionary.doc2bow(gen_doc)
+                           for gen_doc in gen_docs2]
+
+                query_doc_tf_idf2 = tf_idf[corpus2]
+                sum_of_sims = (
+                    np.sum(sims[query_doc_tf_idf2], dtype=np.float32))
+                percentage_of_similarity = round(
+                    float((sum_of_sims/len_gen) * 100))
+                if percentage_of_similarity > 100:
+                    percentage_of_similarity = 100
+                sims.destroy()
+                percentage_list.append(percentage_of_similarity)
+
+            avg_similarity = round(
+                float(sum(percentage_list)/len(percentage_list)))
+            # print(avg_similarity)
+            return render(request, 'home-templates/student.html', {'job_roles': job_roles, 'avg_similarity': avg_similarity, 'selected_job_role': jd,
+                                                                   'display_roles': display_roles})
+
+        # return redirect(check_compatibility, context=context, present_skills=actual_present_skills, absent_skills=actual_absent_skills)
         # return redirect(mcqs.views/mcq_ques)
 
-    return render(request, 'home-templates/student.html', {'job_roles': job_roles})
+    return render(request, 'home-templates/student.html', {'job_roles': job_roles, 'display_roles': display_roles})
 
 
 def check_compatibility(request, context, present_skills, absent_skills):
     if request.method == 'POST':
-        #print(present_skills)
+        # print(present_skills)
         return redirect(mcq_ques, present_skills=present_skills, absent_skills=absent_skills)
     return render(request, 'home-templates/check_compatibility.html', {'context': context})
     # return HttpResponse('<h1> Hello </h1>')
@@ -215,7 +430,7 @@ def view_compatibility(request):
                            'check_display_company': check_display_company})
         if request.POST.get('get_role') == "submit_role":
             role_id = request.POST.get('selected_role')
-            student_list = Student.objects.filter(placement = 'Unplaced')
+            student_list = Student.objects.filter(placement='Unplaced')
             check_display_company = False
             check_select_students = True
             check_set_company = False
@@ -354,7 +569,7 @@ def get_date(req_day):
 # hello
 
 
-@login_required
+@ login_required
 def recruiter(request):
     return render(request, 'home-templates/recruiter.html')
 
@@ -544,3 +759,29 @@ def single_words(list):
             for j in i:
                 my_list.append([j])
     return my_list
+
+
+def convert_pdf_to_txt(path):
+    rsrcmgr = PDFResourceManager()
+    retstr = io.StringIO()
+    codec = 'utf-8'
+    laparams = LAParams()
+    device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
+    # fp = open(path, 'rb')
+    interpreter = PDFPageInterpreter(rsrcmgr, device)
+    password = ""
+    maxpages = 0
+    caching = True
+    pagenos = set()
+
+    for page in PDFPage.get_pages(path, pagenos, maxpages=maxpages,
+                                  password=password,
+                                  caching=caching,
+                                  check_extractable=True):
+        interpreter.process_page(page)
+
+    # fp.close()
+    device.close()
+    text = retstr.getvalue()
+    retstr.close()
+    return text
