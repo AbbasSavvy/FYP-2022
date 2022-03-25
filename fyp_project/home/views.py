@@ -1,3 +1,7 @@
+# from django.core.mail import send_mail
+import socket
+from django.conf import settings
+from django.core import mail
 from .utils import Calendar
 from django.utils.safestring import mark_safe
 from django.views import generic
@@ -28,7 +32,8 @@ import nltk
 import pickle
 nltk.download('punkt')
 nltk.download('stopwords')
-from django.core.mail import send_mail
+socket.getaddrinfo('localhost', 587)
+# _socket.getaddrinfo('localhost', 587)
 
 
 def home(request):
@@ -51,16 +56,24 @@ def schedule(request, roles_id):
         event.start_time = request.POST.get('start_time')
         event.end_time = request.POST.get('end_time')
         event.role_id = role
-        send_email=request.POST.get('send_email')
-        messages.success(request,f'{send_email}')
-        if send_email=="send_email":
-            email_msg='Dear Student, you are invited to attend the'
-            email_subject='hello'
-            from_email='riya.tendulkar16@nmims.edu.in'
-            to_email=['riya.tendulkar16@nmims.edu.in']
-            send_mail(email_subject,email_msg,from_email,to_email)
+        send_email = request.POST.get('send_email')
+        messages.success(request, f'{send_email}')
+        if send_email == "send_email":
+
+            connection = mail.get_connection()
+            connection.open()
+            email_msg = 'Dear Student, you are invited to attend the'
+            email_subject = 'Hello'
+            from_email = settings.EMAIL_HOST_USER
+            to_email = ['riya.tendulkar16@nmims.edu.in']
+
+            email1 = mail.EmailMessage(email_subject, email_msg, from_email,
+                                       to_email, connection=connection)
+            email1.send()
+            connection.close()
 
         event.save()
+
         messages.success(request, f'New Event Scheduled!')
         return render(request, 'home-templates/schedule.html', {'role': role})
     return render(request, 'home-templates/schedule.html', {'role': role})
@@ -182,7 +195,7 @@ def student(request):
 
 def check_compatibility(request, context, present_skills, absent_skills):
     if request.method == 'POST':
-        #print(present_skills)
+        # print(present_skills)
         return redirect(mcq_ques, present_skills=present_skills, absent_skills=absent_skills)
     return render(request, 'home-templates/check_compatibility.html', {'context': context})
     # return HttpResponse('<h1> Hello </h1>')
@@ -225,7 +238,7 @@ def view_compatibility(request):
                            'check_display_company': check_display_company})
         if request.POST.get('get_role') == "submit_role":
             role_id = request.POST.get('selected_role')
-            student_list = Student.objects.filter(placement = 'Unplaced')
+            student_list = Student.objects.filter(placement='Unplaced')
             check_display_company = False
             check_select_students = True
             check_set_company = False
