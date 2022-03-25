@@ -46,7 +46,7 @@
             <h3>Select students for the role: </h3>
             <form action="" method="POST">
                 {% csrf_token %}
-                <select class="input-width form-control form-select" name="program" id="program" required>
+                <!-- <select class="input-width form-control form-select" name="program" id="program" required>
                     <option disabled selected>Filter Program</option>
                     <option value="B.Tech">B.Tech</option>
                     <option value="MBA.Tech">MBA.Tech</option>
@@ -63,9 +63,14 @@
                     <option value="Mechantronics">Mechantronics</option>
                     <option value="Data Science">Data Science</option>
                 </select>
-                <button name="filter_data" id="filter_data" value="filter_data">Filter</button>
-                <input type="checkbox" onClick="toggle(this)"> Select all<br>
+                <button name="filter_data" id="filter_data" value="filter_data">Filter</button> -->
+                
             <table class="table table-light table-striped" style="width:100%">
+                <tr>
+                    <td colspan="11">
+                        <input type="checkbox" onClick="toggle(this)"><span style="margin-left: 25px; border-bottom: none;" class="text-primary">Select all</span>
+                    </td>
+                </tr>
                 <thead class="thead-dark">
                     <tr>
                         <th>Select</th>

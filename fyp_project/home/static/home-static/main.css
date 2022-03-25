@@ -578,6 +578,25 @@ section {
 /*--------------------------------------------------------------
 # Edited
 --------------------------------------------------------------*/
+.student-card-custom-height{
+	height: 135px;
+}
+
+.student-custom-div-margin{
+	width: fit-content;
+	margin: auto;
+	margin-top: 2.5%;
+	margin-bottom: 5%;
+	padding: 10px 15px;
+	border-radius: 5px;
+}
+
+
+.student-custom-row{
+	margin-top: 2.5% !important;
+}
+
+
 .dropdown-custom{
 	z-index: 1000;
 }
