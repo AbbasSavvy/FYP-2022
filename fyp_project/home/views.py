@@ -662,10 +662,22 @@ def stfu(request, selected_students, selected_role_id):
         sorted(id_score_dict.items(), key=lambda x: x[1], reverse=True))
 
     student_data = dict()
+    student_name_str = ''
+    student_score_str = ''
     for id, score in ordered_id_score_dict.items():
         student_data[student_data_dict[id]] = score
+        student_name_str = student_name_str + ',' + student_data_dict[id].student_name
+        student_score_str = student_score_str + ',' + str(score)
+    
+    student_name_str = student_name_str[1:]
+    student_score_str = student_score_str[1:]
+    # print('/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/')
+    # print(student_name_str)
+    # print(student_score_str)
+    # print('/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/')
+    
 
-    return render(request, 'home-templates/stfu.html', {'student_data': student_data})
+    return render(request, 'home-templates/stfu.html', {'student_data': student_data, 'student_names': student_name_str, 'student_scores': student_score_str})
 
 
 def update_student(request, student_id):
